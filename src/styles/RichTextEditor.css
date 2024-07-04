@@ -1,0 +1,53 @@
+.editor-container {
+    width: 80%;
+    margin:auto;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    position: relative;
+    margin-top: 20px;
+  }
+  
+  .toolbar {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .toolbar button, .toolbar select {
+    margin: 5px;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+  }
+  
+  #editor {
+    padding: 10px;
+    min-height: 400px;
+    overflow: auto;
+    outline: none;
+  }
+  
+  .editor-block {
+    margin-bottom: 10px;
+    padding: 10px;
+    min-height: 40px;
+  }
+  
+  .editor-block.active {
+    border: 1px solid blue;
+  }
+  
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .editor-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    font-size: 12px;
+  }
+  
