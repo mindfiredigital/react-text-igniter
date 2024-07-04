@@ -51,3 +51,24 @@
     font-size: 12px;
   }
   
+  .link-dialog {
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 1000;
+  }
+  
+  .link-dialog input {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  #editor img {
+    cursor: move;
+    max-width: 100%;
+  }
+  
+  #editor img:hover {
+    outline: 2px solid blue;
+  }

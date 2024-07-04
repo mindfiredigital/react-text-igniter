@@ -108,7 +108,7 @@ const RichTextEditor = ({ features }) => {
 
     editorBlocks.forEach((block) => {
       let type = 'text';
-      let content = block.innerHTML;
+      let content = block.textContent.trim();
       let level = null;
       let format = block.getAttribute('data-type') || 'normal';
 
@@ -120,11 +120,7 @@ const RichTextEditor = ({ features }) => {
       if (block.querySelector('img')) {
         type = 'image';
         const img = block.querySelector('img');
-        content = {
-          src: img.src,
-          alt: img.alt,
-          caption: block.textContent.replace(img.alt, '').trim()
-        };
+        content = img.src;
       }
 
       blocks.push({
