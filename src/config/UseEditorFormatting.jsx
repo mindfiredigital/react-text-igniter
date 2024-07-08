@@ -51,6 +51,18 @@ export const useEditorFormatting = (editorRef) => {
         } else {
           newStyles.add('underline');
         }
+      } else if (command === 'superscript') {
+        if (newStyles.has('super')) {
+          newStyles.delete('super');
+        } else {
+          newStyles.add('super');
+        }
+      } else if (command === 'subscript') {
+        if (newStyles.has('sub')) {
+          newStyles.delete('sub');
+        } else {
+          newStyles.add('sub');
+        }
       }
 
       // Update the data-type attribute with the modified styles
