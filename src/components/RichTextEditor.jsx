@@ -91,6 +91,18 @@ const RichTextEditor = ({ features }) => {
         } else {
           newStyles = [...currentStyles, 'underline'];
         }
+      } else if (command === 'superscript') {
+        if (currentStyles.includes('super')) {
+          newStyles = currentStyles.filter(style => style !== 'super');
+        } else {
+          newStyles = [...currentStyles, 'super'];
+        }
+      } else if (command === 'subscript') {
+        if (currentStyles.includes('sub')) {
+          newStyles = currentStyles.filter(style => style !== 'sub');
+        } else {
+          newStyles = [...currentStyles, 'sub'];
+        }
       }
 
       activeBlock.setAttribute('data-type', newStyles.join('-') || 'normal');
@@ -126,6 +138,7 @@ const RichTextEditor = ({ features }) => {
           caption: block.textContent.replace(img.alt, '').trim()
         };
       }
+
 
       blocks.push({
         type: type,
@@ -163,6 +176,8 @@ const RichTextEditor = ({ features }) => {
     }}><Icons.ImageIcon/></button>,
     getHtml: <button onClick={getHtml}>Get HTML</button>,
     getJson: <button onClick={getJson}>Get JSON</button>,
+    superscript: <button onClick={() => formatText('superscript')} id="supBtn"><Icons.SuperScriptIcon/></button>,
+    subscript: <button onClick={() => formatText('subscript')} id="subBtn"><Icons.SubScriptIcon/></button>,
   };
 
   return (
