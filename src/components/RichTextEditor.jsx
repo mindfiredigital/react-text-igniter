@@ -2,6 +2,7 @@ import React from 'react';
 import { EditorProvider, useEditor } from '../config/EditorContext.jsx';
 import "../styles/RichTextEditor.css";
 import * as Icons from "../assets/Icons.jsx";
+import featuresData from '../assets/features.json';
 
 // Toolbar component to display and manage editor features
 const Toolbar = ({ features }) => {
@@ -56,14 +57,14 @@ const Toolbar = ({ features }) => {
 
   // Defines buttons for each feature with corresponding click handlers
   const featureButtons = {
-    bold: <button onClick={() => handleFeatureClick('bold')} id="boldBtn"><Icons.BoldIcon /></button>,
-    italic: <button onClick={() => handleFeatureClick('italic')} id="italicBtn"><Icons.ItalicIcon /></button>,
-    underline: <button onClick={() => handleFeatureClick('underline')} id="underlineBtn"><Icons.UnderlineIcon /></button>,
-    orderedList: <button onClick={() => handleFeatureClick('insertOrderedList')}><Icons.OrderedListIcon /></button>,
-    unorderedList: <button onClick={() => handleFeatureClick('insertUnorderedList')}><Icons.UnOrderedListIcon /></button>,
-    alignLeft: <button onClick={() => handleFeatureClick('justifyLeft')}><Icons.AlignLeftIcon /></button>,
-    alignCenter: <button onClick={() => handleFeatureClick('justifyCenter')}><Icons.AlignCenterIcon /></button>,
-    alignRight: <button onClick={() => handleFeatureClick('justifyRight')}><Icons.AlignRightIcon /></button>,
+    bold: <button onClick={() => handleFeatureClick(featuresData.features.bold.tag)} id="boldBtn"><Icons.BoldIcon /></button>,
+    italic: <button onClick={() => handleFeatureClick(featuresData.features.italic.tag)} id="italicBtn"><Icons.ItalicIcon /></button>,
+    underline: <button onClick={() => handleFeatureClick(featuresData.features.underline.tag)} id="underlineBtn"><Icons.UnderlineIcon /></button>,
+    orderedList: <button onClick={() => handleFeatureClick(featuresData.features.insertOrderedList.tag)}><Icons.OrderedListIcon /></button>,
+    unorderedList: <button onClick={() => handleFeatureClick(featuresData.features.insertUnorderedList.tag)}><Icons.UnOrderedListIcon /></button>,
+    alignLeft: <button onClick={() => handleFeatureClick(featuresData.features.justifyLeft.tag)}><Icons.AlignLeftIcon /></button>,
+    alignCenter: <button onClick={() => handleFeatureClick(featuresData.features.justifyCenter.tag)}><Icons.AlignCenterIcon /></button>,
+    alignRight: <button onClick={() => handleFeatureClick(featuresData.features.justifyRight.tag)}><Icons.AlignRightIcon /></button>,
     createLink: <button onClick={() => {
       const url = prompt('Enter the URL');
       handleFeatureClick('createLink', url);
@@ -74,8 +75,8 @@ const Toolbar = ({ features }) => {
     }}><Icons.ImageIcon /></button>,
     getHtml: <button onClick={() => console.log(editorRef.current.innerHTML)}>Get HTML</button>,
     getJson: <button onClick={getJson}>Get JSON</button>,
-    superscript: <button onClick={() => handleFeatureClick('superscript')}><Icons.SuperScriptIcon /></button>,
-    subscript: <button onClick={() => handleFeatureClick('subscript')}><Icons.SubScriptIcon /></button>,
+    superscript: <button onClick={() => handleFeatureClick(featuresData.features.superscript.tag)}><Icons.SuperScriptIcon /></button>,
+    subscript: <button onClick={() => handleFeatureClick(featuresData.features.subscript.tag)}><Icons.SubScriptIcon /></button>,
   };
 
   // Renders the toolbar with mapped feature buttons

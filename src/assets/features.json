@@ -1,0 +1,60 @@
+{
+  "features": {
+    "bold": {
+      "tag": "bold",
+      "displayName": "Bold"
+    },
+    "italic": {
+      "tag": "italic",
+      "displayName": "Italic"
+    },
+    "underline": {
+      "tag": "underline",
+      "displayName": "Underline"
+    },
+    "insertOrderedList": {
+      "tag": "insertOrderedList",
+      "displayName": "Ordered List"
+    },
+    "insertUnorderedList": {
+      "tag": "insertUnorderedList",
+      "displayName": "Unordered List"
+    },
+    "justifyLeft": {
+      "tag": "justifyLeft",
+      "displayName": "Align Left"
+    },
+    "justifyCenter": {
+      "tag": "justifyCenter",
+      "displayName": "Align Center"
+    },
+    "justifyRight": {
+      "tag": "justifyRight",
+      "displayName": "Align Right"
+    },
+    "createLink": {
+      "tag": "createLink",
+      "displayName": "Create Link"
+    },
+    "insertImage": {
+      "tag": "insertImage",
+      "displayName": "Insert Image"
+    },
+    "getHtml": {
+      "tag": "getHtml",
+      "displayName": "Get HTML"
+    },
+    "getJson": {
+      "tag": "getJson",
+      "displayName": "Get JSON"
+    },
+    "superscript": {
+      "tag": "super",
+      "displayName": "Superscript"
+    },
+    "subscript": {
+      "tag": "sub",
+      "displayName": "Subscript"
+    }
+  }
+}
