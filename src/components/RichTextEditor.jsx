@@ -1,134 +1,30 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
+import { EditorProvider, useEditor } from '../config/EditorContext.jsx';
 import "../styles/RichTextEditor.css";
 import * as Icons from "../assets/Icons.jsx";
 
-const RichTextEditor = ({ features }) => {
-  const editorRef = useRef(null);
-  const [wordCount, setWordCount] = useState(0);
-  const [charCount, setCharCount] = useState(0);
+// Toolbar component to display and manage editor features
+const Toolbar = ({ features }) => {
+  const { formatText, editorRef } = useEditor(); // Accessing editor state and actions from editor context
 
-  useEffect(() => {
-    const editor = editorRef.current;
-
-    const handleClick = (event) => {
-      const blocks = editor.querySelectorAll('.editor-block');
-      blocks.forEach((block) => block.classList.remove('active'));
-      if (event.target.classList.contains('editor-block')) {
-        event.target.classList.add('active');
-      }
-    };
-
-    const handleInput = () => {
-      const text = editor.innerText || '';
-      const words = text.trim().split(/\s+/).filter(word => word.length > 0);
-      setWordCount(words.length);
-      setCharCount(text.length);
-
-      const blocks = editor.querySelectorAll('.editor-block');
-      blocks.forEach(updateDataAttributes);
-
-      // Ensure at least one editor block is always present
-      if (blocks.length === 0) {
-        const newBlock = document.createElement('div');
-        newBlock.className = 'editor-block';
-        newBlock.setAttribute('contentEditable', 'true');
-        newBlock.setAttribute('data-type', 'normal');
-        newBlock.setAttribute('placeholder', 'Start typing...');
-        editor.appendChild(newBlock);
-        newBlock.focus();
-      }
-    };
-
-    editor.addEventListener('click', handleClick);
-    editor.addEventListener('input', handleInput);
-
-    return () => {
-      editor.removeEventListener('click', handleClick);
-      editor.removeEventListener('input', handleInput);
-    };
-  }, []);
-
-  const updateDataAttributes = (block) => {
-    const styles = window.getComputedStyle(block);
-    const fontWeight = styles.getPropertyValue('font-weight');
-    const fontStyle = styles.getPropertyValue('font-style');
-    const textDecoration = styles.getPropertyValue('text-decoration');
-
-    let dataType = [];
-    if (fontWeight === 'bold' || fontWeight >= 600) dataType.push('bold');
-    if (fontStyle === 'italic') dataType.push('italic');
-    if (textDecoration.includes('underline')) dataType.push('underline');
-
-    block.setAttribute('data-type', dataType.join('-') || 'normal');
+  // Handles feature button clicks, triggering formatting actions in the editor
+  const handleFeatureClick = (command, value = null) => {
+    formatText(command, value); // Invokes formatting action based on the command and optional value
   };
 
-  const formatText = (command, value = null) => {
-    const activeBlock = document.querySelector('.editor-block.active');
-    if (activeBlock) {
-      activeBlock.focus();
-      document.execCommand(command, false, value);
-
-      // Directly modify the data-type attribute based on command
-      const currentDataType = activeBlock.getAttribute('data-type') || 'normal';
-      const currentStyles = currentDataType.split('-');
-      let newStyles = [];
-
-      if (command === 'bold') {
-        if (currentStyles.includes('bold')) {
-          newStyles = currentStyles.filter(style => style !== 'bold');
-        } else {
-          newStyles = [...currentStyles, 'bold'];
-        }
-      } else if (command === 'italic') {
-        if (currentStyles.includes('italic')) {
-          newStyles = currentStyles.filter(style => style !== 'italic');
-        } else {
-          newStyles = [...currentStyles, 'italic'];
-        }
-      } else if (command === 'underline') {
-        if (currentStyles.includes('underline')) {
-          newStyles = currentStyles.filter(style => style !== 'underline');
-        } else {
-          newStyles = [...currentStyles, 'underline'];
-        }
-      } else if (command === 'superscript') {
-        if (currentStyles.includes('super')) {
-          newStyles = currentStyles.filter(style => style !== 'super');
-        } else {
-          newStyles = [...currentStyles, 'super'];
-        }
-      } else if (command === 'subscript') {
-        if (currentStyles.includes('sub')) {
-          newStyles = currentStyles.filter(style => style !== 'sub');
-        } else {
-          newStyles = [...currentStyles, 'sub'];
-        }
-      }
-
-      activeBlock.setAttribute('data-type', newStyles.join('-') || 'normal');
-    }
-  };
-
-  const getHtml = () => {
-    const editorContent = editorRef.current.innerHTML;
-    console.log(editorContent);
-  };
-
+  // Generates a JSON representation of the current editor content
   const getJson = () => {
     const blocks = [];
     const editorBlocks = editorRef.current.querySelectorAll('.editor-block');
 
+    // Iterates through each editor block to extract content details
     editorBlocks.forEach((block) => {
       let type = 'text';
       let content = block.innerHTML;
       let level = null;
       let format = block.getAttribute('data-type') || 'normal';
 
-      if (block.nodeName.match(/^H[1-6]$/)) {
-        type = 'heading';
-        level = parseInt(block.nodeName.charAt(1));
-      }
-
+      // Checks for image content and structures its representation
       if (block.querySelector('img')) {
         type = 'image';
         const img = block.querySelector('img');
@@ -139,7 +35,7 @@ const RichTextEditor = ({ features }) => {
         };
       }
 
-
+      // Constructs a block object and adds it to the blocks array
       blocks.push({
         type: type,
         content: content,
@@ -148,55 +44,75 @@ const RichTextEditor = ({ features }) => {
       });
     });
 
+    // Constructs and logs a JSON string with version, timestamp, and blocks
     const jsonContent = JSON.stringify({
       version: '1.0.0',
       time: Date.now(),
       blocks: blocks,
     }, null, 2);
 
-    console.log(jsonContent);
+    console.log(jsonContent); // Outputs JSON content to the console
   };
 
+  // Defines buttons for each feature with corresponding click handlers
   const featureButtons = {
-    bold: <button onClick={() => formatText('bold')} id="boldBtn"><Icons.BoldIcon/></button>,
-    italic: <button onClick={() => formatText('italic')} id="italicBtn"><Icons.ItalicIcon/></button>,
-    underline: <button onClick={() => formatText('underline')} id="underlineBtn"><Icons.UnderlineIcon/></button>,
-    orderedList: <button onClick={() => formatText('insertOrderedList')}><Icons.OrderedListIcon/></button>,
-    unorderedList: <button onClick={() => formatText('insertUnorderedList')}><Icons.UnOrderedListIcon/></button>,
-    alignLeft: <button onClick={() => formatText('justifyLeft')}><Icons.AlignLeftIcon/></button>,
-    alignCenter: <button onClick={() => formatText('justifyCenter')}><Icons.AlignCenterIcon/></button>,
-    alignRight: <button onClick={() => formatText('justifyRight')}><Icons.AlignRightIcon/></button>,
+    bold: <button onClick={() => handleFeatureClick('bold')} id="boldBtn"><Icons.BoldIcon /></button>,
+    italic: <button onClick={() => handleFeatureClick('italic')} id="italicBtn"><Icons.ItalicIcon /></button>,
+    underline: <button onClick={() => handleFeatureClick('underline')} id="underlineBtn"><Icons.UnderlineIcon /></button>,
+    orderedList: <button onClick={() => handleFeatureClick('insertOrderedList')}><Icons.OrderedListIcon /></button>,
+    unorderedList: <button onClick={() => handleFeatureClick('insertUnorderedList')}><Icons.UnOrderedListIcon /></button>,
+    alignLeft: <button onClick={() => handleFeatureClick('justifyLeft')}><Icons.AlignLeftIcon /></button>,
+    alignCenter: <button onClick={() => handleFeatureClick('justifyCenter')}><Icons.AlignCenterIcon /></button>,
+    alignRight: <button onClick={() => handleFeatureClick('justifyRight')}><Icons.AlignRightIcon /></button>,
     createLink: <button onClick={() => {
       const url = prompt('Enter the URL');
-      formatText('createLink', url);
-    }}><Icons.LinkIcon/></button>,
+      handleFeatureClick('createLink', url);
+    }}><Icons.LinkIcon /></button>,
     insertImage: <button onClick={() => {
       const url = prompt('Enter the image URL');
       formatText('insertImage', url);
-    }}><Icons.ImageIcon/></button>,
-    getHtml: <button onClick={getHtml}>Get HTML</button>,
+    }}><Icons.ImageIcon /></button>,
+    getHtml: <button onClick={() => console.log(editorRef.current.innerHTML)}>Get HTML</button>,
     getJson: <button onClick={getJson}>Get JSON</button>,
-    superscript: <button onClick={() => formatText('superscript')} id="supBtn"><Icons.SuperScriptIcon/></button>,
-    subscript: <button onClick={() => formatText('subscript')} id="subBtn"><Icons.SubScriptIcon/></button>,
+    superscript: <button onClick={() => handleFeatureClick('superscript')}><Icons.SuperScriptIcon /></button>,
+    subscript: <button onClick={() => handleFeatureClick('subscript')}><Icons.SubScriptIcon /></button>,
   };
 
+  // Renders the toolbar with mapped feature buttons
   return (
-    <div className="editor-container">
-      <div className="toolbar">
-        {features.map((feature, index) => (
-          <React.Fragment key={index}>
-            {featureButtons[feature]}
-          </React.Fragment>
-        ))}
-      </div>
+    <div className="toolbar">
+      {features.map((feature, index) => (
+        <React.Fragment key={index}>
+          {featureButtons[feature]}
+        </React.Fragment>
+      ))}
+    </div>
+  );
+};
+
+// Editor component for rich text editing with word and character count
+const Editor = () => {
+  const { editorRef, wordCount, charCount } = useEditor();
+
+  return (
+    <>
       <div id="editor" ref={editorRef} contentEditable="true">
         <div className="editor-block" contentEditable="true" data-type="normal" placeholder="Start typing..."></div>
       </div>
       <div className="editor-footer">
         <span>Words: {wordCount}</span> | <span>Chars: {charCount}</span>
       </div>
-    </div>
+    </>
   );
 };
+
+const RichTextEditor = ({ features }) => (
+  <EditorProvider>
+    <div className="editor-container">
+      <Toolbar features={features} />
+      <Editor />
+    </div>
+  </EditorProvider>
+);
 
 export default RichTextEditor;
