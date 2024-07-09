@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { EditorProvider, useEditor } from '../config/EditorContext.jsx';
 import "../styles/RichTextEditor.css";
 import * as Icons from "../assets/Icons.jsx";
+import { IconButton} from './ui/buttons.jsx';
+import ImageUploadSelectionDialog from './ui/dialog.jsx';
 
 // Toolbar component to display and manage editor features
 const Toolbar = ({ features }) => {
+  const [isDialogOpen, setDialogOpen] = useState(false);
+
+  const openDialog = () => setDialogOpen(true);
+  const closeDialog = () => setDialogOpen(false);
+
+
   const { formatText, editorRef } = useEditor(); // Accessing editor state and actions from editor context
 
   // Handles feature button clicks, triggering formatting actions in the editor
@@ -56,26 +64,32 @@ const Toolbar = ({ features }) => {
 
   // Defines buttons for each feature with corresponding click handlers
   const featureButtons = {
-    bold: <button onClick={() => handleFeatureClick('bold')} id="boldBtn"><Icons.BoldIcon /></button>,
-    italic: <button onClick={() => handleFeatureClick('italic')} id="italicBtn"><Icons.ItalicIcon /></button>,
-    underline: <button onClick={() => handleFeatureClick('underline')} id="underlineBtn"><Icons.UnderlineIcon /></button>,
-    orderedList: <button onClick={() => handleFeatureClick('insertOrderedList')}><Icons.OrderedListIcon /></button>,
-    unorderedList: <button onClick={() => handleFeatureClick('insertUnorderedList')}><Icons.UnOrderedListIcon /></button>,
-    alignLeft: <button onClick={() => handleFeatureClick('justifyLeft')}><Icons.AlignLeftIcon /></button>,
-    alignCenter: <button onClick={() => handleFeatureClick('justifyCenter')}><Icons.AlignCenterIcon /></button>,
-    alignRight: <button onClick={() => handleFeatureClick('justifyRight')}><Icons.AlignRightIcon /></button>,
-    createLink: <button onClick={() => {
+    bold: <IconButton onClick={() => handleFeatureClick('bold')} id="boldBtn"><Icons.BoldIcon /></IconButton>,
+    italic: <IconButton onClick={() => handleFeatureClick('italic')} id="italicBtn"><Icons.ItalicIcon /></IconButton>,
+    underline: <IconButton onClick={() => handleFeatureClick('underline')} id="underlineBtn"><Icons.UnderlineIcon /></IconButton>,
+    orderedList: <IconButton onClick={() => handleFeatureClick('insertOrderedList')}><Icons.OrderedListIcon /></IconButton>,
+    unorderedList: <IconButton onClick={() => handleFeatureClick('insertUnorderedList')}><Icons.UnOrderedListIcon /></IconButton>,
+    alignLeft: <IconButton onClick={() => handleFeatureClick('justifyLeft')}><Icons.AlignLeftIcon /></IconButton>,
+    alignCenter: <IconButton onClick={() => handleFeatureClick('justifyCenter')}><Icons.AlignCenterIcon /></IconButton>,
+    alignRight: <IconButton onClick={() => handleFeatureClick('justifyRight')}><Icons.AlignRightIcon /></IconButton>,
+    createLink: <IconButton onClick={() => {
       const url = prompt('Enter the URL');
       handleFeatureClick('createLink', url);
-    }}><Icons.LinkIcon /></button>,
-    insertImage: <button onClick={() => {
-      const url = prompt('Enter the image URL');
+    }}><Icons.LinkIcon /></IconButton>,
+    insertImage: <>
+      <IconButton onClick={openDialog}>
+        <Icons.ImageIcon />
+      </IconButton>
+      <ImageUploadSelectionDialog isOpen={isDialogOpen} onClose={closeDialog} title="Select Image">
+        const url = prompt('Enter the image URL');
       formatText('insertImage', url);
-    }}><Icons.ImageIcon /></button>,
-    getHtml: <button onClick={() => console.log(editorRef.current.innerHTML)}>Get HTML</button>,
-    getJson: <button onClick={getJson}>Get JSON</button>,
-    superscript: <button onClick={() => handleFeatureClick('superscript')}><Icons.SuperScriptIcon /></button>,
-    subscript: <button onClick={() => handleFeatureClick('subscript')}><Icons.SubScriptIcon /></button>,
+        <p>This is the dialog content. You can put any content here.</p>
+      </ImageUploadSelectionDialog>
+    </>,
+    getHtml: <IconButton onClick={() => console.log(editorRef.current.innerHTML)}>Get HTML</IconButton>,
+    getJson: <IconButton onClick={getJson}>Get JSON</IconButton>,
+    superscript: <IconButton onClick={() => handleFeatureClick('superscript')}><Icons.SuperScriptIcon /></IconButton>,
+    subscript: <IconButton onClick={() => handleFeatureClick('subscript')}><Icons.SubScriptIcon /></IconButton>,
   };
 
   // Renders the toolbar with mapped feature buttons
