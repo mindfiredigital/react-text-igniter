@@ -30,9 +30,13 @@ export const useEditorState = (editorRef, updateDataAttributes) => {
     // Function to handle click events on editor blocks
     const handleClick = (event) => {
       const blocks = editor.querySelectorAll('.editor-block');
-      blocks.forEach((block) => block.classList.remove('active')); // Remove 'active' class from all blocks
-      if (event.target.classList.contains('editor-block')) {
-        event.target.classList.add('active'); // Add 'active' class to clicked block
+      blocks.forEach((block) => block.classList.remove('active'));
+      let target = event.target;
+      while (target !== editor && !target.classList.contains('editor-block')) {
+        target = target.parentNode;
+      }
+      if (target.classList.contains('editor-block')) {
+        target.classList.add('active');
       }
     };
 

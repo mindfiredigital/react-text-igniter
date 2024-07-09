@@ -25,51 +25,39 @@ export const useEditorFormatting = (editorRef) => {
   const formatText = useCallback((command, value = null) => {
     const activeBlock = document.querySelector('.editor-block.active');
     if (activeBlock) {
-      activeBlock.focus(); // Ensure the active block has focus
-      document.execCommand(command, false, value); // Execute the specified text formatting command
-
-      // Adjust the data-type attribute based on the executed command
+      activeBlock.focus();
+      document.execCommand(command, false, value);
+  
       const currentDataType = activeBlock.getAttribute('data-type') || 'normal';
       const currentStyles = currentDataType.split('-');
       let newStyles = new Set(currentStyles);
-
-      // Toggle or update styles based on the command
-      if (command === featuresData.features.bold.tag) {
-        if (newStyles.has(featuresData.features.bold.tag)) {
-          newStyles.delete(featuresData.features.bold.tag);
-        } else {
-          newStyles.add(featuresData.features.bold.tag);
+  
+      Object.values(featuresData.features).forEach(feature => {
+        if (command === feature.tag) {
+          if (newStyles.has(feature.tag)) {
+            newStyles.delete(feature.tag);
+          } else {
+            newStyles.add(feature.tag);
+          }
         }
-      } else if (command === featuresData.features.italic.tag) {
-        if (newStyles.has(featuresData.features.italic.tag)) {
-          newStyles.delete(featuresData.features.italic.tag);
-        } else {
-          newStyles.add(featuresData.features.italic.tag);
-        }
-      } else if (command === featuresData.features.underline.tag) {
-        if (newStyles.has(featuresData.features.underline.tag)) {
-          newStyles.delete(featuresData.features.underline.tag);
-        } else {
-          newStyles.add(featuresData.features.underline.tag);
-        }
-      } else if (command === featuresData.features.superscript.tag) {
-        if (newStyles.has(featuresData.features.superscript.tag)) {
-          newStyles.delete(featuresData.features.superscript.tag);
-        } else {
-          newStyles.add(featuresData.features.superscript.tag);
-        }
-      } else if (command === featuresData.features.subscript.tag) {
-        if (newStyles.has(featuresData.features.subscript.tag)) {
-          newStyles.delete(featuresData.features.subscript.tag);
-        } else {
-          newStyles.add(featuresData.features.subscript.tag);
-        }
-      }
-
-      // Update the data-type attribute with the modified styles
+      });
+  
       activeBlock.setAttribute('data-type', Array.from(newStyles).join('-') || 'normal');
+      updateDataAttributes(activeBlock);
+    }
+  }, [updateDataAttributes]);
+  const applyHeading = useCallback((heading) => {
+    const activeBlock = document.querySelector('.editor-block.active');
+    if (activeBlock) {
+      const newElement = document.createElement(heading);
+      newElement.innerHTML = activeBlock.innerHTML;
+      newElement.className = activeBlock.className;
+      newElement.setAttribute('contentEditable', 'true');
+      newElement.setAttribute('data-type', activeBlock.getAttribute('data-type') || 'normal');
+      activeBlock.parentNode.replaceChild(newElement, activeBlock);
+      newElement.focus();
+      newElement.classList.add('active');
     }
   }, []);
-
-  return { formatText, updateDataAttributes };
+  return { formatText, updateDataAttributes,applyHeading };
 };

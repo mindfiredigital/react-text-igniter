@@ -55,6 +55,14 @@
     "subscript": {
       "tag": "sub",
       "displayName": "Subscript"
+    },
+    "heading": {
+      "tag": "heading",
+      "displayName": "Heading"
+    },
+    "htmlMode": {
+      "tag": "htmlMode",
+      "displayName": "HTML Mode"
     }
   }
 }
