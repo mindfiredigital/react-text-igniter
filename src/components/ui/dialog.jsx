@@ -6,7 +6,7 @@ import * as Icons from "../../assets/icon.jsx";
 /**
  * ImageUploadSelectionDialog Component
  * 
- * A dialog component for selecting an image either by URL or file upload.
+ * A dialog component for selecting an image either by URL or file upload from computer.
  * 
  * @param {Object} props - Component props
  * @param {boolean} props.isOpen - Whether the dialog is open
