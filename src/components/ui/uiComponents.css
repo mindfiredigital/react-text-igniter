@@ -37,6 +37,7 @@
  DIALOG
  ========================================
  */
+/* background of dialog */
 .dialog-overlay {
   position: fixed;
   top: 0;
@@ -63,6 +64,10 @@
 
 /* Dialog header styles */
 .dialog-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 10px;
@@ -95,7 +100,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   background-color: #f0f0f0;
 }
 
