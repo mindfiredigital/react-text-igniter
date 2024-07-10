@@ -4,6 +4,7 @@ import "../styles/RichTextEditor.css";
 import * as Icons from "../assets/Icons.jsx";
 import { IconButton} from './ui/buttons.jsx';
 import {ImageUploadSelectionDialog, FileUrlDialog} from './ui/dialog.jsx';
+import featuresData from '../assets/features.json';
 
 // Toolbar component to display and manage editor features
 const Toolbar = ({ features }) => {

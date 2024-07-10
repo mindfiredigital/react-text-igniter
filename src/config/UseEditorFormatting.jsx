@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import featuresData from '../assets/features.json';
 
 // Custom hook for handling editor text formatting and data attributes
 export const useEditorFormatting = (editorRef) => {
@@ -33,35 +34,35 @@ export const useEditorFormatting = (editorRef) => {
       let newStyles = new Set(currentStyles);
 
       // Toggle or update styles based on the command
-      if (command === 'bold') {
-        if (newStyles.has('bold')) {
-          newStyles.delete('bold');
+      if (command === featuresData.features.bold.tag) {
+        if (newStyles.has(featuresData.features.bold.tag)) {
+          newStyles.delete(featuresData.features.bold.tag);
         } else {
-          newStyles.add('bold');
+          newStyles.add(featuresData.features.bold.tag);
         }
-      } else if (command === 'italic') {
-        if (newStyles.has('italic')) {
-          newStyles.delete('italic');
+      } else if (command === featuresData.features.italic.tag) {
+        if (newStyles.has(featuresData.features.italic.tag)) {
+          newStyles.delete(featuresData.features.italic.tag);
         } else {
-          newStyles.add('italic');
+          newStyles.add(featuresData.features.italic.tag);
         }
-      } else if (command === 'underline') {
-        if (newStyles.has('underline')) {
-          newStyles.delete('underline');
+      } else if (command === featuresData.features.underline.tag) {
+        if (newStyles.has(featuresData.features.underline.tag)) {
+          newStyles.delete(featuresData.features.underline.tag);
         } else {
-          newStyles.add('underline');
+          newStyles.add(featuresData.features.underline.tag);
         }
-      } else if (command === 'superscript') {
-        if (newStyles.has('super')) {
-          newStyles.delete('super');
+      } else if (command === featuresData.features.superscript.tag) {
+        if (newStyles.has(featuresData.features.superscript.tag)) {
+          newStyles.delete(featuresData.features.superscript.tag);
         } else {
-          newStyles.add('super');
+          newStyles.add(featuresData.features.superscript.tag);
         }
-      } else if (command === 'subscript') {
-        if (newStyles.has('sub')) {
-          newStyles.delete('sub');
+      } else if (command === featuresData.features.subscript.tag) {
+        if (newStyles.has(featuresData.features.subscript.tag)) {
+          newStyles.delete(featuresData.features.subscript.tag);
         } else {
-          newStyles.add('sub');
+          newStyles.add(featuresData.features.subscript.tag);
         }
       }
 
