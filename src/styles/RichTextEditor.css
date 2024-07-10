@@ -13,7 +13,7 @@
     flex-wrap: wrap;
   }
   
-  .toolbar button, .toolbar select {
+  .toolbar .toolbarBtn, .toolbar select {
     margin: 5px;
     cursor: pointer;
     border: none;

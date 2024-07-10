@@ -2,11 +2,34 @@ import React,{useState,useEffect} from 'react';
 import { EditorProvider, useEditor } from '../config/EditorContext.jsx';
 import "../styles/RichTextEditor.css";
 import * as Icons from "../assets/Icons.jsx";
+import { IconButton} from './ui/buttons.jsx';
+import {ImageUploadSelectionDialog, FileUrlDialog} from './ui/dialog.jsx';
 import featuresData from '../assets/features.json';
 
 // Toolbar component to display and manage editor features
 const Toolbar = ({ features }) => {
   const { formatText, editorRef, currentHeading, changeHeading, isHtmlMode, toggleHtmlMode, applyHeading } = useEditor(); // Accessing editor state and actions from editor context
+  const [isImageDialogOpen, setImageDialogOpen] = useState(false);
+  const [isUrlDialogOpen, setUrlDialogOpen] = useState(false);
+
+  const openImageDialog = () => setImageDialogOpen(true);
+  const closeImageDialog = () => setImageDialogOpen(false);
+
+  const openUrlDialog = () => setUrlDialogOpen(true);
+  const closeUrlDialog = () => setUrlDialogOpen(false);
+
+
+  const handleImageSubmit = ({ file, imageUrl }) => {
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        handleFeatureClick('insertImage', e.target.result);
+      };
+      reader.readAsDataURL(file);
+    } else if (imageUrl) {
+      handleFeatureClick('insertImage', imageUrl);
+    }
+  };
 
   // Handles feature button clicks, triggering formatting actions in the editor
   const handleFeatureClick = (command, value = null) => {
@@ -64,14 +87,30 @@ const Toolbar = ({ features }) => {
 
   // Defines buttons for each feature with corresponding click handlers
   const featureButtons = {
-    bold: <button onClick={() => handleFeatureClick(featuresData.features.bold.tag)} id="boldBtn"><Icons.BoldIcon /></button>,
-    italic: <button onClick={() => handleFeatureClick(featuresData.features.italic.tag)} id="italicBtn"><Icons.ItalicIcon /></button>,
-    underline: <button onClick={() => handleFeatureClick(featuresData.features.underline.tag)} id="underlineBtn"><Icons.UnderlineIcon /></button>,
-    orderedList: <button onClick={() => handleFeatureClick(featuresData.features.insertOrderedList.tag)}><Icons.OrderedListIcon /></button>,
-    unorderedList: <button onClick={() => handleFeatureClick(featuresData.features.insertUnorderedList.tag)}><Icons.UnOrderedListIcon /></button>,
-    alignLeft: <button onClick={() => handleFeatureClick(featuresData.features.justifyLeft.tag)}><Icons.AlignLeftIcon /></button>,
-    alignCenter: <button onClick={() => handleFeatureClick(featuresData.features.justifyCenter.tag)}><Icons.AlignCenterIcon /></button>,
-    alignRight: <button onClick={() => handleFeatureClick(featuresData.features.justifyRight.tag)}><Icons.AlignRightIcon /></button>,
+    bold: <IconButton onClick={() => handleFeatureClick('bold')} id="boldBtn"><Icons.BoldIcon /></IconButton>,
+    italic: <IconButton onClick={() => handleFeatureClick('italic')} id="italicBtn"><Icons.ItalicIcon /></IconButton>,
+    underline: <IconButton onClick={() => handleFeatureClick('underline')} id="underlineBtn"><Icons.UnderlineIcon /></IconButton>,
+    orderedList: <IconButton onClick={() => handleFeatureClick('insertOrderedList')}><Icons.OrderedListIcon /></IconButton>,
+    unorderedList: <IconButton onClick={() => handleFeatureClick('insertUnorderedList')}><Icons.UnOrderedListIcon /></IconButton>,
+    alignLeft: <IconButton onClick={() => handleFeatureClick('justifyLeft')}><Icons.AlignLeftIcon /></IconButton>,
+    alignCenter: <IconButton onClick={() => handleFeatureClick('justifyCenter')}><Icons.AlignCenterIcon /></IconButton>,
+    alignRight: <IconButton onClick={() => handleFeatureClick('justifyRight')}><Icons.AlignRightIcon /></IconButton>,
+    createLink: <>
+      <IconButton onClick={openUrlDialog}>
+        <Icons.LinkIcon />
+      </IconButton>
+      <FileUrlDialog isOpen={isUrlDialogOpen} onClose={closeUrlDialog} title="Provide url" onSubmit={(url) => handleFeatureClick('createLink', url)}/>
+    </>,
+    insertImage: <>
+      <IconButton onClick={openImageDialog}>
+        <Icons.ImageIcon />
+      </IconButton>
+      <ImageUploadSelectionDialog isOpen={isImageDialogOpen} onClose={closeImageDialog} title="Select Image" onSubmit={handleImageSubmit}/>
+    </>,
+    getHtml: <IconButton onClick={() => console.log(editorRef.current.innerHTML)}>Get HTML</IconButton>,
+    getJson: <IconButton onClick={getJson}>Get JSON</IconButton>,
+    superscript: <IconButton onClick={() => handleFeatureClick('superscript')}><Icons.SuperScriptIcon /></IconButton>,
+    subscript: <IconButton onClick={() => handleFeatureClick('subscript')}><Icons.SubScriptIcon /></IconButton>,
     heading: (
       <select value={currentHeading} onChange={handleHeadingChange}>
         <option value="p">Paragraph</option>
@@ -83,22 +122,10 @@ const Toolbar = ({ features }) => {
         <option value="h6">Heading 6</option>
       </select>
     ),
-    createLink: <button onClick={() => {
-      const url = prompt('Enter the URL');
-      handleFeatureClick('createLink', url);
-    }}><Icons.LinkIcon /></button>,
-    insertImage: <button onClick={() => {
-      const url = prompt('Enter the image URL');
-      formatText('insertImage', url);
-    }}><Icons.ImageIcon /></button>,
-    getHtml: <button onClick={() => console.log(editorRef.current.innerHTML)}>Get HTML</button>,
-    getJson: <button onClick={getJson}>Get JSON</button>,
-    superscript: <button onClick={() => handleFeatureClick(featuresData.features.superscript.tag)}><Icons.SuperScriptIcon /></button>,
-    subscript: <button onClick={() => handleFeatureClick(featuresData.features.subscript.tag)}><Icons.SubScriptIcon /></button>,
     htmlMode: (
-      <button onClick={toggleHtmlMode}>
+      <IconButton onClick={toggleHtmlMode}>
         {isHtmlMode ? 'Normal Mode' : 'HTML Mode'}
-      </button>
+      </IconButton>
     ),
   };
 
