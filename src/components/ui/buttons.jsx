@@ -13,7 +13,7 @@ const AppButton = ({ type = "primary", children, onClick, disabled = false }) =>
 
 const IconButton = ({ children, onClick, id }) => {
   return (
-    <button onClick={onClick} id={id}>
+    <button onClick={onClick} id={id}className="toolbarBtn">
       {children}
     </button>
   );
