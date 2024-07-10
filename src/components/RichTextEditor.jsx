@@ -3,15 +3,31 @@ import { EditorProvider, useEditor } from '../config/EditorContext.jsx';
 import "../styles/RichTextEditor.css";
 import * as Icons from "../assets/Icons.jsx";
 import { IconButton} from './ui/buttons.jsx';
-import ImageUploadSelectionDialog from './ui/dialog.jsx';
+import {ImageUploadSelectionDialog, FileUrlDialog} from './ui/dialog.jsx';
 
 // Toolbar component to display and manage editor features
 const Toolbar = ({ features }) => {
-  const [isDialogOpen, setDialogOpen] = useState(false);
+  const [isImageDialogOpen, setImageDialogOpen] = useState(false);
+  const [isUrlDialogOpen, setUrlDialogOpen] = useState(false);
 
-  const openDialog = () => setDialogOpen(true);
-  const closeDialog = () => setDialogOpen(false);
+  const openImageDialog = () => setImageDialogOpen(true);
+  const closeImageDialog = () => setImageDialogOpen(false);
 
+  const openUrlDialog = () => setUrlDialogOpen(true);
+  const closeUrlDialog = () => setUrlDialogOpen(false);
+
+
+  const handleImageSubmit = ({ file, imageUrl }) => {
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        handleFeatureClick('insertImage', e.target.result);
+      };
+      reader.readAsDataURL(file);
+    } else if (imageUrl) {
+      handleFeatureClick('insertImage', imageUrl);
+    }
+  };
 
   const { formatText, editorRef } = useEditor(); // Accessing editor state and actions from editor context
 
@@ -72,19 +88,17 @@ const Toolbar = ({ features }) => {
     alignLeft: <IconButton onClick={() => handleFeatureClick('justifyLeft')}><Icons.AlignLeftIcon /></IconButton>,
     alignCenter: <IconButton onClick={() => handleFeatureClick('justifyCenter')}><Icons.AlignCenterIcon /></IconButton>,
     alignRight: <IconButton onClick={() => handleFeatureClick('justifyRight')}><Icons.AlignRightIcon /></IconButton>,
-    createLink: <IconButton onClick={() => {
-      const url = prompt('Enter the URL');
-      handleFeatureClick('createLink', url);
-    }}><Icons.LinkIcon /></IconButton>,
+    createLink: <>
+      <IconButton onClick={openUrlDialog}>
+        <Icons.LinkIcon />
+      </IconButton>
+      <FileUrlDialog isOpen={isUrlDialogOpen} onClose={closeUrlDialog} title="Provide url" onSubmit={(url) => handleFeatureClick('createLink', url)}/>
+    </>,
     insertImage: <>
-      <IconButton onClick={openDialog}>
+      <IconButton onClick={openImageDialog}>
         <Icons.ImageIcon />
       </IconButton>
-      <ImageUploadSelectionDialog isOpen={isDialogOpen} onClose={closeDialog} title="Select Image">
-        const url = prompt('Enter the image URL');
-      formatText('insertImage', url);
-        <p>This is the dialog content. You can put any content here.</p>
-      </ImageUploadSelectionDialog>
+      <ImageUploadSelectionDialog isOpen={isImageDialogOpen} onClose={closeImageDialog} title="Select Image" onSubmit={handleImageSubmit}/>
     </>,
     getHtml: <IconButton onClick={() => console.log(editorRef.current.innerHTML)}>Get HTML</IconButton>,
     getJson: <IconButton onClick={getJson}>Get JSON</IconButton>,
