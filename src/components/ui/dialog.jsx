@@ -8,6 +8,17 @@ const ImageUploadSelectionDialog = ({ isOpen, onClose, title, children }) => {
   const [imageUrl, setImageUrl] = useState("");
   const [error, setError] = useState("");
 
+  const closeDialog = () => {
+    resetToDefault();
+    onClose();
+  };
+
+  const resetToDefault = () => {
+    setImageUrl("");
+    setFile(null);
+    setError("");
+  };
+
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
@@ -19,16 +30,20 @@ const ImageUploadSelectionDialog = ({ isOpen, onClose, title, children }) => {
   const handleImageUrl = (event) => {
     setImageUrl(event.target.value);
     setFile(null);
-  }
+  };
+
+  const removeFile = () => {
+    setFile(null);
+  };
 
   const handleSubmit = () => {
-    if(file || imageUrl){
-      console.log({file, imageUrl});
+    if (file || imageUrl) {
+      console.log({ file, imageUrl });
       onClose();
     } else {
-      setError("Please select a file or image url")
+      setError("Please select a file or image url");
     }
-  }
+  };
 
   if (!isOpen) return null;
 
@@ -52,21 +67,24 @@ const ImageUploadSelectionDialog = ({ isOpen, onClose, title, children }) => {
               onChange={handleImageUrl}
             />
             <div className="or-divider">OR</div>
-            {error && <p className="error">{error}</p>}
             <label htmlFor="file-input" className="custom-file-input">
-              Choose an Image
-            </label>
+                {/* {!file && (
+              
+            )}Choose an Image */}
+            {!file ? "Choose an image" : "Reselect Image"}
+              </label>
             <input type="file" id="file-input" accept="image/*" onChange={handleFileChange} />
             {file && (
               <div className="file-info">
-                <p>Selected file: {file.name}</p>
+                <p>Selected file: {file.name} </p>
                 <p>File size: {(file.size / 1024).toFixed(2)} KB</p>
               </div>
             )}
+            {error && <p className="error">{error}</p>}
           </div>
         </div>
         <div className="dialog-footer">
-          <AppButton type="cancel" onClick={onClose}>
+          <AppButton type="cancel" onClick={closeDialog}>
             Cancel
           </AppButton>
           <AppButton onClick={handleSubmit}>Submit</AppButton>
