@@ -40,7 +40,9 @@ A powerful and intuitive HTML text editor built with React.js.
    npm i
 4. Start the development server:
    ```bash
-  npm start
+   npm start
+
+## Naming Conventions
 
 We follow these naming conventions throughout the project:
 
@@ -52,13 +54,7 @@ We follow these naming conventions throughout the project:
 - **Style Files:** kebab-case (e.g., `rich-text-editor.css`)
 
 ## Contributing
-
-We welcome contributions to improve the HTML Text Editor! Please follow these steps:
-
-1. Fork the repository
-2. Create a new branch: `git checkout -b features/feature-name`
-3. Make your changes and commit them: `git commit -m 'feat:Add some feature'`
-4. 
+ 
 We welcome contributions to improve the HTML Text Editor! Please follow these steps:
 1. Fork the repository
 2. Create a new branch: git checkout -b features\feature-name
