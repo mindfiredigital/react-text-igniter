@@ -20,6 +20,8 @@ A powerful and intuitive HTML text editor built with React.js.
   - Bold
   - Italic
   - Underline
+  - Subscript
+  - Superscript
 - Paragraph alignment (left, center, right)
 - List creation (ordered and unordered)
 - Image and link insertion
