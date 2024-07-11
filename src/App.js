@@ -1,14 +1,10 @@
-import React from 'react';
-import RichTextEditor from "./components/RichTextEditor.jsx";
+import React from "react";
+import RichTextEditor from "./components/richTextEditor";
+import featuresData from "./assets/feature.json";
 const App = () => {
-  const features = [
-    'bold', 'italic', 'underline', 'orderedList', 'unorderedList',
-    'alignLeft', 'alignCenter', 'alignRight', 'createLink', 'insertImage', 'getHtml', 'getJson'
-  ];
+  const features = Object.keys(featuresData.features);
 
-  return (
-      <RichTextEditor features={features} />
-  );
+  return <RichTextEditor features={features} />;
 };
 
 export default App;

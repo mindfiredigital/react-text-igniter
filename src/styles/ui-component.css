@@ -1,0 +1,187 @@
+/* CSS variables for consistent theming */
+:root {
+  /* Color variables */
+  --primary-bg: white;
+  --primary-color: gray;
+  --hover-bg: black;
+  --hover-color: black;
+  --border-color: black;
+  --cancel-border-hover: red;
+  --overlay-bg: #00000080;
+  --container-bg: #f0f0f0;
+
+  /* Box shadow variable */
+  --box-shadow: 2px 6px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* 
+ ======================================== 
+ BUTTONS
+ ========================================
+ */
+/* General button styles */
+.button {
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;
+  margin: 2px;
+  border: 2px solid var(--border-color);
+}
+
+/* Primary button styles */
+.button-primary {
+  background: var(--primary-bg);
+  color: var(--primary-color);
+}
+
+.button-primary:hover {
+  font-size: 16px;
+  color: var(--hover-color);
+  box-shadow: var(--box-shadow);
+}
+
+/* Cancel button styles */
+.button-cancel {
+  background: var(--primary-bg);
+  color: var(--primary-color);
+}
+
+.button-cancel:hover {
+  font-size: 16px;
+  border: 2px solid var(--cancel-border-hover);
+  color: var(--hover-color);
+  box-shadow: var(--box-shadow);
+}
+
+/* 
+ ======================================== 
+ DIALOG
+ ========================================
+ */
+/* Dialog overlay */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--overlay-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Dialog container */
+.dialog-container {
+  background: var(--primary-bg);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+  width: 400px;
+  max-width: 100%;
+  z-index: 1001;
+}
+
+/* Dialog header */
+.dialog-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Dialog body */
+.dialog-body {
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+/* Dialog footer */
+.dialog-footer {
+  text-align: right;
+}
+
+/* Close button */
+.close-button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+/* General container styles */
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 16px;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--container-bg);
+}
+
+/* Image URL input */
+.container .image-url-input {
+  width: 90%;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-family: inherit;
+  border: 1px solid #ccc;
+}
+
+/* OR divider */
+.container .or-divider {
+  margin: 10px;
+}
+
+/* Hide default file input */
+#file-input {
+  display: none;
+}
+
+/* Focus styles for form inputs */
+.form-group input:focus {
+  outline: none;
+  border-color: #1778f2;
+}
+
+/* Custom file input label */
+.custom-file-input {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  background: var(--primary-bg);
+  color: var(--primary-color);
+  border: 2px solid var(--border-color);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.custom-file-input:hover {
+  font-size: 16px;
+  color: var(--hover-color);
+  box-shadow: var(--box-shadow);
+}
+
+/* File info display */
+.file-info {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* File remove button */
+.file-remove {
+  margin-left: 10px;
+  cursor: pointer;
+  color: red;
+}
