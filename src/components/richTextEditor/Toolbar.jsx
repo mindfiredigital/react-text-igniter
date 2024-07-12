@@ -21,8 +21,7 @@ const Toolbar = ({ features }) => {
   const [isUrlDialogOpen, setUrlDialogOpen] = useState(false);
 
   // Access editor-related functions from the context
-  const { formatText, editorRef } = useEditor();
-
+  const { formatText, editorRef, currentHeading, changeHeading, isHtmlMode, toggleHtmlMode, applyHeading } = useEditor();
   /**
    * Handles image submission from the dialog
    * @param {Object} param0 - Destructured object containing file and imageUrl
@@ -38,6 +37,14 @@ const Toolbar = ({ features }) => {
       formatText("insertImage", imageUrl);
     }
   };
+
+    // Handles heading button clicks, triggering heading changes in the editor
+    const handleHeadingChange = (e) => {
+      const heading = e.target.value;
+      changeHeading(heading);
+      applyHeading(heading);
+    };
+  
 
   // Object containing all available toolbar buttons
   const featureButtons = {
@@ -66,17 +73,17 @@ const Toolbar = ({ features }) => {
         <Icons.UnOrderedListIcon />
       </IconButton>
     ),
-    alignLeft: (
+    justifyLeft: (
       <IconButton onClick={() => formatText("justifyLeft")}>
         <Icons.AlignLeftIcon />
       </IconButton>
     ),
-    alignCenter: (
+    justifyCenter: (
       <IconButton onClick={() => formatText("justifyCenter")}>
         <Icons.AlignCenterIcon />
       </IconButton>
     ),
-    alignRight: (
+    justifyRight: (
       <IconButton onClick={() => formatText("justifyRight")}>
         <Icons.AlignRightIcon />
       </IconButton>
@@ -125,15 +132,32 @@ const Toolbar = ({ features }) => {
         <Icons.SubScriptIcon />
       </IconButton>
     ),
+    heading: (
+      <select value={currentHeading} onChange={handleHeadingChange}>
+        <option value="p">Paragraph</option>
+        <option value="h1">Heading 1</option>
+        <option value="h2">Heading 2</option>
+        <option value="h3">Heading 3</option>
+        <option value="h4">Heading 4</option>
+        <option value="h5">Heading 5</option>
+        <option value="h6">Heading 6</option>
+      </select>
+    ),
+    htmlMode: (
+      <IconButton onClick={toggleHtmlMode}>
+        <Icons.CodeIcon/>
+      </IconButton>
+    ),
   };
 
   return (
     <div className="toolbar">
-      {/* Render buttons based on the features prop */}
-      {features.map((feature, index) => (
-        <React.Fragment key={index}>{featureButtons[feature]}</React.Fragment>
-      ))}
-    </div>
+    {!isHtmlMode && features.map((feature, index) => (
+      <React.Fragment key={index}>
+        {featureButtons[feature]}
+      </React.Fragment>
+    ))}
+  </div>
   );
 };
 
