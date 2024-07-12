@@ -1,11 +1,28 @@
 import React, { useState } from "react";
-import "./uiComponents.css";
-import { AppButton, IconButton } from "./buttons";
-import * as Icons from "../../assets/Icons";
-// ================================================================
-// DIALOG FOR GETTING IMAGE URL OR IMAGE FILE
-// ================================================================
-const ImageUploadSelectionDialog = ({ isOpen, onClose, onSubmit, title, children }) => {
+import "../../styles/ui-component.css";
+import { AppButton, IconButton } from "./Button.jsx";
+import * as Icons from "../../assets/icon.jsx";
+
+/**
+ * ImageUploadSelectionDialog Component
+ * 
+ * A dialog component for selecting an image either by URL or file upload from computer.
+ * 
+ * @param {Object} props - Component props
+ * @param {boolean} props.isOpen - Whether the dialog is open
+ * @param {Function} props.onClose - Function to close the dialog
+ * @param {Function} props.onSubmit - Function to handle image submission
+ * @param {string} props.title - Dialog title
+ * @param {React.ReactNode} props.children - Additional dialog content
+ * @returns {JSX.Element|null} The rendered ImageUploadSelectionDialog component or null if not open
+ */
+const ImageUploadSelectionDialog = ({
+  isOpen,
+  onClose,
+  onSubmit,
+  title,
+  children,
+}) => {
   const [file, setFile] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [error, setError] = useState("");
@@ -36,7 +53,7 @@ const ImageUploadSelectionDialog = ({ isOpen, onClose, onSubmit, title, children
 
   const handleSubmit = () => {
     if (file || imageUrl) {
-      onSubmit({file , imageUrl})
+      onSubmit({ file, imageUrl });
       onClose();
     } else {
       setError("Please select a file or image url");
@@ -46,7 +63,6 @@ const ImageUploadSelectionDialog = ({ isOpen, onClose, onSubmit, title, children
   if (!isOpen) return null;
 
   return (
-    // background of dialog
     <div className="dialog-overlay">
       <div className="dialog-container">
         <div className="dialog-header">
@@ -68,7 +84,12 @@ const ImageUploadSelectionDialog = ({ isOpen, onClose, onSubmit, title, children
             <label htmlFor="file-input" className="custom-file-input">
               {!file ? "Choose an image" : "Reselect Image"}
             </label>
-            <input type="file" id="file-input" accept="image/*" onChange={handleFileChange} />
+            <input
+              type="file"
+              id="file-input"
+              accept="image/*"
+              onChange={handleFileChange}
+            />
             {file && (
               <div className="file-info">
                 <p>Selected file: {file.name} </p>
@@ -89,10 +110,19 @@ const ImageUploadSelectionDialog = ({ isOpen, onClose, onSubmit, title, children
   );
 };
 
-
-// ================================================================
-// DIALOG FOR GETTING FILE URL
-// ================================================================
+/**
+ * FileUrlDialog Component
+ * 
+ * A dialog component for entering a file URL.
+ * 
+ * @param {Object} props - Component props
+ * @param {boolean} props.isOpen - Whether the dialog is open
+ * @param {Function} props.onClose - Function to close the dialog
+ * @param {Function} props.onSubmit - Function to handle URL submission
+ * @param {string} props.title - Dialog title
+ * @param {React.ReactNode} props.children - Additional dialog content
+ * @returns {JSX.Element|null} The rendered FileUrlDialog component or null if not open
+ */
 const FileUrlDialog = ({ isOpen, onClose, onSubmit, title, children }) => {
   const [url, setUrl] = useState("");
   const [error, setError] = useState("");
@@ -123,7 +153,6 @@ const FileUrlDialog = ({ isOpen, onClose, onSubmit, title, children }) => {
   if (!isOpen) return null;
 
   return (
-    // background of dialog
     <div className="dialog-overlay">
       <div className="dialog-container">
         <div className="dialog-header">

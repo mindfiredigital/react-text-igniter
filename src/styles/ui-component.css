@@ -1,3 +1,4 @@
+/* CSS variables for consistent theming */
 :root {
   /* Color variables */
   --primary-bg: white;
@@ -42,6 +43,7 @@
   box-shadow: var(--box-shadow);
 }
 
+/* Cancel button styles */
 .button-cancel {
   background: var(--primary-bg);
   color: var(--primary-color);
@@ -53,12 +55,13 @@
   color: var(--hover-color);
   box-shadow: var(--box-shadow);
 }
+
 /* 
  ======================================== 
  DIALOG
  ========================================
  */
-/* background of dialog */
+/* Dialog overlay */
 .dialog-overlay {
   position: fixed;
   top: 0;
@@ -72,7 +75,7 @@
   z-index: 1000;
 }
 
-/* Dialog container styles */
+/* Dialog container */
 .dialog-container {
   background: var(--primary-bg);
   padding: 20px;
@@ -83,7 +86,7 @@
   z-index: 1001;
 }
 
-/* Dialog header styles */
+/* Dialog header */
 .dialog-header {
   display: flex;
   flex-direction: row;
@@ -94,18 +97,18 @@
   margin-bottom: 10px;
 }
 
-/* Dialog body styles */
+/* Dialog body */
 .dialog-body {
   margin-bottom: 20px;
   font-size: 16px;
 }
 
-/* Dialog footer styles */
+/* Dialog footer */
 .dialog-footer {
   text-align: right;
 }
 
-/* Close button styles */
+/* Close button */
 .close-button {
   background: none;
   border: none;
@@ -116,7 +119,7 @@
   right: 10px;
 }
 
-/* General styles for the container */
+/* General container styles */
 .container {
   display: flex;
   flex-direction: column;
@@ -126,6 +129,7 @@
   background-color: var(--container-bg);
 }
 
+/* Image URL input */
 .container .image-url-input {
   width: 90%;
   padding: 12px 16px;
@@ -134,21 +138,23 @@
   border: 1px solid #ccc;
 }
 
+/* OR divider */
 .container .or-divider {
-    margin: 10px;
+  margin: 10px;
 }
-/* Hide the default file input */
+
+/* Hide default file input */
 #file-input {
   display: none;
 }
 
+/* Focus styles for form inputs */
 .form-group input:focus {
   outline: none;
   border-color: #1778f2;
 }
 
-
-/* Style for the custom file input label */
+/* Custom file input label */
 .custom-file-input {
   display: inline-block;
   padding: 10px 20px;
@@ -167,11 +173,13 @@
   box-shadow: var(--box-shadow);
 }
 
+/* File info display */
 .file-info {
   margin-top: 10px;
   font-size: 14px;
 }
 
+/* File remove button */
 .file-remove {
   margin-left: 10px;
   cursor: pointer;

@@ -12,12 +12,12 @@
       "tag": "underline",
       "displayName": "Underline"
     },
-    "insertOrderedList": {
-      "tag": "insertOrderedList",
+    "orderedList": {
+      "tag": "orderedList",
       "displayName": "Ordered List"
     },
-    "insertUnorderedList": {
-      "tag": "insertUnorderedList",
+    "unorderedList": {
+      "tag": "unorderedList",
       "displayName": "Unordered List"
     },
     "justifyLeft": {

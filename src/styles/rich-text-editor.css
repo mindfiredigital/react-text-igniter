@@ -1,0 +1,60 @@
+/* Main editor container */
+.editor-container {
+  width: 80%;
+  margin: auto;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  position: relative;
+  margin-top: 20px;
+}
+
+/* Toolbar styles */
+.toolbar {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.toolbar .toolbarBtn,
+.toolbar select {
+  margin: 5px;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+}
+
+/* Main editor area */
+#editor {
+  padding: 10px;
+  min-height: 400px;
+  overflow: auto;
+  outline: none;
+}
+
+/* Individual editor blocks */
+.editor-block {
+  margin-bottom: 10px;
+  padding: 10px;
+  min-height: 40px;
+}
+
+/* Active editor block */
+.editor-block.active {
+  border: 1px solid blue;
+}
+
+/* Image styles within the editor */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Editor footer (word/character count) */
+.editor-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+}
