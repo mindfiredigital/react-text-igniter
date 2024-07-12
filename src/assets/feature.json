@@ -63,6 +63,10 @@
     "htmlMode": {
       "tag": "htmlMode",
       "displayName": "HTML Mode"
+    },
+    "columnLayout": {
+      "tag": "columnLayout",
+      "displayName": "Column Layout"
     }
   }
 }

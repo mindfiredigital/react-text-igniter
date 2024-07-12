@@ -3,13 +3,16 @@
   /* Color variables */
   --primary-bg: white;
   --primary-color: gray;
+  --primary-textColor: black;
   --hover-bg: black;
   --hover-color: black;
   --border-color: black;
+  --border-hover-color: gray;
   --cancel-border-hover: red;
   --overlay-bg: #00000080;
   --container-bg: #f0f0f0;
-
+  --common-padding: 10px 14px;
+  --common-hover-padding: 8px 12px;
   /* Box shadow variable */
   --box-shadow: 2px 6px 8px rgba(0, 0, 0, 0.4);
 }
@@ -55,6 +58,72 @@
   color: var(--hover-color);
   box-shadow: var(--box-shadow);
 }
+
+
+/* 
+ ======================================== 
+ DROPDOWN
+ ========================================
+ */
+.icon-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.icon-dropdown select {
+  display: none; /* Hide the native select element */
+}
+
+.icon-dropdown .dropbtn {
+  display: inline-block;
+  color: var(--primary-textColor);
+  text-align: center;
+  padding: var(--common-padding);
+  text-decoration: none;
+  background-color: white;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+}
+
+.icon-dropdown .dropbtn:hover,
+.icon-dropdown:hover .dropbtn {
+  padding: var(--common-hover-padding);
+  background-color: #f1f1f1;
+  border: 2px solid var(--border-hover-color);
+}
+
+.icon-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  padding-top: 4px;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.icon-dropdown-content .dropdown-item {
+  color: black;
+  padding: var(--common-padding);
+  font-size: 12px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.icon-dropdown-content .dropdown-item:hover {
+  padding: var(--common-hover-padding);
+  background-color: #f1f1f1;
+  font-size: 12px;
+  border: 2px solid var(--border-hover-color);
+}
+
+.icon-dropdown:hover .icon-dropdown-content {
+  display: block;
+}
+
+
 
 /* 
  ======================================== 
@@ -185,3 +254,5 @@
   cursor: pointer;
   color: red;
 }
+
+
