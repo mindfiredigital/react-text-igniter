@@ -2,6 +2,8 @@ import React, {useState , createContext, useContext, useRef } from "react";
 import { useEditorFormatting } from "../hooks/useEditorFormatting.jsx";
 import { useEditorState } from "../hooks/useEditorState.jsx";
 import { useHeadingState } from "../hooks/useHeadingState.jsx";
+import { useTableOperations } from "../hooks/useTableOperation.jsx";
+
 // Create a context for the editor
 const EditorContext = createContext();
 
@@ -27,6 +29,8 @@ export const EditorProvider = ({ children }) => {
 
   const headingState = useHeadingState();
 
+  const { insertTable, addTableRow, addTableColumn } = useTableOperations(editorRef);
+
   const [isHtmlMode, setIsHtmlMode] = useState(false);
 
   const toggleHtmlMode = () => {
@@ -34,7 +38,7 @@ export const EditorProvider = ({ children }) => {
   };
 
   // Combine all editor-related values and functions
-  const editorValue = { ...state, ...headingState , applyHeading , formatText, editorRef, isHtmlMode , toggleHtmlMode};
+  const editorValue = { ...state, ...headingState , applyHeading , formatText, editorRef, insertTable, addTableRow , addTableColumn, isHtmlMode , toggleHtmlMode};
 
   return (
     <EditorContext.Provider value={editorValue}>

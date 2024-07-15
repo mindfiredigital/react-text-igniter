@@ -7,10 +7,10 @@ import { getJson } from "../../utils/editorUtil.jsx";
 
 /**
  * Toolbar Component
- * 
+ *
  * This component renders a toolbar with various formatting and action buttons for the editor.
  * It uses the useEditor hook to access editor-related functionality.
- * 
+ *
  * @param {Object} props - Component props
  * @param {Array} props.features - Array of feature names to be displayed in the toolbar
  * @returns {JSX.Element} The rendered Toolbar component
@@ -21,7 +21,19 @@ const Toolbar = ({ features }) => {
   const [isUrlDialogOpen, setUrlDialogOpen] = useState(false);
 
   // Access editor-related functions from the context
-  const { formatText, editorRef, currentHeading, changeHeading, isHtmlMode, toggleHtmlMode, applyHeading } = useEditor();
+  const {
+    formatText,
+    editorRef,
+    currentHeading,
+    changeHeading,
+    isHtmlMode,
+    toggleHtmlMode,
+    applyHeading,
+    insertTable,
+    addTableRow,
+    addTableColumn,
+  } = useEditor();
+
   /**
    * Handles image submission from the dialog
    * @param {Object} param0 - Destructured object containing file and imageUrl
@@ -38,13 +50,32 @@ const Toolbar = ({ features }) => {
     }
   };
 
-    // Handles heading button clicks, triggering heading changes in the editor
-    const handleHeadingChange = (e) => {
-      const heading = e.target.value;
-      changeHeading(heading);
-      applyHeading(heading);
-    };
-  
+  // Handles heading button clicks, triggering heading changes in the editor
+  const handleHeadingChange = (e) => {
+    const heading = e.target.value;
+    changeHeading(heading);
+    applyHeading(heading);
+  };
+
+  // Handles table button clicks, triggering table changes in the editor
+  const handleTableOperation = (e) => {
+    const operation = e.target.value;
+    switch (operation) {
+      case 'insert':
+        insertTable(2, 2);
+        break;
+      case 'addRow':
+        addTableRow();
+        break;
+      case 'addColumn':
+        addTableColumn();
+        break;
+      default:
+        break;
+    }
+    e.target.value = ''; // Reset select after operation
+  };
+
 
   // Object containing all available toolbar buttons
   const featureButtons = {
@@ -145,19 +176,26 @@ const Toolbar = ({ features }) => {
     ),
     htmlMode: (
       <IconButton onClick={toggleHtmlMode}>
-        <Icons.CodeIcon/>
+        <Icons.CodeIcon />
       </IconButton>
+    ),
+    table: (
+      <select onChange={handleTableOperation} className="table-select">
+        <option value="">Table</option>
+        <option value="insert">Insert Table</option>
+        <option value="addRow">Add Row</option>
+        <option value="addColumn">Add Column</option>
+      </select>
     ),
   };
 
   return (
     <div className="toolbar">
-    {!isHtmlMode && features.map((feature, index) => (
-      <React.Fragment key={index}>
-        {featureButtons[feature]}
-      </React.Fragment>
-    ))}
-  </div>
+      {!isHtmlMode &&
+        features.map((feature, index) => (
+          <React.Fragment key={index}>{featureButtons[feature]}</React.Fragment>
+        ))}
+    </div>
   );
 };
 
