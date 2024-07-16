@@ -1,5 +1,6 @@
 import React from "react";
 import "../../styles/ui-component.css";
+import Tooltip from "./ToolTip";
 
 /**
  * AppButton Component
@@ -39,11 +40,15 @@ const AppButton = ({
  * @param {string} props.id - Button ID
  * @returns {JSX.Element} The rendered IconButton component
  */
-const IconButton = ({ children, onClick, id }) => {
+const IconButton = ({ children, onClick, id, toolTip }) => {
   return (
-    <button onClick={onClick} id={id} className="toolbarBtn">
-      {children}
-    </button>
+    <Tooltip text={toolTip}>
+      <div className="toolbarBtnDiv">
+        <button className="toolbarBtn" onClick={onClick} id={id}>
+          {children}
+        </button>
+      </div>
+    </Tooltip>
   );
 };
 

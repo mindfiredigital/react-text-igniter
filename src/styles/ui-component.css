@@ -59,6 +59,28 @@
   box-shadow: var(--box-shadow);
 }
 
+.toolbarBtn{
+  padding: 0;
+	margin: 0;
+}
+
+.toolbarBtnDiv {
+  display: grid;
+  padding: 2px;
+  text-align: center;
+	align-items: center;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.toolbarBtnDiv:hover {
+  padding: 0px;
+  background-color: #f1f1f1;
+  border: 2px solid var(--border-hover-color);
+  border-radius: 4px;
+}
+
 
 /* 
  ======================================== 
@@ -91,6 +113,7 @@
   padding: var(--common-hover-padding);
   background-color: #f1f1f1;
   border: 2px solid var(--border-hover-color);
+  border-radius: 4px;
 }
 
 .icon-dropdown-content {
@@ -117,14 +140,55 @@
   background-color: #f1f1f1;
   font-size: 12px;
   border: 2px solid var(--border-hover-color);
+  border-radius: 4px;
 }
 
 .icon-dropdown:hover .icon-dropdown-content {
   display: block;
 }
 
+.icon-dropdown.open-right .icon-dropdown-content {
+  margin-left: 8px;
+  left: 100%; /* Position the dropdown to the right of the button */
+  top: 0;
+}
 
+/* 
+ ======================================== 
+ TOOLTIP
+ ========================================
+*/
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+}
 
+.tooltip {
+  height: auto;
+  visibility: gone;
+  visibility: visible;
+  background-color: black;
+  font-size: 12px;
+  color: #fff;
+  text-align: center;
+  padding: 4px 8px;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 20;
+  /*bottom: 125%; Position the tooltip above the element */
+  top: 105%; /* Position the tooltip below the element */
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip-container:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+}
 /* 
  ======================================== 
  DIALOG

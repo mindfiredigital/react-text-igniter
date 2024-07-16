@@ -74,48 +74,48 @@ const Toolbar = ({ features }) => {
   // Object containing all available toolbar buttons
   const featureButtons = {
     bold: (
-      <IconButton onClick={() => formatText("bold")} id="boldBtn">
+      <IconButton onClick={() => formatText("bold")} id="boldBtn" toolTip={"Bold"}>
         <Icons.BoldIcon />
       </IconButton>
     ),
     italic: (
-      <IconButton onClick={() => formatText("italic")} id="italicBtn">
+      <IconButton onClick={() => formatText("italic")} id="italicBtn" toolTip={"Italic"}>
         <Icons.ItalicIcon />
       </IconButton>
     ),
     underline: (
-      <IconButton onClick={() => formatText("underline")} id="underlineBtn">
+      <IconButton onClick={() => formatText("underline")} id="underlineBtn" toolTip={"Underline"}>
         <Icons.UnderlineIcon />
       </IconButton>
     ),
     orderedList: (
-      <IconButton onClick={() => formatText("insertOrderedList")}>
+      <IconButton onClick={() => formatText("insertOrderedList")} toolTip={"Ordered List"}>
         <Icons.OrderedListIcon />
       </IconButton>
     ),
     unorderedList: (
-      <IconButton onClick={() => formatText("insertUnorderedList")}>
+      <IconButton onClick={() => formatText("insertUnorderedList")} toolTip={"Unordered List"}>
         <Icons.UnOrderedListIcon />
       </IconButton>
     ),
     justifyLeft: (
-      <IconButton onClick={() => formatText("justifyLeft")}>
+      <IconButton onClick={() => formatText("justifyLeft")} toolTip={"Justify List"}>
         <Icons.AlignLeftIcon />
       </IconButton>
     ),
     justifyCenter: (
-      <IconButton onClick={() => formatText("justifyCenter")}>
+      <IconButton onClick={() => formatText("justifyCenter")} toolTip={"Justify Center"}>
         <Icons.AlignCenterIcon />
       </IconButton>
     ),
     justifyRight: (
-      <IconButton onClick={() => formatText("justifyRight")}>
+      <IconButton onClick={() => formatText("justifyRight")} toolTip={"Justify Right"}>
         <Icons.AlignRightIcon />
       </IconButton>
     ),
     createLink: (
       <>
-        <IconButton onClick={() => setUrlDialogOpen(true)}>
+        <IconButton onClick={() => setUrlDialogOpen(true)} toolTip={"Create Link"}>
           <Icons.LinkIcon />
         </IconButton>
         <FileUrlDialog
@@ -128,7 +128,7 @@ const Toolbar = ({ features }) => {
     ),
     insertImage: (
       <>
-        <IconButton onClick={() => setImageDialogOpen(true)}>
+        <IconButton onClick={() => setImageDialogOpen(true)} toolTip={"Insert Image"}>
           <Icons.ImageIcon />
         </IconButton>
         <ImageUploadSelectionDialog
@@ -140,16 +140,22 @@ const Toolbar = ({ features }) => {
       </>
     ),
     getHtml: (
-      <IconButton onClick={() => console.log(editorRef.current.innerHTML)}>Get HTML</IconButton>
+      <IconButton onClick={() => console.log(editorRef.current.innerHTML)} toolTip={"Get HTML"}>
+        Get HTML
+      </IconButton>
     ),
-    getJson: <IconButton onClick={() => getJson(editorRef)}>Get JSON</IconButton>,
+    getJson: (
+      <IconButton onClick={() => getJson(editorRef)} toolTip={"Get JSON"}>
+        Get JSON
+      </IconButton>
+    ),
     superscript: (
-      <IconButton onClick={() => formatText("superscript")}>
+      <IconButton onClick={() => formatText("superscript")} toolTip={"Superscript"}>
         <Icons.SuperScriptIcon />
       </IconButton>
     ),
     subscript: (
-      <IconButton onClick={() => formatText("subscript")}>
+      <IconButton onClick={() => formatText("subscript")} toolTip={"Subscript"}>
         <Icons.SubScriptIcon />
       </IconButton>
     ),
@@ -170,7 +176,7 @@ const Toolbar = ({ features }) => {
       />
     ),
     htmlMode: (
-      <IconButton onClick={toggleHtmlMode}>
+      <IconButton onClick={toggleHtmlMode} toolTip={"Html mode"}>
         <Icons.CodeIcon />
       </IconButton>
     ),
@@ -179,9 +185,12 @@ const Toolbar = ({ features }) => {
         id="columnLayoutDropdown"
         selected={currentHeading}
         items={[
-          { value: "fruit", label: "Fruit" },
-          { value: "vegetable", label: "Vegetable" },
-          { value: "meat", label: "Meat" },
+          { value: "singleColumn", label: "Single Column" },
+          { value: "twoColumn", label: "Two Column" },
+          { value: "threeColumn", label: "Three Column" },
+          { value: "fourColumn", label: "Three Column" },
+          { value: "sixtyFortyRatio", label: "60/40" },
+          { value: "fortySixtyRatio", label: "40/60" },
         ]}
         onChange={handleColumnLayoutChange}
       />

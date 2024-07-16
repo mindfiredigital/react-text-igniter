@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useEditor } from "../../contexts/editorContext.jsx";
 import { AppButton } from "../ui/Button.jsx";
+import "../../index.css"
 /**
  * Editor Component
  *

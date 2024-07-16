@@ -10,24 +10,32 @@ import "../../styles/ui-component.css";
  * @param {React.ReactNode} props.children - Button content (usually an icon)
  * @param {Function} props.onClick - Click event handler
  * @param {string} props.id - Button ID
+ * @param {string} props.openRight - To show option on right by default it will be at bottom.
  * @returns {JSX.Element} The rendered IconButton component
  */
 
-const IconDropDown = ({ items, onChange, selected, id }) => {
+const IconDropDown = ({ items, onChange, selected, id, openRight }) => {
   const [selectedLabel, setSelectedLabel] = useState(() => {
     const selectedItem = items.find((item) => item.value === selected);
     return selectedItem ? selectedItem.label : "";
   });
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleButtonClick = () => {
+    setIsOpen(!isOpen);
+  };
 
   const handleItemClick = (value, label) => {
     // const selectedValue = event.target.value;
     setSelectedLabel(label);
     onChange(value);
+    // if needed to close after item selection.
+    // setIsOpen(false);
   };
 
   return (
-    <div className="icon-dropdown">
-      <button className="dropbtn" id={id}>
+    <div className={`icon-dropdown ${openRight ? "open-right" : ""}`}>
+      <button className="dropbtn" id={id} onClick={handleButtonClick}>
         {selectedLabel || "Select..."}
       </button>
       <div className="icon-dropdown-content">
