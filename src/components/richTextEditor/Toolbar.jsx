@@ -30,6 +30,7 @@ const Toolbar = ({ features }) => {
     isHtmlMode,
     toggleHtmlMode,
     applyHeading,
+    addImage,
   } = useEditor();
   /**
    * Handles image submission from the dialog
@@ -38,13 +39,26 @@ const Toolbar = ({ features }) => {
    * @param {string} param0.imageUrl - The entered image URL
    */
   const handleImageSubmit = ({ file, imageUrl }) => {
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => formatText("insertImage", e.target.result);
-      reader.readAsDataURL(file);
-    } else if (imageUrl) {
-      formatText("insertImage", imageUrl);
-    }
+    addImage(file, imageUrl);
+    // if (file) {
+    //       const reader = new FileReader();
+    //       reader.onload = (e) => {
+    //         const img = document.createElement("img");
+    //         img.src = e.target.result;
+    //         img.alt = file.name;
+    //         img.style.maxWidth = "100%";
+            
+    //         activeBlock.appendChild(img);
+    //       };
+    //       reader.readAsDataURL(file);
+
+    // } else if (imageUrl) {
+    //       const img = document.createElement("img");
+    //       img.src = imageUrl;
+    //       img.alt = "Inserted image";
+    //       img.style.maxWidth = "100%";
+    //       activeBlock.appendChild(img);
+    // }
   };
 
   // Handles heading button clicks, triggering heading changes in the editor

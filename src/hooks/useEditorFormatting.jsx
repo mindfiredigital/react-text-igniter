@@ -83,6 +83,27 @@ export const useEditorFormatting = (editorRef) => {
     }
   }, []);
 
+  const addImage = useCallback((file, imageUrl) => {
+    const activeBlock = document.querySelector(".editor-block.active");
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = document.createElement("img");
+        img.src = e.target.result;
+        img.alt = file.name;
+        img.style.maxWidth = "100%";
+        activeBlock.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    } else if (imageUrl) {
+      const img = document.createElement("img");
+      img.src = imageUrl;
+      img.alt = "Inserted image";
+      img.style.maxWidth = "100%";
+      activeBlock.appendChild(img);
+    }
+  },[]);
+
   // Applies a heading tag to the active block
   const applyHeading = useCallback((heading) => {
     const activeBlock = document.querySelector(".editor-block.active");
@@ -100,5 +121,5 @@ export const useEditorFormatting = (editorRef) => {
       newElement.classList.add("active");
     }
   }, []);
-  return { formatText, updateDataAttributes, applyHeading };
+  return { formatText, updateDataAttributes, applyHeading, addImage };
 };
