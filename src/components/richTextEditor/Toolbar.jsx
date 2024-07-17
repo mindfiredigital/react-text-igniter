@@ -21,6 +21,18 @@ const Toolbar = ({ features }) => {
   const [isImageDialogOpen, setImageDialogOpen] = useState(false);
   const [isUrlDialogOpen, setUrlDialogOpen] = useState(false);
 
+  // State for tracking active formats
+  const [activeFormats, setActiveFormats] = useState({
+    bold: false,
+    italic: false,
+    underline: false,
+    superscript: false,
+    subscript: false,
+    justifyLeft: false,
+    justifyCenter: false,
+    justifyRight: false,
+  });
+
   // Access editor-related functions from the context
   const {
     formatText,
@@ -40,25 +52,6 @@ const Toolbar = ({ features }) => {
    */
   const handleImageSubmit = ({ file, imageUrl }) => {
     addImage(file, imageUrl);
-    // if (file) {
-    //       const reader = new FileReader();
-    //       reader.onload = (e) => {
-    //         const img = document.createElement("img");
-    //         img.src = e.target.result;
-    //         img.alt = file.name;
-    //         img.style.maxWidth = "100%";
-            
-    //         activeBlock.appendChild(img);
-    //       };
-    //       reader.readAsDataURL(file);
-
-    // } else if (imageUrl) {
-    //       const img = document.createElement("img");
-    //       img.src = imageUrl;
-    //       img.alt = "Inserted image";
-    //       img.style.maxWidth = "100%";
-    //       activeBlock.appendChild(img);
-    // }
   };
 
   // Handles heading button clicks, triggering heading changes in the editor
@@ -68,8 +61,31 @@ const Toolbar = ({ features }) => {
     applyHeading(heading);
   };
 
+  const handleFormatText = (format) => {
+    formatText(format);
+    updateActiveFormats();
+  };
+
+  const updateActiveFormats = () => {
+    const activeBlock = document.querySelector(".editor-block.active");
+    if (activeBlock) {
+      const styles = window.getComputedStyle(activeBlock);
+      console.log(window.getComputedStyle(activeBlock));
+      setActiveFormats({
+        bold: styles.fontWeight === "bold" || +styles.fontWeight >= 600,
+        italic: styles.fontStyle === "italic",
+        underline: styles.textDecoration.includes("underline"),
+        superscript: styles.verticalAlign === "super",
+        subscript: styles.verticalAlign === "sub",
+        justifyLeft: styles.textAlign === "left",
+        justifyCenter: styles.textAlign === "center",
+        justifyRight: styles.textAlign === "right",
+      });
+    }
+  };
+
   const handleColumnLayoutChange = (value) => {
-    console.log("===========",value,"==========")
+    console.log("===========", value, "==========");
     const activeBlock = editorRef.current.querySelector(".editor-block.active");
     // if (activeBlock) {
     //   activeBlock.className = `editor-block active layout-${layout}`;
@@ -88,42 +104,59 @@ const Toolbar = ({ features }) => {
   // Object containing all available toolbar buttons
   const featureButtons = {
     bold: (
-      <IconButton onClick={() => formatText("bold")} id="boldBtn" toolTip={"Bold"}>
+      <IconButton
+        onClick={() => handleFormatText("bold")}
+        id="boldBtn"
+        toolTip={"Bold"}
+        isActive={activeFormats.bold}
+      >
         <Icons.BoldIcon />
       </IconButton>
     ),
     italic: (
-      <IconButton onClick={() => formatText("italic")} id="italicBtn" toolTip={"Italic"}>
+      <IconButton
+        onClick={() => handleFormatText("italic")}
+        id="italicBtn"
+        toolTip={"Italic"}
+        isActive={activeFormats.italic}
+      >
         <Icons.ItalicIcon />
       </IconButton>
     ),
     underline: (
-      <IconButton onClick={() => formatText("underline")} id="underlineBtn" toolTip={"Underline"}>
+      <IconButton
+        onClick={() => handleFormatText("underline")}
+        id="underlineBtn"
+        toolTip={"Underline"}
+      >
         <Icons.UnderlineIcon />
       </IconButton>
     ),
     orderedList: (
-      <IconButton onClick={() => formatText("insertOrderedList")} toolTip={"Ordered List"}>
+      <IconButton onClick={() => handleFormatText("insertOrderedList")} toolTip={"Ordered List"}>
         <Icons.OrderedListIcon />
       </IconButton>
     ),
     unorderedList: (
-      <IconButton onClick={() => formatText("insertUnorderedList")} toolTip={"Unordered List"}>
+      <IconButton
+        onClick={() => handleFormatText("insertUnorderedList")}
+        toolTip={"Unordered List"}
+      >
         <Icons.UnOrderedListIcon />
       </IconButton>
     ),
     justifyLeft: (
-      <IconButton onClick={() => formatText("justifyLeft")} toolTip={"Justify List"}>
+      <IconButton onClick={() => handleFormatText("justifyLeft")} toolTip={"Justify List"}>
         <Icons.AlignLeftIcon />
       </IconButton>
     ),
     justifyCenter: (
-      <IconButton onClick={() => formatText("justifyCenter")} toolTip={"Justify Center"}>
+      <IconButton onClick={() => handleFormatText("justifyCenter")} toolTip={"Justify Center"}>
         <Icons.AlignCenterIcon />
       </IconButton>
     ),
     justifyRight: (
-      <IconButton onClick={() => formatText("justifyRight")} toolTip={"Justify Right"}>
+      <IconButton onClick={() => handleFormatText("justifyRight")} toolTip={"Justify Right"}>
         <Icons.AlignRightIcon />
       </IconButton>
     ),
@@ -136,19 +169,19 @@ const Toolbar = ({ features }) => {
           isOpen={isUrlDialogOpen}
           onClose={() => setUrlDialogOpen(false)}
           title="Provide URL"
-          onSubmit={(url) => formatText("createLink", url)}
+          onSubmit={(url) => handleFormatText("createLink", url)}
         />
       </>
     ),
     insertImage: (
       <>
-        <IconButton onClick={() => setImageDialogOpen(true)} toolTip={"Insert Image"}>
+        <IconButton onClick={() => setImageDialogOpen(true)} toolTip={"Insert Image/video"}>
           <Icons.ImageIcon />
         </IconButton>
         <ImageUploadSelectionDialog
           isOpen={isImageDialogOpen}
           onClose={() => setImageDialogOpen(false)}
-          title="Select Image"
+          title="Select Image/Video file"
           onSubmit={handleImageSubmit}
         />
       </>
@@ -164,12 +197,12 @@ const Toolbar = ({ features }) => {
       </IconButton>
     ),
     superscript: (
-      <IconButton onClick={() => formatText("superscript")} toolTip={"Superscript"}>
+      <IconButton onClick={() => handleFormatText("superscript")} toolTip={"Superscript"}>
         <Icons.SuperScriptIcon />
       </IconButton>
     ),
     subscript: (
-      <IconButton onClick={() => formatText("subscript")} toolTip={"Subscript"}>
+      <IconButton onClick={() => handleFormatText("subscript")} toolTip={"Subscript"}>
         <Icons.SubScriptIcon />
       </IconButton>
     ),

@@ -81,6 +81,12 @@
   border-radius: 4px;
 }
 
+.toolbarBtnDiv.active {
+  padding: 0px;
+  border: 2px solid var(--border-hover-color);
+  border-radius: 2px;
+}
+
 
 /* 
  ======================================== 
