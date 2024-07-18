@@ -7,11 +7,13 @@ const Tooltip = ({ text, children }) => {
 //   const showTooltip = () => setVisible(true);
 //   const hideTooltip = () => setVisible(false);
 
-  return (
-    <div className="tooltip-container" >
+  return text ? (
+    <div className="tooltip-container">
       {children}
-      {true && <div className="tooltip">{text}</div>}
+      <div className="tooltip">{text}</div>
     </div>
+  ) : (
+    <></>
   );
 };
 
