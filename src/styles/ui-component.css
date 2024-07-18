@@ -41,7 +41,6 @@
 }
 
 .button-primary:hover {
-  font-size: 16px;
   color: var(--hover-color);
   box-shadow: var(--box-shadow);
 }
@@ -53,7 +52,6 @@
 }
 
 .button-cancel:hover {
-  font-size: 16px;
   border: 2px solid var(--cancel-border-hover);
   color: var(--hover-color);
   box-shadow: var(--box-shadow);
@@ -307,7 +305,6 @@
 }
 
 .custom-file-input:hover {
-  font-size: 16px;
   color: var(--hover-color);
   box-shadow: var(--box-shadow);
 }
