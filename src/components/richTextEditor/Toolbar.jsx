@@ -42,7 +42,7 @@ const Toolbar = ({ features }) => {
     isHtmlMode,
     toggleHtmlMode,
     applyHeading,
-    addImage,
+    addImageOrVideo,
   } = useEditor();
   /**
    * Handles image submission from the dialog
@@ -50,8 +50,8 @@ const Toolbar = ({ features }) => {
    * @param {File} param0.file - The selected image file
    * @param {string} param0.imageUrl - The entered image URL
    */
-  const handleImageSubmit = ({ file, imageUrl }) => {
-    addImage(file, imageUrl);
+  const handleImageSubmit = ({ file, fileUrl }) => {
+    addImageOrVideo(file, fileUrl);
   };
 
   // Handles heading button clicks, triggering heading changes in the editor
@@ -63,24 +63,49 @@ const Toolbar = ({ features }) => {
 
   const handleFormatText = (format) => {
     formatText(format);
-    updateActiveFormats();
+    updateActiveFormats(format);
   };
 
-  const updateActiveFormats = () => {
+  const updateActiveFormats = (format) => {
     const activeBlock = document.querySelector(".editor-block.active");
     if (activeBlock) {
       const styles = window.getComputedStyle(activeBlock);
-      console.log(window.getComputedStyle(activeBlock));
-      setActiveFormats({
-        bold: styles.fontWeight === "bold" || +styles.fontWeight >= 600,
-        italic: styles.fontStyle === "italic",
-        underline: styles.textDecoration.includes("underline"),
-        superscript: styles.verticalAlign === "super",
-        subscript: styles.verticalAlign === "sub",
-        justifyLeft: styles.textAlign === "left",
-        justifyCenter: styles.textAlign === "center",
-        justifyRight: styles.textAlign === "right",
-      });
+      console.log("=========================");
+      // Update the specific format without changing the others
+      const newFormats = { ...activeFormats };
+
+      switch (format) {
+        case "bold":
+          newFormats.bold = !newFormats.bold;
+          break;
+        case "italic":
+          newFormats.italic = !newFormats.italic;
+          break;
+        case "underline":
+          newFormats.underline = !newFormats.underline;
+          break;
+        case "super":
+          newFormats.superscript = !newFormats.superscript;
+          break;
+        case "sub":
+          newFormats.subscript = !newFormats.subscript;
+          break;
+        case "left":
+          newFormats.justifyLeft = !newFormats.justifyLeft;
+          break;
+        case "center":
+          newFormats.justifyCenter = !newFormats.justifyCenter;
+          break;
+        case "right":
+          newFormats.justifyRight = !newFormats.justifyRight;
+          break;
+        default:
+          break;
+      }
+
+      setActiveFormats(newFormats);
+      console.log(newFormats);
+      console.log("=========================");
     }
   };
 

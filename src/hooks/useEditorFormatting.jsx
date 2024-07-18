@@ -83,26 +83,45 @@ export const useEditorFormatting = (editorRef) => {
     }
   }, []);
 
-  const addImage = useCallback((file, imageUrl) => {
+  const addImageOrVideo = useCallback((file, imageUrl) => {
     const activeBlock = document.querySelector(".editor-block.active");
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const img = document.createElement("img");
-        img.src = e.target.result;
-        img.alt = file.name;
-        img.style.maxWidth = "100%";
-        activeBlock.appendChild(img);
-      };
-      reader.readAsDataURL(file);
-    } else if (imageUrl) {
-      const img = document.createElement("img");
-      img.src = imageUrl;
-      img.alt = "Inserted image";
-      img.style.maxWidth = "100%";
-      activeBlock.appendChild(img);
+    const appendMedia = (element) => {
+      element.style.maxWidth = "100%";
+      activeBlock.appendChild(element);
+    };
+
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      let element;
+      if (file.type.startsWith("image/")) {
+        element = document.createElement("img");
+        element.src = e.target.result;
+        element.alt = file.name;
+      } else if (file.type.startsWith("video/")) {
+        element = document.createElement("video");
+        element.src = e.target.result;
+        element.controls = true;
+        element.alt = file.name;
+      }
+      appendMedia(element);
+    };
+    reader.readAsDataURL(file);
+  } else if (imageUrl) {
+    let element;
+    if (imageUrl.match(/\.(jpeg|jpg|gif|png)$/) != null) {
+      element = document.createElement("img");
+      element.src = imageUrl;
+      element.alt = "Inserted image";
+    } else if (imageUrl.match(/\.(mp4|webm|ogg)$/) != null) {
+      element = document.createElement("video");
+      element.src = imageUrl;
+      element.controls = true;
+      element.alt = "Inserted video";
     }
-  },[]);
+    appendMedia(element);
+  }
+  }, []);
 
   // Applies a heading tag to the active block
   const applyHeading = useCallback((heading) => {
@@ -121,5 +140,5 @@ export const useEditorFormatting = (editorRef) => {
       newElement.classList.add("active");
     }
   }, []);
-  return { formatText, updateDataAttributes, applyHeading, addImage };
+  return {formatText, updateDataAttributes, applyHeading, addImageOrVideo};
 };
