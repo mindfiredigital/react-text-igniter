@@ -22,7 +22,8 @@ export const EditorProvider = ({ children }) => {
   const editorRef = useRef(null);
 
   // Use the editor formatting hook
-  const { formatText, updateDataAttributes,applyHeading } = useEditorFormatting(editorRef);
+  const { formatText, updateDataAttributes, applyHeading, addImageOrVideo } =
+    useEditorFormatting(editorRef);
 
   // Use the editor state hook
   const state = useEditorState(editorRef, updateDataAttributes);
@@ -38,7 +39,7 @@ export const EditorProvider = ({ children }) => {
   };
 
   // Combine all editor-related values and functions
-  const editorValue = { ...state, ...headingState , applyHeading , formatText, editorRef, insertTable, addTableRow , addTableColumn,insertLayout, isHtmlMode , toggleHtmlMode};
+  const editorValue = { ...state, ...headingState , applyHeading , formatText, editorRef, addImageOrVideo, insertTable, addTableRow , addTableColumn,insertLayout, isHtmlMode , toggleHtmlMode};
 
   return (
     <EditorContext.Provider value={editorValue}>
