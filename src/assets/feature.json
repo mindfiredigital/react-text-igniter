@@ -63,6 +63,14 @@
     "htmlMode": {
       "tag": "htmlMode",
       "displayName": "HTML Mode"
+    },
+    "table":{
+      "tag": "table",
+      "displayName":"Table"
+    },
+    "layout":{
+      "tag":"layout",
+      "displayName":"Layout"
     }
   }
 }

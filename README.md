@@ -31,7 +31,7 @@ A powerful and intuitive HTML text editor built with React.js.
 
 1. Clone the repository:
    ```bash
-   https://github.com/deepakyadav-01/Text-Editor
+   git clone https://github.com/deepakyadav-01/Text-Editor
 2. Navigate to the project directory:
    ```bash
    cd Text-Editor
