@@ -3,13 +3,16 @@
   /* Color variables */
   --primary-bg: white;
   --primary-color: gray;
+  --primary-textColor: black;
   --hover-bg: black;
   --hover-color: black;
   --border-color: black;
+  --border-hover-color: gray;
   --cancel-border-hover: red;
   --overlay-bg: #00000080;
   --container-bg: #f0f0f0;
-
+  --common-padding: 10px 14px;
+  --common-hover-padding: 8px 12px;
   /* Box shadow variable */
   --box-shadow: 2px 6px 8px rgba(0, 0, 0, 0.4);
 }
@@ -38,7 +41,6 @@
 }
 
 .button-primary:hover {
-  font-size: 16px;
   color: var(--hover-color);
   box-shadow: var(--box-shadow);
 }
@@ -50,12 +52,147 @@
 }
 
 .button-cancel:hover {
-  font-size: 16px;
   border: 2px solid var(--cancel-border-hover);
   color: var(--hover-color);
   box-shadow: var(--box-shadow);
 }
 
+.toolbarBtn{
+  padding: 0;
+	margin: 0;
+}
+
+.toolbarBtnDiv {
+  display: grid;
+  padding: 2px;
+  text-align: center;
+	align-items: center;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.toolbarBtnDiv:hover {
+  padding: 0px;
+  background-color: #f1f1f1;
+  border: 2px solid var(--border-hover-color);
+  border-radius: 4px;
+}
+
+.toolbarBtnDiv.active {
+  padding: 0px;
+  border: 2px solid var(--border-hover-color);
+  border-radius: 2px;
+}
+
+
+/* 
+ ======================================== 
+ DROPDOWN
+ ========================================
+ */
+.icon-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.icon-dropdown select {
+  display: none; /* Hide the native select element */
+}
+
+.icon-dropdown .dropbtn {
+  display: inline-block;
+  color: var(--primary-textColor);
+  text-align: center;
+  padding: var(--common-padding);
+  text-decoration: none;
+  background-color: white;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+}
+
+.icon-dropdown .dropbtn:hover,
+.icon-dropdown:hover .dropbtn {
+  padding: var(--common-hover-padding);
+  background-color: #f1f1f1;
+  border: 2px solid var(--border-hover-color);
+  border-radius: 4px;
+}
+
+.icon-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  padding-top: 4px;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.icon-dropdown-content .dropdown-item {
+  color: black;
+  padding: var(--common-padding);
+  font-size: 12px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.icon-dropdown-content .dropdown-item:hover {
+  padding: var(--common-hover-padding);
+  background-color: #f1f1f1;
+  font-size: 12px;
+  border: 2px solid var(--border-hover-color);
+  border-radius: 4px;
+}
+
+.icon-dropdown:hover .icon-dropdown-content {
+  display: block;
+}
+
+.icon-dropdown.open-right .icon-dropdown-content {
+  margin-left: 8px;
+  left: 100%; /* Position the dropdown to the right of the button */
+  top: 0;
+}
+
+/* 
+ ======================================== 
+ TOOLTIP
+ ========================================
+*/
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip {
+  height: auto;
+  visibility: gone;
+  visibility: visible;
+  background-color: black;
+  font-size: 12px;
+  color: #fff;
+  text-align: center;
+  padding: 4px 8px;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 20;
+  /*bottom: 125%; Position the tooltip above the element */
+  top: 105%; /* Position the tooltip below the element */
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip-container:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+}
 /* 
  ======================================== 
  DIALOG
@@ -168,7 +305,6 @@
 }
 
 .custom-file-input:hover {
-  font-size: 16px;
   color: var(--hover-color);
   box-shadow: var(--box-shadow);
 }
@@ -185,3 +321,5 @@
   cursor: pointer;
   color: red;
 }
+
+

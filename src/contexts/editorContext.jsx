@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useRef } from "react";
+import React, {useState , createContext, useContext, useRef } from "react";
 import { useEditorFormatting } from "../hooks/useEditorFormatting.jsx";
 import { useEditorState } from "../hooks/useEditorState.jsx";
-
+import { useHeadingState } from "../hooks/useHeadingState.jsx";
 // Create a context for the editor
 const EditorContext = createContext();
 
@@ -20,13 +20,31 @@ export const EditorProvider = ({ children }) => {
   const editorRef = useRef(null);
 
   // Use the editor formatting hook
-  const { formatText, updateDataAttributes } = useEditorFormatting(editorRef);
+  const { formatText, updateDataAttributes, applyHeading, addImageOrVideo } =
+    useEditorFormatting(editorRef);
 
   // Use the editor state hook
   const state = useEditorState(editorRef, updateDataAttributes);
 
+  const headingState = useHeadingState();
+
+  const [isHtmlMode, setIsHtmlMode] = useState(false);
+
+  const toggleHtmlMode = () => {
+    setIsHtmlMode(!isHtmlMode);
+  };
+
   // Combine all editor-related values and functions
-  const editorValue = { ...state, formatText, editorRef };
+  const editorValue = {
+    ...state,
+    ...headingState,
+    applyHeading,
+    formatText,
+    editorRef,
+    addImageOrVideo,
+    isHtmlMode,
+    toggleHtmlMode,
+  };
 
   return (
     <EditorContext.Provider value={editorValue}>
