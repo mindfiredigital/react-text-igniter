@@ -67,6 +67,10 @@
     "table":{
       "tag": "table",
       "displayName":"Table"
+    },
+    "layout":{
+      "tag":"layout",
+      "displayName":"Layout"
     }
   }
 }

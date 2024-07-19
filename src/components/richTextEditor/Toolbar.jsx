@@ -32,6 +32,7 @@ const Toolbar = ({ features }) => {
     insertTable,
     addTableRow,
     addTableColumn,
+    insertLayout
   } = useEditor();
 
   /**
@@ -76,6 +77,30 @@ const Toolbar = ({ features }) => {
     e.target.value = ''; // Reset select after operation
   };
 
+  // Handles layout button clicks, triggering layout changes in the editor
+  const handleLayoutOperation = (e) => {
+    const layout = e.target.value;
+    switch (layout) {
+      case 'single':
+        insertLayout([100]);
+        break;
+      case 'two-equal':
+        insertLayout([50, 50]);
+        break;
+      case 'three-equal':
+        insertLayout([33.33, 33.33, 33.33]);
+        break;
+      case '40-60':
+        insertLayout([40, 60]);
+        break;
+      case '60-40':
+        insertLayout([60, 40]);
+        break;
+      default:
+        break;
+    }
+    e.target.value = ''; // Reset select after operation
+  };
 
   // Object containing all available toolbar buttons
   const featureButtons = {
@@ -185,6 +210,16 @@ const Toolbar = ({ features }) => {
         <option value="insert">Insert Table</option>
         <option value="addRow">Add Row</option>
         <option value="addColumn">Add Column</option>
+      </select>
+    ),
+    layout: (
+      <select onChange={handleLayoutOperation} className="layout-select">
+        <option value="">Layout</option>
+        <option value="single">Single Column</option>
+        <option value="two-equal">Two Columns</option>
+        <option value="three-equal">Three Columns</option>
+        <option value="40-60">40-60</option>
+        <option value="60-40">60-40</option>
       </select>
     ),
   };

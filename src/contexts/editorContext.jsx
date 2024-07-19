@@ -29,7 +29,7 @@ export const EditorProvider = ({ children }) => {
 
   const headingState = useHeadingState();
 
-  const { insertTable, addTableRow, addTableColumn } = useTableOperations(editorRef);
+  const { insertTable, addTableRow, addTableColumn,insertLayout } = useTableOperations(editorRef);
 
   const [isHtmlMode, setIsHtmlMode] = useState(false);
 
@@ -38,7 +38,7 @@ export const EditorProvider = ({ children }) => {
   };
 
   // Combine all editor-related values and functions
-  const editorValue = { ...state, ...headingState , applyHeading , formatText, editorRef, insertTable, addTableRow , addTableColumn, isHtmlMode , toggleHtmlMode};
+  const editorValue = { ...state, ...headingState , applyHeading , formatText, editorRef, insertTable, addTableRow , addTableColumn,insertLayout, isHtmlMode , toggleHtmlMode};
 
   return (
     <EditorContext.Provider value={editorValue}>
