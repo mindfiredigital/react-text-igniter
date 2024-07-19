@@ -5,9 +5,9 @@ import * as Icons from "../../assets/icon.jsx";
 
 /**
  * ImageUploadSelectionDialog Component
- * 
+ *
  * A dialog component for selecting an image either by URL or file upload from computer.
- * 
+ *
  * @param {Object} props - Component props
  * @param {boolean} props.isOpen - Whether the dialog is open
  * @param {Function} props.onClose - Function to close the dialog
@@ -16,16 +16,14 @@ import * as Icons from "../../assets/icon.jsx";
  * @param {React.ReactNode} props.children - Additional dialog content
  * @returns {JSX.Element|null} The rendered ImageUploadSelectionDialog component or null if not open
  */
-const ImageUploadSelectionDialog = ({
-  isOpen,
-  onClose,
-  onSubmit,
-  title,
-  children,
-}) => {
+const ImageUploadSelectionDialog = ({ isOpen, onClose, onSubmit, title, children }) => {
   const [file, setFile] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [error, setError] = useState("");
+
+  // valid extensions for image and video.
+  const validImageExtensions = ["jpg", "jpeg", "png", "gif", "bmp", "webp"];
+  const validVideoExtensions = ["mp4", "avi", "mov", "wmv", "flv", "webm"];
 
   const closeDialog = () => {
     resetToDefault();
@@ -41,14 +39,34 @@ const ImageUploadSelectionDialog = ({
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
-      setFile(selectedFile);
-      setError("");
+      const fileExtension = selectedFile.name.split(".").pop().toLowerCase();
+      if (
+        validImageExtensions.includes(fileExtension) ||
+        validVideoExtensions.includes(fileExtension)
+      ) {
+        setFile(selectedFile);
+        setError("");
+      } else {
+        setFile(null);
+        setError("Invalid file type. Please select an image or video file.");
+      }
     }
   };
 
   const handleImageUrl = (event) => {
-    setImageUrl(event.target.value);
-    setFile(null);
+    const url = event.target.value;
+    const urlExtension = url.split(".").pop().split("?")[0].toLowerCase();
+    if (
+      validImageExtensions.includes(urlExtension) ||
+      validVideoExtensions.includes(urlExtension)
+    ) {
+      setImageUrl(url);
+      setFile(null);
+      setError("");
+    } else {
+      setImageUrl("");
+      setError("Invalid URL. Please provide a link to an image or video.");
+    }
   };
 
   const handleSubmit = () => {
@@ -76,18 +94,18 @@ const ImageUploadSelectionDialog = ({
             <input
               type="text"
               className="image-url-input"
-              placeholder="Paste image URL"
+              placeholder="Paste file URL"
               value={imageUrl}
               onChange={handleImageUrl}
             />
             <div className="or-divider">OR</div>
             <label htmlFor="file-input" className="custom-file-input">
-              {!file ? "Choose an image" : "Reselect Image"}
+              {!file ? "Select file" : "Reselect file"}
             </label>
             <input
               type="file"
               id="file-input"
-              accept="image/*"
+              accept="image/*,video/*"
               onChange={handleFileChange}
             />
             {file && (
@@ -112,9 +130,9 @@ const ImageUploadSelectionDialog = ({
 
 /**
  * FileUrlDialog Component
- * 
+ *
  * A dialog component for entering a file URL.
- * 
+ *
  * @param {Object} props - Component props
  * @param {boolean} props.isOpen - Whether the dialog is open
  * @param {Function} props.onClose - Function to close the dialog
