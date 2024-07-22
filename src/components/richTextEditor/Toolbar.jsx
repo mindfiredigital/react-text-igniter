@@ -118,8 +118,7 @@ const Toolbar = ({ features }) => {
   };
 
   // Handles table button clicks, triggering table changes in the editor
-  const handleTableOperation = (e) => {
-    const operation = e.target.value;
+  const handleTableOperation = (operation) => {
     switch (operation) {
       case "insert":
         insertTable(2, 2);
@@ -133,12 +132,11 @@ const Toolbar = ({ features }) => {
       default:
         break;
     }
-    e.target.value = ""; // Reset select after operation
+    operation = ""; // Reset select after operation
   };
 
   // Handles layout button clicks, triggering layout changes in the editor
-  const handleLayoutOperation = (e) => {
-    const layout = e.target.value;
+  const handleLayoutOperation = (layout) => {
     switch (layout) {
       case "single":
         insertLayout([100]);
@@ -158,7 +156,7 @@ const Toolbar = ({ features }) => {
       default:
         break;
     }
-    e.target.value = ""; // Reset select after operation
+    //e.target.value = ""; // Reset select after operation
   };
 
   // Object containing all available toolbar buttons
@@ -309,12 +307,6 @@ const Toolbar = ({ features }) => {
       </IconButton>
     ),
     table: (
-      // <select onChange={handleTableOperation} className="table-select">
-      //   <option value="">Table</option>
-      //   <option value="insert">Insert Table</option>
-      //   <option value="addRow">Add Row</option>
-      //   <option value="addColumn">Add Column</option>
-      // </select>
       <IconDropDown
         id="tableDropdown"
         selected="insert"
@@ -330,14 +322,6 @@ const Toolbar = ({ features }) => {
     ),
 
     layout: (
-      // <select onChange={handleLayoutOperation} className="layout-select">
-      //   <option value="">Layout</option>
-      //   <option value="single">Single Column</option>
-      //   <option value="two-equal">Two Columns</option>
-      //   <option value="three-equal">Three Columns</option>
-      //   <option value="40-60">40-60</option>
-      //   <option value="60-40">60-40</option>
-      // </select>
       <IconDropDown
         id="layoutDropdown"
         selected="single"
