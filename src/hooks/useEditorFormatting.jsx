@@ -85,9 +85,20 @@ export const useEditorFormatting = (editorRef) => {
 
   const addImageOrVideo = useCallback((file, imageUrl) => {
     const activeBlock = document.querySelector(".editor-block.active");
+
     const appendMedia = (element) => {
       element.style.maxWidth = "100%";
       activeBlock.appendChild(element);
+
+      // Create a new line for the user to continue writing
+      const newLine = document.createElement("p");
+      newLine.classList.add("editor-block");
+      newLine.innerHTML = "<br>"; // Ensures the new paragraph has some content so it is not collapsed
+      activeBlock.parentNode.insertBefore(newLine, activeBlock.nextSibling);
+
+      // Optionally, make the new line the active block
+      activeBlock.classList.remove("active");
+      newLine.classList.add("active");
     };
 
   if (file) {
