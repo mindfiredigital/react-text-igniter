@@ -42,8 +42,13 @@ const Toolbar = ({ features }) => {
     isHtmlMode,
     toggleHtmlMode,
     applyHeading,
+    insertTable,
+    addTableRow,
+    addTableColumn,
+    insertLayout,
     addImageOrVideo,
   } = useEditor();
+
   /**
    * Handles image submission from the dialog
    * @param {Object} param0 - Destructured object containing file and imageUrl
@@ -109,21 +114,48 @@ const Toolbar = ({ features }) => {
     }
   };
 
-  const handleColumnLayoutChange = (value) => {
-    console.log("===========", value, "==========");
-    const activeBlock = editorRef.current.querySelector(".editor-block.active");
-    // if (activeBlock) {
-    //   activeBlock.className = `editor-block active layout-${layout}`;
-    //   if (layout !== "single") {
-    //     const columns = Number(layout === "two" ? 2 : 3);
-    //     activeBlock.innerHTML = Array(columns)
-    //       .fill('<div class="column" contenteditable="true"><p>Edit this content</p></div>')
-    //       .join("");
-    //   } else {
-    //     activeBlock.innerHTML =
-    //       '<div class="column" contenteditable="true"><p>Edit this content</p></div>';
-    //   }
-    // }
+  // Handles table button clicks, triggering table changes in the editor
+  const handleTableOperation = (e) => {
+    const operation = e.target.value;
+    switch (operation) {
+      case 'insert':
+        insertTable(2, 2);
+        break;
+      case 'addRow':
+        addTableRow();
+        break;
+      case 'addColumn':
+        addTableColumn();
+        break;
+      default:
+        break;
+    }
+    e.target.value = ''; // Reset select after operation
+  };
+
+  // Handles layout button clicks, triggering layout changes in the editor
+  const handleLayoutOperation = (e) => {
+    const layout = e.target.value;
+    switch (layout) {
+      case 'single':
+        insertLayout([100]);
+        break;
+      case 'two-equal':
+        insertLayout([50, 50]);
+        break;
+      case 'three-equal':
+        insertLayout([33.33, 33.33, 33.33]);
+        break;
+      case '40-60':
+        insertLayout([40, 60]);
+        break;
+      case '60-40':
+        insertLayout([60, 40]);
+        break;
+      default:
+        break;
+    }
+    e.target.value = ''; // Reset select after operation
   };
 
   // Object containing all available toolbar buttons
@@ -248,25 +280,55 @@ const Toolbar = ({ features }) => {
       />
     ),
     htmlMode: (
-      <IconButton onClick={toggleHtmlMode} toolTip={"Html mode"}>
+      <IconButton onClick={toggleHtmlMode}>
         <Icons.CodeIcon />
       </IconButton>
     ),
-    columnLayout: (
+    table: (
+      // <select onChange={handleTableOperation} className="table-select">
+      //   <option value="">Table</option>
+      //   <option value="insert">Insert Table</option>
+      //   <option value="addRow">Add Row</option>
+      //   <option value="addColumn">Add Column</option>
+      // </select>
       <IconDropDown
-        id="columnLayoutDropdown"
-        selected={currentHeading}
+        id="tableDropdown"
+        selected="insert"
         items={[
-          { value: "singleColumn", label: "Single Column" },
-          { value: "twoColumn", label: "Two Column" },
-          { value: "threeColumn", label: "Three Column" },
-          { value: "fourColumn", label: "Three Column" },
-          { value: "sixtyFortyRatio", label: "60/40" },
-          { value: "fortySixtyRatio", label: "40/60" },
+          { value: "insert", label: "Insert Table" },
+          { value: "addRow", label: "Add Row" },
+          { value: "addColumn", label: "Add Column" },
         ]}
-        onChange={handleColumnLayoutChange}
-      />
+        onChange={handleTableOperation}
+      >
+        <Icons.TableIcon />
+      </IconDropDown>
     ),
+
+    layout: (
+      // <select onChange={handleLayoutOperation} className="layout-select">
+      //   <option value="">Layout</option>
+      //   <option value="single">Single Column</option>
+      //   <option value="two-equal">Two Columns</option>
+      //   <option value="three-equal">Three Columns</option>
+      //   <option value="40-60">40-60</option>
+      //   <option value="60-40">60-40</option>
+      // </select>
+        <IconDropDown
+          id="layoutDropdown"
+          selected="single"
+          items={[
+            { value: "single", label: "Single Column" },
+            { value: "two-equal", label: "Two Columns" },
+            { value: "three-equal", label: "Three Columns" },
+            { value: "40-60", label: "40-60" },
+            { value: "60-40", label: "60-40" },
+          ]}
+          onChange={handleLayoutOperation}
+        >
+          <Icons.LayoutIcon />
+        </IconDropDown>
+       ),
   };
 
   return (

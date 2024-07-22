@@ -19,7 +19,7 @@ const Editor = () => {
 
   // Callback function to handle changes in normal mode (contenteditable)
   const handleNormalModeChange = useCallback((event) => {
-    setContent(event.target.innerHTML);
+    // setContent(event.target.innerHTML);
   }, []);
 
   // Callback function to handle changes in HTML mode (textarea)
