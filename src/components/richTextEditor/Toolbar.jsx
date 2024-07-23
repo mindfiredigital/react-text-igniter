@@ -75,7 +75,6 @@ const Toolbar = ({ features }) => {
     const activeBlock = document.querySelector(".editor-block.active");
     if (activeBlock) {
       const styles = window.getComputedStyle(activeBlock);
-      console.log("=========================");
       // Update the specific format without changing the others
       const newFormats = { ...activeFormats };
 
@@ -89,73 +88,75 @@ const Toolbar = ({ features }) => {
         case "underline":
           newFormats.underline = !newFormats.underline;
           break;
-        case "super":
+        case "superscript":
           newFormats.superscript = !newFormats.superscript;
           break;
-        case "sub":
+        case "subscript":
           newFormats.subscript = !newFormats.subscript;
           break;
-        case "left":
-          newFormats.justifyLeft = !newFormats.justifyLeft;
+        case "justifyLeft":
+          newFormats.justifyLeft = true;
+          newFormats.justifyCenter = false;
+          newFormats.justifyRight = false;
           break;
-        case "center":
-          newFormats.justifyCenter = !newFormats.justifyCenter;
+        case "justifyCenter":
+          newFormats.justifyLeft = false;
+          newFormats.justifyCenter = true;
+          newFormats.justifyRight = false;
           break;
-        case "right":
-          newFormats.justifyRight = !newFormats.justifyRight;
+        case "justifyRight":
+          newFormats.justifyLeft = false;
+          newFormats.justifyCenter = false;
+          newFormats.justifyRight = true;
           break;
         default:
           break;
       }
 
       setActiveFormats(newFormats);
-      console.log(newFormats);
-      console.log("=========================");
     }
   };
 
   // Handles table button clicks, triggering table changes in the editor
-  const handleTableOperation = (e) => {
-    const operation = e.target.value;
+  const handleTableOperation = (operation) => {
     switch (operation) {
-      case 'insert':
+      case "insert":
         insertTable(2, 2);
         break;
-      case 'addRow':
+      case "addRow":
         addTableRow();
         break;
-      case 'addColumn':
+      case "addColumn":
         addTableColumn();
         break;
       default:
         break;
     }
-    e.target.value = ''; // Reset select after operation
+    operation = ""; // Reset select after operation
   };
 
   // Handles layout button clicks, triggering layout changes in the editor
-  const handleLayoutOperation = (e) => {
-    const layout = e.target.value;
+  const handleLayoutOperation = (layout) => {
     switch (layout) {
-      case 'single':
+      case "single":
         insertLayout([100]);
         break;
-      case 'two-equal':
+      case "two-equal":
         insertLayout([50, 50]);
         break;
-      case 'three-equal':
+      case "three-equal":
         insertLayout([33.33, 33.33, 33.33]);
         break;
-      case '40-60':
+      case "40-60":
         insertLayout([40, 60]);
         break;
-      case '60-40':
+      case "60-40":
         insertLayout([60, 40]);
         break;
       default:
         break;
     }
-    e.target.value = ''; // Reset select after operation
+    //e.target.value = ""; // Reset select after operation
   };
 
   // Object containing all available toolbar buttons
@@ -185,6 +186,7 @@ const Toolbar = ({ features }) => {
         onClick={() => handleFormatText("underline")}
         id="underlineBtn"
         toolTip={"Underline"}
+        isActive={activeFormats.underline}
       >
         <Icons.UnderlineIcon />
       </IconButton>
@@ -203,17 +205,29 @@ const Toolbar = ({ features }) => {
       </IconButton>
     ),
     justifyLeft: (
-      <IconButton onClick={() => handleFormatText("justifyLeft")} toolTip={"Justify List"}>
+      <IconButton
+        onClick={() => handleFormatText("justifyLeft")}
+        toolTip={"Justify List"}
+        isActive={activeFormats.justifyLeft}
+      >
         <Icons.AlignLeftIcon />
       </IconButton>
     ),
     justifyCenter: (
-      <IconButton onClick={() => handleFormatText("justifyCenter")} toolTip={"Justify Center"}>
+      <IconButton
+        onClick={() => handleFormatText("justifyCenter")}
+        toolTip={"Justify Center"}
+        isActive={activeFormats.justifyCenter}
+      >
         <Icons.AlignCenterIcon />
       </IconButton>
     ),
     justifyRight: (
-      <IconButton onClick={() => handleFormatText("justifyRight")} toolTip={"Justify Right"}>
+      <IconButton
+        onClick={() => handleFormatText("justifyRight")}
+        toolTip={"Justify Right"}
+        isActive={activeFormats.justifyRight}
+      >
         <Icons.AlignRightIcon />
       </IconButton>
     ),
@@ -254,12 +268,20 @@ const Toolbar = ({ features }) => {
       </IconButton>
     ),
     superscript: (
-      <IconButton onClick={() => handleFormatText("superscript")} toolTip={"Superscript"}>
+      <IconButton
+        onClick={() => handleFormatText("superscript")}
+        toolTip={"Superscript"}
+        isActive={activeFormats.superscript}
+      >
         <Icons.SuperScriptIcon />
       </IconButton>
     ),
     subscript: (
-      <IconButton onClick={() => handleFormatText("subscript")} toolTip={"Subscript"}>
+      <IconButton
+        onClick={() => handleFormatText("subscript")}
+        toolTip={"Subscript"}
+        isActive={activeFormats.subscript}
+      >
         <Icons.SubScriptIcon />
       </IconButton>
     ),
@@ -285,12 +307,6 @@ const Toolbar = ({ features }) => {
       </IconButton>
     ),
     table: (
-      // <select onChange={handleTableOperation} className="table-select">
-      //   <option value="">Table</option>
-      //   <option value="insert">Insert Table</option>
-      //   <option value="addRow">Add Row</option>
-      //   <option value="addColumn">Add Column</option>
-      // </select>
       <IconDropDown
         id="tableDropdown"
         selected="insert"
@@ -306,29 +322,21 @@ const Toolbar = ({ features }) => {
     ),
 
     layout: (
-      // <select onChange={handleLayoutOperation} className="layout-select">
-      //   <option value="">Layout</option>
-      //   <option value="single">Single Column</option>
-      //   <option value="two-equal">Two Columns</option>
-      //   <option value="three-equal">Three Columns</option>
-      //   <option value="40-60">40-60</option>
-      //   <option value="60-40">60-40</option>
-      // </select>
-        <IconDropDown
-          id="layoutDropdown"
-          selected="single"
-          items={[
-            { value: "single", label: "Single Column" },
-            { value: "two-equal", label: "Two Columns" },
-            { value: "three-equal", label: "Three Columns" },
-            { value: "40-60", label: "40-60" },
-            { value: "60-40", label: "60-40" },
-          ]}
-          onChange={handleLayoutOperation}
-        >
-          <Icons.LayoutIcon />
-        </IconDropDown>
-       ),
+      <IconDropDown
+        id="layoutDropdown"
+        selected="single"
+        items={[
+          { value: "single", label: "Single Column" },
+          { value: "two-equal", label: "Two Columns" },
+          { value: "three-equal", label: "Three Columns" },
+          { value: "40-60", label: "40-60" },
+          { value: "60-40", label: "60-40" },
+        ]}
+        onChange={handleLayoutOperation}
+      >
+        <Icons.LayoutIcon />
+      </IconDropDown>
+    ),
   };
 
   return (
