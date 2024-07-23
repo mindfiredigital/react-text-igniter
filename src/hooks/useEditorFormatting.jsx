@@ -18,8 +18,7 @@ export const useEditorFormatting = (editorRef) => {
     const dataType = [];
 
     // Check for bold text
-    if (styles.fontWeight === "bold" || +styles.fontWeight >= 600)
-      dataType.push("bold");
+    if (styles.fontWeight === "bold" || +styles.fontWeight >= 600) dataType.push("bold");
 
     // Check for italic text
     if (styles.fontStyle === "italic") dataType.push("italic");
@@ -52,9 +51,7 @@ export const useEditorFormatting = (editorRef) => {
       const currentStyles = new Set(currentDataType.split("-"));
 
       const toggleStyle = (style) => {
-        currentStyles.has(style)
-          ? currentStyles.delete(style)
-          : currentStyles.add(style);
+        currentStyles.has(style) ? currentStyles.delete(style) : currentStyles.add(style);
       };
 
       // Handle different formatting commands
@@ -76,15 +73,22 @@ export const useEditorFormatting = (editorRef) => {
       }
 
       // Update the data-type attribute
-      activeBlock.setAttribute(
-        "data-type",
-        Array.from(currentStyles).join("-") || "normal"
-      );
+      activeBlock.setAttribute("data-type", Array.from(currentStyles).join("-") || "normal");
     }
   }, []);
 
   const addImageOrVideo = useCallback((file, imageUrl) => {
-    const activeBlock = document.querySelector(".editor-block.active");
+    const editorContainer = document.getElementById("editor");
+    var activeBlock = document.querySelector(".editor-block.active");
+
+    if (!activeBlock) {
+      const div = document.createElement("div");
+      div.className = "editor-block active";
+      div.contentEditable = true;
+      div.dataset.type = "normal";
+      editorContainer.appendChild(div);
+      activeBlock = div;
+    }
 
     const appendMedia = (element) => {
       element.style.maxWidth = "100%";
@@ -101,37 +105,37 @@ export const useEditorFormatting = (editorRef) => {
       newLine.classList.add("active");
     };
 
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        let element;
+        if (file.type.startsWith("image/")) {
+          element = document.createElement("img");
+          element.src = e.target.result;
+          element.alt = file.name;
+        } else if (file.type.startsWith("video/")) {
+          element = document.createElement("video");
+          element.src = e.target.result;
+          element.controls = true;
+          element.alt = file.name;
+        }
+        appendMedia(element);
+      };
+      reader.readAsDataURL(file);
+    } else if (imageUrl) {
       let element;
-      if (file.type.startsWith("image/")) {
+      if (imageUrl.match(/\.(jpeg|jpg|gif|png)$/) != null) {
         element = document.createElement("img");
-        element.src = e.target.result;
-        element.alt = file.name;
-      } else if (file.type.startsWith("video/")) {
+        element.src = imageUrl;
+        element.alt = "Inserted image";
+      } else if (imageUrl.match(/\.(mp4|webm|ogg)$/) != null) {
         element = document.createElement("video");
-        element.src = e.target.result;
+        element.src = imageUrl;
         element.controls = true;
-        element.alt = file.name;
+        element.alt = "Inserted video";
       }
       appendMedia(element);
-    };
-    reader.readAsDataURL(file);
-  } else if (imageUrl) {
-    let element;
-    if (imageUrl.match(/\.(jpeg|jpg|gif|png)$/) != null) {
-      element = document.createElement("img");
-      element.src = imageUrl;
-      element.alt = "Inserted image";
-    } else if (imageUrl.match(/\.(mp4|webm|ogg)$/) != null) {
-      element = document.createElement("video");
-      element.src = imageUrl;
-      element.controls = true;
-      element.alt = "Inserted video";
     }
-    appendMedia(element);
-  }
   }, []);
 
   // Applies a heading tag to the active block
@@ -142,14 +146,11 @@ export const useEditorFormatting = (editorRef) => {
       newElement.innerHTML = activeBlock.innerHTML;
       newElement.className = activeBlock.className;
       newElement.setAttribute("contentEditable", "true");
-      newElement.setAttribute(
-        "data-type",
-        activeBlock.getAttribute("data-type") || "normal"
-      );
+      newElement.setAttribute("data-type", activeBlock.getAttribute("data-type") || "normal");
       activeBlock.parentNode.replaceChild(newElement, activeBlock);
       newElement.focus();
       newElement.classList.add("active");
     }
   }, []);
-  return {formatText, updateDataAttributes, applyHeading, addImageOrVideo};
+  return { formatText, updateDataAttributes, applyHeading, addImageOrVideo };
 };
