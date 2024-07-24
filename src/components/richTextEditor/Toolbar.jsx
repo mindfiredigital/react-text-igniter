@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useEditor } from "../../contexts/editorContext.jsx";
 import * as Icons from "../../assets/icon.jsx";
 import { IconButton } from "../ui/Button.jsx";
 import { ImageUploadSelectionDialog, FileUrlDialog } from "../ui/Dialog.jsx";
 import { getJson } from "../../utils/editorUtil.jsx";
 import { IconDropDown } from "../ui/Dropdown.jsx";
+import { usePreviewMode } from "../../hooks/usePreviewMode.jsx";
 
 /**
  * Toolbar Component
@@ -20,6 +21,9 @@ const Toolbar = ({ features }) => {
   // State for managing dialog visibility
   const [isImageDialogOpen, setImageDialogOpen] = useState(false);
   const [isUrlDialogOpen, setUrlDialogOpen] = useState(false);
+
+  // State for preview mode
+  const { isToolbarVisible, toggleToolbarVisibility } = usePreviewMode();
 
   // State for tracking active formats
   const [activeFormats, setActiveFormats] = useState({
@@ -158,6 +162,35 @@ const Toolbar = ({ features }) => {
     }
     //e.target.value = ""; // Reset select after operation
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.ctrlKey || e.metaKey) {
+        switch (e.key.toLowerCase()) {
+          case "b":
+            e.preventDefault();
+            handleFormatText("bold");
+            break;
+          case "i":
+            e.preventDefault();
+            handleFormatText("italic");
+            break;
+          case "u":
+            e.preventDefault();
+            handleFormatText("underline");
+            break;
+          default:
+            break;
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   // Object containing all available toolbar buttons
   const featureButtons = {
@@ -320,7 +353,6 @@ const Toolbar = ({ features }) => {
         <Icons.TableIcon />
       </IconDropDown>
     ),
-
     layout: (
       <IconDropDown
         id="layoutDropdown"
@@ -341,7 +373,14 @@ const Toolbar = ({ features }) => {
 
   return (
     <div className="toolbar">
+      <div className="toolbar-switch">
+        <label>
+          <input type="checkbox" checked={isToolbarVisible} onChange={toggleToolbarVisibility} />
+          {!isToolbarVisible ? "Preview Mode" : "Edit Mode"}
+        </label>
+      </div>
       {!isHtmlMode &&
+        !isToolbarVisible &&
         features.map((feature, index) => (
           <React.Fragment key={index}>{featureButtons[feature]}</React.Fragment>
         ))}
