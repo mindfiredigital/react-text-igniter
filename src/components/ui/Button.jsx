@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../styles/ui-component.css";
+import * as Icons from "../../assets/icon.jsx";
 import Tooltip from "./ToolTip";
 
 /**
@@ -50,4 +51,47 @@ const IconButton = ({ children, onClick, id, toolTip, isActive }) => {
   );
 };
 
-export { AppButton, IconButton };
+const LinkButton = ({ text, url, onEdit, onDelete }) => {
+  const [hover, setHover] = useState(false);
+
+  const handleClick = () => {
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
+  return (
+    <div
+      className="link-button-container"
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{ display: "inline-block", position: "relative" }}
+    >
+      <button className="link-button" onClick={handleClick}>
+        {text}
+      </button>
+      {hover && (
+        <div
+          className="link-options"
+          style={{
+            position: "absolute",
+            top: "100%",
+            left: "0",
+            background: "white",
+            border: "1px solid #ccc",
+            padding: "4px",
+          }}
+        >
+          <IconButton onClick={onEdit} id="linkOnEditBtn">
+            <Icons.EditIcon />
+          </IconButton>
+          <IconButton onClick={onDelete} id="linkOnDelBtn">
+            <Icons.DeleteIcon />
+          </IconButton>
+
+          <button onClick={onDelete}>Delete</button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export { AppButton, IconButton, LinkButton };

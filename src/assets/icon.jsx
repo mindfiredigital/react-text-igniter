@@ -198,6 +198,7 @@ export const EditIcon = () => (
     <path d="M5 21h14c1.103 0 2-.897 2-2v-8.668l-2 2V19H8.158c-.026 0-.053.01-.079.01-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2z"></path>
   </svg>
 );
+
 export const DeleteIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
