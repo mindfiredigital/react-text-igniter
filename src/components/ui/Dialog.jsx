@@ -148,8 +148,9 @@ const ImageUploadSelectionDialog = ({ isOpen, onClose, onSubmit, title, children
  * @param {React.ReactNode} props.children - Additional dialog content
  * @returns {JSX.Element|null} The rendered FileUrlDialog component or null if not open
  */
-const FileUrlDialog = ({ isOpen, onClose, onSubmit, title, children }) => {
-  const [url, setUrl] = useState("");
+const FileUrlDialog = ({ isOpen, onClose, onSubmit, linkText, link, children }) => {
+  const [url, setUrl] = useState(link || ""); // Initialize with link if provided
+  const [text, setText] = useState(linkText || ""); // Initialize with title if provided
   const [error, setError] = useState("");
 
   const closeDialog = () => {
@@ -158,20 +159,33 @@ const FileUrlDialog = ({ isOpen, onClose, onSubmit, title, children }) => {
   };
 
   const resetToDefault = () => {
-    setUrl("");
+    setUrl(link || "");
+    setText(linkText || "");
     setError("");
   };
 
-  const handleImageUrl = (event) => {
+  const handleLinkUrl = (event) => {
     setUrl(event.target.value);
   };
 
+  const handleLinkText = (event) => {
+    setText(event.target.value);
+  };
+
   const handleSubmit = () => {
-    if (url) {
-      onSubmit(url);
-      onClose();
+    let errorMessage = "";
+    if (!url) {
+      errorMessage += "Please provide a file URL. ";
+    }
+    if (!text) {
+      errorMessage += "Please provide a title for the link.";
+    }
+    if (errorMessage) {
+      setError(errorMessage);
     } else {
-      setError("Please provide file url");
+      onSubmit({ text, url }); // Pass both url and title
+      console.log("#########", linkText, url, "#########");
+      onClose();
     }
   };
 
@@ -181,7 +195,7 @@ const FileUrlDialog = ({ isOpen, onClose, onSubmit, title, children }) => {
     <div className="dialog-overlay">
       <div className="dialog-container">
         <div className="dialog-header">
-          {title}
+          {"Enter Title"}
           <IconButton onClick={onClose} id="dialogClose">
             <Icons.CloseIcon />
           </IconButton>
@@ -191,9 +205,18 @@ const FileUrlDialog = ({ isOpen, onClose, onSubmit, title, children }) => {
             <input
               type="text"
               className="image-url-input"
+              placeholder="Link Text"
+              value={text}
+              onChange={handleLinkText}
+            />
+          </div>
+          <div className="container">
+            <input
+              type="text"
+              className="image-url-input"
               placeholder="Paste image URL"
               value={url}
-              onChange={handleImageUrl}
+              onChange={handleLinkUrl}
             />
             {error && <p className="error">{error}</p>}
           </div>

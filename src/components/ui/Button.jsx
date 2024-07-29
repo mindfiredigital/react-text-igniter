@@ -68,6 +68,7 @@ const LinkButton = ({ text, url, onEdit, onDelete }) => {
       <button className="link-button" onClick={handleClick}>
         {text}
       </button>
+    
       {hover && (
         <div
           className="link-options"
@@ -75,19 +76,18 @@ const LinkButton = ({ text, url, onEdit, onDelete }) => {
             position: "absolute",
             top: "100%",
             left: "0",
+            minWidth: "80px",
             background: "white",
             border: "1px solid #ccc",
             padding: "4px",
           }}
         >
-          <IconButton onClick={onEdit} id="linkOnEditBtn">
-            <Icons.EditIcon />
-          </IconButton>
-          <IconButton onClick={onDelete} id="linkOnDelBtn">
-            <Icons.DeleteIcon />
-          </IconButton>
-
-          <button onClick={onDelete}>Delete</button>
+          <button className="toolbarBtn" onClick={onEdit} id="linkEditBtn">
+            Edit
+          </button>
+          <button className="toolbarBtn" onClick={onDelete} id="linkDelBtn">
+            Delete
+          </button>
         </div>
       )}
     </div>

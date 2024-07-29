@@ -274,7 +274,11 @@ const Toolbar = ({ features }) => {
           isOpen={isUrlDialogOpen}
           onClose={() => setUrlDialogOpen(false)}
           title="Provide URL"
-          onSubmit={(url) => addLink("createLink", url)}
+          linkText=""
+          link=""
+          onSubmit={(data) => {
+            addLink(data.text, data.url);
+          }}
         />
       </>
     ),
