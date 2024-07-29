@@ -1,5 +1,7 @@
 import { useCallback } from "react";
 import featuresData from "../assets/feature.json";
+import { createRoot } from 'react-dom/client';
+import { LinkButton } from "../components/ui/Button";
 
 /**
  * Custom hook for handling editor formatting
@@ -152,5 +154,73 @@ export const useEditorFormatting = (editorRef) => {
       newElement.classList.add("active");
     }
   }, []);
-  return { formatText, updateDataAttributes, applyHeading, addImageOrVideo };
+
+  
+// const addLink = useCallback(
+//   (linkText, linkUrl) => {
+//     const activeBlock = document.querySelector(".editor-block.active");
+//     if (activeBlock) {
+//       const selection = window.getSelection();
+//       const range = selection.getRangeAt(0);
+
+//       const anchor = document.createElement("a");
+//       anchor.href = linkUrl;
+//       anchor.textContent = linkText;
+//       anchor.target = "_blank";
+//       anchor.cursor = "pointer";
+//       anchor.rel = "noopener noreferrer"; // Security measures for external links
+
+//       const parentElement = document.createElement("div");
+//       parentElement.appendChild(anchor);
+//       // range.deleteContents(); // Remove the selected text, if any
+//       // range.insertNode(anchor);
+
+//       // // Move the cursor to the end of the link
+//       range.setStartAfter(anchor);
+//       range.setEndAfter(anchor);
+//       selection.removeAllRanges();
+//       selection.addRange(range);
+
+//       // Ensure the link is part of the active block's content
+//       // if (!activeBlock.contains(anchor)) {
+//       activeBlock.appendChild(parentElement);
+//       // }
+
+//       // Optionally update the data-type attribute of the block
+//       //updateDataAttributes(activeBlock);
+//     }
+//   },
+//   [updateDataAttributes]
+// );
+
+  const addLink = useCallback(
+    (linkText, linkUrl) => {
+      const activeBlock = document.querySelector(".editor-block.active");
+      if (activeBlock) {
+        // Create a container div for the React component
+        const container = document.createElement("div");
+
+        const root = createRoot(container);
+        root.render(<LinkButton text={linkText} url={linkUrl} />);
+        
+        activeBlock.appendChild(container);
+
+        const newLine = document.createElement("p");
+        newLine.classList.add("editor-block");
+        newLine.setAttribute("contentEditable", "true");
+        newLine.innerHTML = "<br>";
+
+        activeBlock.parentNode.insertBefore(newLine, container.nextSibling);
+
+        // Optionally, make the new line the active block
+        container.classList.remove("active");
+        newLine.classList.add("active");
+
+        newLine.focus();
+      }
+    },
+    [updateDataAttributes]
+  );
+
+  return { formatText, updateDataAttributes, applyHeading, addImageOrVideo, addLink };
 };

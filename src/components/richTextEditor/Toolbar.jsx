@@ -51,6 +51,7 @@ const Toolbar = ({ features }) => {
     addTableColumn,
     insertLayout,
     addImageOrVideo,
+    addLink,
   } = useEditor();
 
   /**
@@ -273,7 +274,7 @@ const Toolbar = ({ features }) => {
           isOpen={isUrlDialogOpen}
           onClose={() => setUrlDialogOpen(false)}
           title="Provide URL"
-          onSubmit={(url) => handleFormatText("createLink", url)}
+          onSubmit={(url) => addLink("createLink", url)}
         />
       </>
     ),
