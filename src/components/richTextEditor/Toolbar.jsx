@@ -6,6 +6,7 @@ import { ImageUploadSelectionDialog, FileUrlDialog } from "../ui/Dialog.jsx";
 import { getJson } from "../../utils/editorUtil.jsx";
 import { IconDropDown } from "../ui/Dropdown.jsx";
 import { usePreviewMode } from "../../hooks/usePreviewMode.jsx";
+import { ParagraphStyleButton } from "../ui/toolBar/ParagraphStyleButton.jsx";
 
 /**
  * Toolbar Component
@@ -53,6 +54,13 @@ const Toolbar = ({ features }) => {
     addImageOrVideo,
     addLink,
   } = useEditor();
+
+  
+  const [selectedStyle, setSelectedStyle] = useState("");
+
+  const handleChange = (value) => {
+    setSelectedStyle(value);
+  };
 
   /**
    * Handles image submission from the dialog
@@ -324,20 +332,34 @@ const Toolbar = ({ features }) => {
       </IconButton>
     ),
     heading: (
-      <IconDropDown
-        id="headingDropdown"
-        selected={currentHeading}
+      <ParagraphStyleButton
         items={[
-          { value: "p", label: "Paragraph" },
-          { value: "h1", label: "Heading 1" },
-          { value: "h2", label: "Heading 2" },
-          { value: "h3", label: "Heading 3" },
-          { value: "h4", label: "Heading 4" },
-          { value: "h5", label: "Heading 5" },
-          { value: "h6", label: "Heading 6" },
+          { value: "normal", label: "Normal" },
+          { value: "paragraph", label: "Paragraph" },
+          { value: "heading1", label: "Heading 1" },
+          { value: "heading2", label: "Heading 2" },
+          { value: "heading3", label: "Heading 3" },
+          { value: "title", label: "Title" },
+          { value: "subtitle", label: "Subtitle" },
         ]}
-        onChange={handleHeadingChange}
+        selected={selectedStyle}
+        onChange={handleChange}
+        id="paragraph-style-button"
       />
+      // <IconDropDown
+      //   id="headingDropdown"
+      //   selected={currentHeading}
+      //   items={[
+      //     { value: "p", label: "Paragraph" },
+      //     { value: "h1", label: "Heading 1" },
+      //     { value: "h2", label: "Heading 2" },
+      //     { value: "h3", label: "Heading 3" },
+      //     { value: "h4", label: "Heading 4" },
+      //     { value: "h5", label: "Heading 5" },
+      //     { value: "h6", label: "Heading 6" },
+      //   ]}
+      //   onChange={handleHeadingChange}
+      // />
     ),
     htmlMode: (
       <IconButton onClick={toggleHtmlMode}>
