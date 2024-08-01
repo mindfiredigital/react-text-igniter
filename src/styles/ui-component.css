@@ -7,11 +7,11 @@
   --hover-bg: black;
   --hover-color: black;
   --border-color: black;
-  --border-hover-color: gray;
+  --border-hover-color: rgb(185, 183, 183);
   --cancel-border-hover: red;
   --overlay-bg: #00000080;
   --container-bg: #f0f0f0;
-  --common-padding: 10px 14px;
+  --common-padding: 6px 10px;
   --common-hover-padding: 8px 12px;
   /* Box shadow variable */
   --box-shadow: 2px 6px 8px rgba(0, 0, 0, 0.4);
@@ -195,7 +195,7 @@
   position: absolute;
   z-index: 20;
   /*bottom: 125%; Position the tooltip above the element */
-  top: 105%; /* Position the tooltip below the element */
+  top: 95%; /* Position the tooltip below the element */
   left: 50%;
   transform: translateX(-50%);
   white-space: nowrap;

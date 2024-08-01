@@ -33,6 +33,7 @@ const IconDropDown = ({ items, onChange, selected, id, openRight }) => {
   };
 
   return (
+    // this same button can be used as inline button and can be opened on the right side.
     <div className={`icon-dropdown ${openRight ? "open-right" : ""}`}>
       <button className="dropbtn" id={id} onClick={handleButtonClick}>
         {selectedLabel || "Select Value"}
