@@ -142,9 +142,22 @@ export const useEditorFormatting = (editorRef) => {
 
   // Applies a heading tag to the active block
   const applyHeading = useCallback((heading) => {
+    
     const activeBlock = document.querySelector(".editor-block.active");
+        const styleToElementMap = {
+          normal: "div",
+          paragraph: "p",
+          heading1: "h1",
+          heading2: "h2",
+          heading3: "h3",
+          heading4: "h4",
+          title: "h1",
+          subtitle: "h2",
+          strong: "strong",
+        };
+        console.log("############", styleToElementMap[heading], "############");
     if (activeBlock) {
-      const newElement = document.createElement(heading);
+      const newElement = document.createElement(styleToElementMap[heading]);
       newElement.innerHTML = activeBlock.innerHTML;
       newElement.className = activeBlock.className;
       newElement.setAttribute("contentEditable", "true");

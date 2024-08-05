@@ -15,8 +15,8 @@ import "../../styles/rich-text-editor.css";
  */
 const RichTextEditor = ({ features }) => (
   <EditorProvider>
+    <Toolbar features={features} />
     <div className="editor-container">
-      <Toolbar features={features} />
       <Editor />
     </div>
   </EditorProvider>

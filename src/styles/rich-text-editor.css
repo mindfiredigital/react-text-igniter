@@ -1,17 +1,19 @@
 /* Main editor container */
 .editor-container {
-  width: 80%;
+  width: 90%;
   margin: auto;
+  background-color: white;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   position: relative;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 /* Toolbar styles */
 .toolbar {
   display: flex;
+  background-color: white;
   justify-content: flex-start;
-  margin-bottom: 10px;
+  margin: 10px;
   flex-wrap: wrap;
 }
 

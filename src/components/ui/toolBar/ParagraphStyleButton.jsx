@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../../styles/toolbar-components.css";
+import "../../../styles/ui-component.css";
 
 /**
  * ParagraphStyleButton Component
@@ -35,21 +35,20 @@ const ParagraphStyleButton = ({ items, onChange, selected, id, openRight }) => {
 
   return (
     <div className={`icon-dropdown ${openRight ? "open-right" : ""}`}>
-      <button className={`dropbtn ${selected}`} id={id} onClick={handleButtonClick}>
+      {/* <button className={`dropbtn ${selected}`} id={id} onClick={handleButtonClick}> */}
+      <button className={`dropbtn`} id={id} onClick={handleButtonClick}>
         {selectedLabel || "Select Value"}
       </button>
       {isOpen && (
         <div className="icon-dropdown-content">
           {items.map((item, index) => (
-            <div className="dropdown-item">
-              <div
-                key={index}
-                className={`${item.value}`}
-                onClick={() => handleItemClick(item.value, item.label)}
-              >
-                {item.icon && <span className="dropdown-icon">{item.icon}</span>}
-                {item.label}
-              </div>
+            <div
+              key={index}
+              className={`dropdown-item ${item.value}`}
+              onClick={() => handleItemClick(item.value, item.label)}
+            >
+              {item.icon && <span className="dropdown-icon">{item.icon}</span>}
+              {item.label}
             </div>
           ))}
         </div>

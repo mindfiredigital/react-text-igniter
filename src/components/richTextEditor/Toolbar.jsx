@@ -55,11 +55,13 @@ const Toolbar = ({ features }) => {
     addLink,
   } = useEditor();
 
-  
+
   const [selectedStyle, setSelectedStyle] = useState("");
 
   const handleChange = (value) => {
     setSelectedStyle(value);
+    changeHeading(value);
+    applyHeading(value);
   };
 
   /**
@@ -339,8 +341,10 @@ const Toolbar = ({ features }) => {
           { value: "heading1", label: "Heading 1" },
           { value: "heading2", label: "Heading 2" },
           { value: "heading3", label: "Heading 3" },
+          { value: "heading4", label: "Heading 4" },
           { value: "title", label: "Title" },
           { value: "subtitle", label: "Subtitle" },
+          { value: "strong", label: "Strong" },
         ]}
         selected={selectedStyle}
         onChange={handleChange}

@@ -13,6 +13,7 @@
   --container-bg: #f0f0f0;
   --common-padding: 6px 10px;
   --common-hover-padding: 8px 12px;
+  --common-hover-border: 2px solid var(--border-color);
   /* Box shadow variable */
   --box-shadow: 2px 6px 8px rgba(0, 0, 0, 0.4);
 }
@@ -31,7 +32,7 @@
   transition: all 0.3s ease;
   display: inline-block;
   margin: 2px;
-  border: 2px solid var(--border-color);
+  border: var(--common-hover-border);
 }
 
 /* Primary button styles */
@@ -67,7 +68,7 @@
   padding: 2px;
   text-align: center;
   align-items: center;
-  background-color: white;
+  background: var(--primary-bg);
   border: none;
   cursor: pointer;
 }
@@ -75,7 +76,7 @@
 .toolbarBtnDiv:hover {
   padding: 0px;
   background-color: #f1f1f1;
-  border: 2px solid var(--border-hover-color);
+  border: var(--common-hover-border);
   border-radius: 4px;
 }
 
@@ -122,7 +123,6 @@
   padding: var(--common-padding);
   text-decoration: none;
   background-color: white;
-  font-size: 14px;
   border: none;
   cursor: pointer;
 }
@@ -148,7 +148,6 @@
 .icon-dropdown-content .dropdown-item {
   color: black;
   padding: var(--common-padding);
-  font-size: 12px;
   text-decoration: none;
   display: block;
   text-align: left;
@@ -157,7 +156,6 @@
 .icon-dropdown-content .dropdown-item:hover {
   padding: var(--common-hover-padding);
   background-color: #f1f1f1;
-  font-size: 12px;
   border: 2px solid var(--border-hover-color);
   border-radius: 4px;
 }
@@ -172,6 +170,57 @@
   top: 0;
 }
 
+
+/* Specific styles for each type */
+.normal {
+  font-weight: normal;
+}
+
+.paragraph {
+  font-size: 14px;
+}
+
+.heading1 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.heading2 {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.heading3 {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.heading4 {
+  font-size: 12px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  font-size: 14px;
+}
+
+.strong {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.book-title {
+    font-size: 12px;
+    font-weight: bold;
+    font-style: italic;
+}
 /* 
  ======================================== 
  TOOLTIP
