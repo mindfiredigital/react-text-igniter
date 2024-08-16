@@ -1,45 +1,41 @@
-import React, {useState , createContext, useContext, useRef } from "react";
+import React, { createContext, useContext, useRef } from "react";
 import { useEditorFormatting } from "../hooks/useEditorFormatting.jsx";
 import { useEditorState } from "../hooks/useEditorState.jsx";
 import { useHeadingState } from "../hooks/useHeadingState.jsx";
 import { useTableOperations } from "../hooks/useTableOperation.jsx";
+import { useHtmlMode } from "../hooks/useHtmlMode.jsx";
 
 // Create a context for the editor
 const EditorContext = createContext();
 
-/**
- * EditorProvider Component
- * 
- * This component provides the editor context to its children.
- * It sets up the editor ref and combines various editor-related hooks.
- * 
- * @param {Object} props - Component props
- * @param {React.ReactNode} props.children - Child components
- * @returns {JSX.Element} The EditorProvider component
- */
 export const EditorProvider = ({ children }) => {
   // Create a ref for the editor element
   const editorRef = useRef(null);
 
-  // Use the editor formatting hook
+  // Use custom hooks to manage different aspects of the editor
   const { formatText, updateDataAttributes, applyHeading, addImageOrVideo, addLink } =
     useEditorFormatting(editorRef);
-
-  // Use the editor state hook
   const state = useEditorState(editorRef, updateDataAttributes);
-
   const headingState = useHeadingState();
-
-  const { insertTable, addTableRow, addTableColumn,insertLayout } = useTableOperations(editorRef);
-
-  const [isHtmlMode, setIsHtmlMode] = useState(false);
-
-  const toggleHtmlMode = () => {
-    setIsHtmlMode(!isHtmlMode);
-  };
+  const { insertTable, addTableRow, addTableColumn, insertLayout } = useTableOperations(editorRef);
+  const { isHtmlMode, toggleHtmlMode } = useHtmlMode();
 
   // Combine all editor-related values and functions
-  const editorValue = { ...state, ...headingState , applyHeading , formatText, editorRef, addImageOrVideo, addLink, insertTable, addTableRow , addTableColumn,insertLayout, isHtmlMode , toggleHtmlMode};
+  const editorValue = { 
+    ...state, 
+    ...headingState, 
+    applyHeading, 
+    formatText, 
+    editorRef, 
+    addImageOrVideo, 
+    addLink, 
+    insertTable, 
+    addTableRow, 
+    addTableColumn, 
+    insertLayout, 
+    isHtmlMode, 
+    toggleHtmlMode 
+  };
 
   return (
     <EditorContext.Provider value={editorValue}>
@@ -48,11 +44,5 @@ export const EditorProvider = ({ children }) => {
   );
 };
 
-/**
- * useEditor Hook
- * 
- * A custom hook to access the editor context.
- * 
- * @returns {Object} The editor context value
- */
+// Custom hook to use the editor context
 export const useEditor = () => useContext(EditorContext);

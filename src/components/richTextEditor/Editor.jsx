@@ -2,63 +2,50 @@ import React, { useState, useCallback, useEffect } from "react";
 import { useEditor } from "../../contexts/editorContext.jsx";
 import { AppButton } from "../ui/Button.jsx";
 import "../../index.css"
-/**
- * Editor Component
- *
- * This component represents the main editable area of the text editor.
- * It uses the useEditor hook to access editor-related functionality and state.
- *
- * @returns {JSX.Element} The rendered Editor component
- */
-const Editor = () => {
-  // Destructure necessary values and functions from the useEditor hook
-  const { editorRef, wordCount, charCount, isHtmlMode, toggleHtmlMode } = useEditor();
-  const [content, setContent] = useState(
-    '<div class="editor-block active" contenteditable="true" data-type="normal" placeholder="Start typing..."></div>'
-  );
 
-  // Callback function to handle changes in normal mode (contenteditable)
+const Editor = () => {
+  // Access editor-related functions and state from the context
+  const { editorRef, wordCount, charCount, isHtmlMode, toggleHtmlMode } = useEditor();
+  
+  // State to hold the editor's content
+  const [content, setContent] = useState('');
+
+  // Handler for changes in normal (rich text) mode
   const handleNormalModeChange = useCallback((event) => {
     // setContent(event.target.innerHTML);
   }, []);
 
-  // Callback function to handle changes in HTML mode (textarea)
+  // Handler for changes in HTML mode
   const handleHtmlModeChange = useCallback((event) => {
     setContent(event.target.value);
   }, []);
 
-  // Function to move the cursor to the end of the content in normal mode
-  const moveCursorToEnd = useCallback(() => {
+  // Effect to focus the editor when switching modes
+  useEffect(() => {
     if (editorRef.current) {
-      const range = document.createRange();
-      const selection = window.getSelection();
-      range.selectNodeContents(editorRef.current);
-      range.collapse(false);
-      selection.removeAllRanges();
-      selection.addRange(range);
       editorRef.current.focus();
     }
-  }, [editorRef]);
+  }, [isHtmlMode]);
 
-  // Effect to move the cursor to the end when switching from HTML mode to normal mode
-  useEffect(() => {
-    if (!isHtmlMode) {
-      moveCursorToEnd();
-    }
-  }, [content, isHtmlMode, moveCursorToEnd]);
   return (
     <>
-      {/* Editor area */}
+      {/* Main editor area */}
       <div
         id="editor"
         ref={editorRef}
         contentEditable={!isHtmlMode}
-        className={isHtmlMode ? "html-mode" : ""}
+        className={`editor-content ${isHtmlMode ? "html-mode" : ""}`}
         onInput={handleNormalModeChange}
-        style={{ display: isHtmlMode ? "none" : "block" }}
+        style={{ 
+          display: isHtmlMode ? "none" : "block",
+          minHeight: "300px",
+          padding: "10px",
+          overflowY: "auto"
+        }}
         dangerouslySetInnerHTML={{ __html: content }}
       />
-      {/* HTML mode textarea */}
+      
+      {/* HTML mode textarea and convert button */}
       {isHtmlMode && (
         <>
           <textarea
@@ -74,11 +61,11 @@ const Editor = () => {
               resize: "vertical",
             }}
           />
-          {/* Button to toggle between HTML mode and normal mode */}
           <AppButton onClick={toggleHtmlMode}>Convert</AppButton>
         </>
       )}
-      {/* Editor footer showing word and character counts */}
+      
+      {/* Editor footer with word and character count */}
       <div className="editor-footer" style={{ display: isHtmlMode ? "none" : "block" }}>
         <span>Words: {wordCount}</span> | <span>Chars: {charCount}</span>
       </div>
