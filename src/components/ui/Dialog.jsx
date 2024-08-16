@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../styles/ui-component.css";
 import { AppButton, IconButton } from "./Button.jsx";
 import * as Icons from "../../assets/icon.jsx";
@@ -17,6 +17,13 @@ const ImageUploadSelectionDialog = ({
   // valid extensions for image and video.
   const validImageExtensions = ["jpg", "jpeg", "png", "gif", "bmp", "webp"];
   const validVideoExtensions = ["mp4", "avi", "mov", "wmv", "flv", "webm"];
+
+  // Reset dialog state when it is opened
+  useEffect(() => {
+    if (isOpen) {
+      resetToDefault();
+    }
+  }, [isOpen]);
 
   const closeDialog = () => {
     resetToDefault();

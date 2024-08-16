@@ -7,8 +7,7 @@ export const useEditorFormatting = (editorRef) => {
     const dataType = [];
 
     // Check for bold text
-    if (styles.fontWeight === "bold" || +styles.fontWeight >= 600)
-      dataType.push("bold");
+    if (styles.fontWeight === "bold" || +styles.fontWeight >= 600) dataType.push("bold");
 
     // Check for italic text
     if (styles.fontStyle === "italic") dataType.push("italic");
@@ -35,9 +34,7 @@ export const useEditorFormatting = (editorRef) => {
       const currentStyles = new Set(currentDataType.split("-"));
 
       const toggleStyle = (style) => {
-        currentStyles.has(style)
-          ? currentStyles.delete(style)
-          : currentStyles.add(style);
+        currentStyles.has(style) ? currentStyles.delete(style) : currentStyles.add(style);
       };
 
       // Handle different formatting commands
@@ -59,18 +56,36 @@ export const useEditorFormatting = (editorRef) => {
       }
 
       // Update the data-type attribute
-      activeBlock.setAttribute(
-        "data-type",
-        Array.from(currentStyles).join("-") || "normal"
-      );
+      activeBlock.setAttribute("data-type", Array.from(currentStyles).join("-") || "normal");
     }
   }, []);
 
   const addImageOrVideo = useCallback((file, imageUrl) => {
-    const activeBlock = document.querySelector(".editor-block.active");
+    const editorContainer = document.getElementById("editor");
+    var activeBlock = document.querySelector(".editor-block.active");
+
+    if (!activeBlock) {
+      const div = document.createElement("div");
+      div.className = "editor-block active";
+      div.contentEditable = true;
+      div.dataset.type = "normal";
+      editorContainer.appendChild(div);
+      activeBlock = div;
+    }
+
     const appendMedia = (element) => {
       element.style.maxWidth = "100%";
       activeBlock.appendChild(element);
+
+      // Create a new line for the user to continue writing
+      const newLine = document.createElement("p");
+      newLine.classList.add("editor-block");
+      newLine.innerHTML = "<br>"; // Ensures the new paragraph has some content so it is not collapsed
+      activeBlock.parentNode.insertBefore(newLine, activeBlock.nextSibling);
+
+      // Optionally, make the new line the active block
+      activeBlock.classList.remove("active");
+      newLine.classList.add("active");
     };
 
     if (file) {
@@ -114,10 +129,7 @@ export const useEditorFormatting = (editorRef) => {
       newElement.innerHTML = activeBlock.innerHTML;
       newElement.className = activeBlock.className;
       newElement.setAttribute("contentEditable", "true");
-      newElement.setAttribute(
-        "data-type",
-        activeBlock.getAttribute("data-type") || "normal"
-      );
+      newElement.setAttribute("data-type", activeBlock.getAttribute("data-type") || "normal");
       activeBlock.parentNode.replaceChild(newElement, activeBlock);
       newElement.focus();
       newElement.classList.add("active");
