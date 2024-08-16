@@ -6,16 +6,6 @@ import { ImageUploadSelectionDialog, FileUrlDialog } from "../ui/Dialog.jsx";
 import { getJson } from "../../utils/editorUtil.jsx";
 import { IconDropDown } from "../ui/Dropdown.jsx";
 
-/**
- * Toolbar Component
- *
- * This component renders a toolbar with various formatting and action buttons for the editor.
- * It uses the useEditor hook to access editor-related functionality.
- *
- * @param {Object} props - Component props
- * @param {Array} props.features - Array of feature names to be displayed in the toolbar
- * @returns {JSX.Element} The rendered Toolbar component
- */
 const Toolbar = ({ features }) => {
   // State for managing dialog visibility
   const [isImageDialogOpen, setImageDialogOpen] = useState(false);
@@ -49,12 +39,7 @@ const Toolbar = ({ features }) => {
     addImageOrVideo,
   } = useEditor();
 
-  /**
-   * Handles image submission from the dialog
-   * @param {Object} param0 - Destructured object containing file and imageUrl
-   * @param {File} param0.file - The selected image file
-   * @param {string} param0.imageUrl - The entered image URL
-   */
+  // Handles image submission from the dialog
   const handleImageSubmit = ({ file, fileUrl }) => {
     addImageOrVideo(file, fileUrl);
   };
@@ -118,44 +103,44 @@ const Toolbar = ({ features }) => {
   const handleTableOperation = (e) => {
     const operation = e.target.value;
     switch (operation) {
-      case 'insert':
+      case "insert":
         insertTable(2, 2);
         break;
-      case 'addRow':
+      case "addRow":
         addTableRow();
         break;
-      case 'addColumn':
+      case "addColumn":
         addTableColumn();
         break;
       default:
         break;
     }
-    e.target.value = ''; // Reset select after operation
+    e.target.value = ""; // Reset select after operation
   };
 
   // Handles layout button clicks, triggering layout changes in the editor
   const handleLayoutOperation = (e) => {
     const layout = e.target.value;
     switch (layout) {
-      case 'single':
+      case "single":
         insertLayout([100]);
         break;
-      case 'two-equal':
+      case "two-equal":
         insertLayout([50, 50]);
         break;
-      case 'three-equal':
+      case "three-equal":
         insertLayout([33.33, 33.33, 33.33]);
         break;
-      case '40-60':
+      case "40-60":
         insertLayout([40, 60]);
         break;
-      case '60-40':
+      case "60-40":
         insertLayout([60, 40]);
         break;
       default:
         break;
     }
-    e.target.value = ''; // Reset select after operation
+    e.target.value = ""; // Reset select after operation
   };
 
   // Object containing all available toolbar buttons
@@ -190,7 +175,10 @@ const Toolbar = ({ features }) => {
       </IconButton>
     ),
     orderedList: (
-      <IconButton onClick={() => handleFormatText("insertOrderedList")} toolTip={"Ordered List"}>
+      <IconButton
+        onClick={() => handleFormatText("insertOrderedList")}
+        toolTip={"Ordered List"}
+      >
         <Icons.OrderedListIcon />
       </IconButton>
     ),
@@ -203,23 +191,35 @@ const Toolbar = ({ features }) => {
       </IconButton>
     ),
     justifyLeft: (
-      <IconButton onClick={() => handleFormatText("justifyLeft")} toolTip={"Justify List"}>
+      <IconButton
+        onClick={() => handleFormatText("justifyLeft")}
+        toolTip={"Justify List"}
+      >
         <Icons.AlignLeftIcon />
       </IconButton>
     ),
     justifyCenter: (
-      <IconButton onClick={() => handleFormatText("justifyCenter")} toolTip={"Justify Center"}>
+      <IconButton
+        onClick={() => handleFormatText("justifyCenter")}
+        toolTip={"Justify Center"}
+      >
         <Icons.AlignCenterIcon />
       </IconButton>
     ),
     justifyRight: (
-      <IconButton onClick={() => handleFormatText("justifyRight")} toolTip={"Justify Right"}>
+      <IconButton
+        onClick={() => handleFormatText("justifyRight")}
+        toolTip={"Justify Right"}
+      >
         <Icons.AlignRightIcon />
       </IconButton>
     ),
     createLink: (
       <>
-        <IconButton onClick={() => setUrlDialogOpen(true)} toolTip={"Create Link"}>
+        <IconButton
+          onClick={() => setUrlDialogOpen(true)}
+          toolTip={"Create Link"}
+        >
           <Icons.LinkIcon />
         </IconButton>
         <FileUrlDialog
@@ -232,7 +232,10 @@ const Toolbar = ({ features }) => {
     ),
     insertImage: (
       <>
-        <IconButton onClick={() => setImageDialogOpen(true)} toolTip={"Insert Image/video"}>
+        <IconButton
+          onClick={() => setImageDialogOpen(true)}
+          toolTip={"Insert Image/video"}
+        >
           <Icons.ImageIcon />
         </IconButton>
         <ImageUploadSelectionDialog
@@ -244,7 +247,10 @@ const Toolbar = ({ features }) => {
       </>
     ),
     getHtml: (
-      <IconButton onClick={() => console.log(editorRef.current.innerHTML)} toolTip={"Get HTML"}>
+      <IconButton
+        onClick={() => console.log(editorRef.current.innerHTML)}
+        toolTip={"Get HTML"}
+      >
         Get HTML
       </IconButton>
     ),
@@ -254,12 +260,18 @@ const Toolbar = ({ features }) => {
       </IconButton>
     ),
     superscript: (
-      <IconButton onClick={() => handleFormatText("superscript")} toolTip={"Superscript"}>
+      <IconButton
+        onClick={() => handleFormatText("superscript")}
+        toolTip={"Superscript"}
+      >
         <Icons.SuperScriptIcon />
       </IconButton>
     ),
     subscript: (
-      <IconButton onClick={() => handleFormatText("subscript")} toolTip={"Subscript"}>
+      <IconButton
+        onClick={() => handleFormatText("subscript")}
+        toolTip={"Subscript"}
+      >
         <Icons.SubScriptIcon />
       </IconButton>
     ),
@@ -314,21 +326,21 @@ const Toolbar = ({ features }) => {
       //   <option value="40-60">40-60</option>
       //   <option value="60-40">60-40</option>
       // </select>
-        <IconDropDown
-          id="layoutDropdown"
-          selected="single"
-          items={[
-            { value: "single", label: "Single Column" },
-            { value: "two-equal", label: "Two Columns" },
-            { value: "three-equal", label: "Three Columns" },
-            { value: "40-60", label: "40-60" },
-            { value: "60-40", label: "60-40" },
-          ]}
-          onChange={handleLayoutOperation}
-        >
-          <Icons.LayoutIcon />
-        </IconDropDown>
-       ),
+      <IconDropDown
+        id="layoutDropdown"
+        selected="single"
+        items={[
+          { value: "single", label: "Single Column" },
+          { value: "two-equal", label: "Two Columns" },
+          { value: "three-equal", label: "Three Columns" },
+          { value: "40-60", label: "40-60" },
+          { value: "60-40", label: "60-40" },
+        ]}
+        onChange={handleLayoutOperation}
+      >
+        <Icons.LayoutIcon />
+      </IconDropDown>
+    ),
   };
 
   return (

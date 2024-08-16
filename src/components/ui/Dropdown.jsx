@@ -1,19 +1,6 @@
 import React, { useState } from "react";
 import "../../styles/ui-component.css";
 
-/**
- * IconButton Component
- *
- * A button component specifically designed for icons in the toolbar.
- *
- * @param {Object} props - Component props
- * @param {React.ReactNode} props.children - Button content (usually an icon)
- * @param {Function} props.onClick - Click event handler
- * @param {string} props.id - Button ID
- * @param {string} props.openRight - To show option on right by default it will be at bottom.
- * @returns {JSX.Element} The rendered IconButton component
- */
-
 const IconDropDown = ({ items, onChange, selected, id, openRight }) => {
   const [selectedLabel, setSelectedLabel] = useState(() => {
     const selectedItem = items.find((item) => item.value === selected);

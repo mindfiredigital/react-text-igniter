@@ -3,13 +3,6 @@ import { useReducer, useEffect } from "react";
 // Initial state for the editor
 const initialState = { wordCount: 0, charCount: 0 };
 
-/**
- * Reducer function for managing editor state
- * 
- * @param {Object} state - Current state
- * @param {Object} action - Action object
- * @returns {Object} New state
- */
 const reducer = (state, action) => {
   switch (action.type) {
     case "SET_COUNTS":
@@ -23,13 +16,6 @@ const reducer = (state, action) => {
   }
 };
 
-/**
- * Custom hook for managing editor state
- * 
- * @param {React.RefObject} editorRef - Reference to the editor element
- * @param {Function} updateDataAttributes - Function to update data attributes
- * @returns {Object} Current editor state
- */
 export const useEditorState = (editorRef, updateDataAttributes) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -38,7 +24,7 @@ export const useEditorState = (editorRef, updateDataAttributes) => {
 
     /**
      * Handles click events within the editor
-     * 
+     *
      * @param {Event} event - Click event
      */
     const handleClick = (event) => {
@@ -46,7 +32,7 @@ export const useEditorState = (editorRef, updateDataAttributes) => {
       editor
         .querySelectorAll(".editor-block")
         .forEach((block) => block.classList.remove("active"));
-      
+
       // Add active class to clicked block
       if (event.target.classList.contains("editor-block")) {
         event.target.classList.add("active");
@@ -62,7 +48,7 @@ export const useEditorState = (editorRef, updateDataAttributes) => {
         .trim()
         .split(/\s+/)
         .filter((word) => word.length > 0);
-      
+
       // Update word and character counts
       dispatch({
         type: "SET_COUNTS",

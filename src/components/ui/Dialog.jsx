@@ -3,20 +3,13 @@ import "../../styles/ui-component.css";
 import { AppButton, IconButton } from "./Button.jsx";
 import * as Icons from "../../assets/icon.jsx";
 
-/**
- * ImageUploadSelectionDialog Component
- *
- * A dialog component for selecting an image either by URL or file upload from computer.
- *
- * @param {Object} props - Component props
- * @param {boolean} props.isOpen - Whether the dialog is open
- * @param {Function} props.onClose - Function to close the dialog
- * @param {Function} props.onSubmit - Function to handle image submission
- * @param {string} props.title - Dialog title
- * @param {React.ReactNode} props.children - Additional dialog content
- * @returns {JSX.Element|null} The rendered ImageUploadSelectionDialog component or null if not open
- */
-const ImageUploadSelectionDialog = ({ isOpen, onClose, onSubmit, title, children }) => {
+const ImageUploadSelectionDialog = ({
+  isOpen,
+  onClose,
+  onSubmit,
+  title,
+  children,
+}) => {
   const [file, setFile] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [error, setError] = useState("");
@@ -128,19 +121,6 @@ const ImageUploadSelectionDialog = ({ isOpen, onClose, onSubmit, title, children
   );
 };
 
-/**
- * FileUrlDialog Component
- *
- * A dialog component for entering a file URL.
- *
- * @param {Object} props - Component props
- * @param {boolean} props.isOpen - Whether the dialog is open
- * @param {Function} props.onClose - Function to close the dialog
- * @param {Function} props.onSubmit - Function to handle URL submission
- * @param {string} props.title - Dialog title
- * @param {React.ReactNode} props.children - Additional dialog content
- * @returns {JSX.Element|null} The rendered FileUrlDialog component or null if not open
- */
 const FileUrlDialog = ({ isOpen, onClose, onSubmit, title, children }) => {
   const [url, setUrl] = useState("");
   const [error, setError] = useState("");

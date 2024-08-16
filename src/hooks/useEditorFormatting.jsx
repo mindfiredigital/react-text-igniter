@@ -1,18 +1,7 @@
 import { useCallback } from "react";
 import featuresData from "../assets/feature.json";
 
-/**
- * Custom hook for handling editor formatting
- *
- * @param {React.RefObject} editorRef - Reference to the editor element
- * @returns {Object} Object containing formatting functions
- */
 export const useEditorFormatting = (editorRef) => {
-  /**
-   * Updates data attributes of a block based on its computed styles
-   *
-   * @param {HTMLElement} block - The block element to update
-   */
   const updateDataAttributes = useCallback((block) => {
     const styles = window.getComputedStyle(block);
     const dataType = [];
@@ -36,12 +25,6 @@ export const useEditorFormatting = (editorRef) => {
     block.setAttribute("data-type", dataType.join("-") || "normal");
   }, []);
 
-  /**
-   * Applies formatting to the selected text
-   *
-   * @param {string} command - The formatting command to execute
-   * @param {string|null} value - Optional value for the command
-   */
   const formatText = useCallback((command, value = null) => {
     const activeBlock = document.querySelector(".editor-block.active");
     if (activeBlock) {
@@ -90,37 +73,37 @@ export const useEditorFormatting = (editorRef) => {
       activeBlock.appendChild(element);
     };
 
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        let element;
+        if (file.type.startsWith("image/")) {
+          element = document.createElement("img");
+          element.src = e.target.result;
+          element.alt = file.name;
+        } else if (file.type.startsWith("video/")) {
+          element = document.createElement("video");
+          element.src = e.target.result;
+          element.controls = true;
+          element.alt = file.name;
+        }
+        appendMedia(element);
+      };
+      reader.readAsDataURL(file);
+    } else if (imageUrl) {
       let element;
-      if (file.type.startsWith("image/")) {
+      if (imageUrl.match(/\.(jpeg|jpg|gif|png)$/) != null) {
         element = document.createElement("img");
-        element.src = e.target.result;
-        element.alt = file.name;
-      } else if (file.type.startsWith("video/")) {
+        element.src = imageUrl;
+        element.alt = "Inserted image";
+      } else if (imageUrl.match(/\.(mp4|webm|ogg)$/) != null) {
         element = document.createElement("video");
-        element.src = e.target.result;
+        element.src = imageUrl;
         element.controls = true;
-        element.alt = file.name;
+        element.alt = "Inserted video";
       }
       appendMedia(element);
-    };
-    reader.readAsDataURL(file);
-  } else if (imageUrl) {
-    let element;
-    if (imageUrl.match(/\.(jpeg|jpg|gif|png)$/) != null) {
-      element = document.createElement("img");
-      element.src = imageUrl;
-      element.alt = "Inserted image";
-    } else if (imageUrl.match(/\.(mp4|webm|ogg)$/) != null) {
-      element = document.createElement("video");
-      element.src = imageUrl;
-      element.controls = true;
-      element.alt = "Inserted video";
     }
-    appendMedia(element);
-  }
   }, []);
 
   // Applies a heading tag to the active block
@@ -140,5 +123,5 @@ export const useEditorFormatting = (editorRef) => {
       newElement.classList.add("active");
     }
   }, []);
-  return {formatText, updateDataAttributes, applyHeading, addImageOrVideo};
+  return { formatText, updateDataAttributes, applyHeading, addImageOrVideo };
 };
