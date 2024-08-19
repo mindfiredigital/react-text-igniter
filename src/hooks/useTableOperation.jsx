@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
 
 export const useTableOperations = (editorRef) => {
-  // Function to insert a table into the editor
   const insertTable = useCallback((rows = 2, cols = 2) => {
     const editor = editorRef.current;
     if (editor) {
+      editor.focus();
       const table = document.createElement('table');
       table.style.width = '100%';
       table.style.border = '1px solid #ccc';
@@ -27,7 +27,6 @@ export const useTableOperations = (editorRef) => {
       range.deleteContents();
       range.insertNode(table);
       
-      // Move cursor after the table
       range.setStartAfter(table);
       range.setEndAfter(table);
       selection.removeAllRanges();
@@ -35,10 +34,10 @@ export const useTableOperations = (editorRef) => {
     }
   }, [editorRef]);
 
-  // Function to add a new row to the selected table
   const addTableRow = useCallback(() => {
     const editor = editorRef.current;
     if (editor) {
+      editor.focus();
       const selection = window.getSelection();
       const range = selection.getRangeAt(0);
       const table = range.startContainer.closest('table');
@@ -56,10 +55,10 @@ export const useTableOperations = (editorRef) => {
     }
   }, [editorRef]);
 
-  // Function to add a new column to the selected table
   const addTableColumn = useCallback(() => {
     const editor = editorRef.current;
     if (editor) {
+      editor.focus();
       const selection = window.getSelection();
       const range = selection.getRangeAt(0);
       const table = range.startContainer.closest('table');
@@ -82,10 +81,10 @@ export const useTableOperations = (editorRef) => {
     }
   }, [editorRef]);
 
-  // Function to insert a layout (table with specific column widths)
   const insertLayout = useCallback((columns) => {
     const editor = editorRef.current;
     if (editor) {
+      editor.focus();
       const table = document.createElement('table');
       table.className = 'layout-table';
       table.style.width = '100%';
@@ -106,7 +105,6 @@ export const useTableOperations = (editorRef) => {
       range.deleteContents();
       range.insertNode(table);
       
-      // Move cursor after the table
       range.setStartAfter(table);
       range.setEndAfter(table);
       selection.removeAllRanges();

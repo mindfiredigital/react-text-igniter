@@ -4,23 +4,17 @@ import { AppButton } from "../ui/Button.jsx";
 import "../../index.css"
 
 const Editor = () => {
-  // Access editor-related functions and state from the context
   const { editorRef, wordCount, charCount, isHtmlMode, toggleHtmlMode } = useEditor();
-  
-  // State to hold the editor's content
   const [content, setContent] = useState('');
 
-  // Handler for changes in normal (rich text) mode
-  const handleNormalModeChange = useCallback((event) => {
-    // setContent(event.target.innerHTML);
+  const handleNormalModeChange = useCallback(() => {
+    // setContent(editorRef.current.innerHTML);
   }, []);
 
-  // Handler for changes in HTML mode
   const handleHtmlModeChange = useCallback((event) => {
     setContent(event.target.value);
   }, []);
 
-  // Effect to focus the editor when switching modes
   useEffect(() => {
     if (editorRef.current) {
       editorRef.current.focus();
@@ -29,7 +23,6 @@ const Editor = () => {
 
   return (
     <>
-      {/* Main editor area */}
       <div
         id="editor"
         ref={editorRef}
@@ -45,7 +38,6 @@ const Editor = () => {
         dangerouslySetInnerHTML={{ __html: content }}
       />
       
-      {/* HTML mode textarea and convert button */}
       {isHtmlMode && (
         <>
           <textarea
@@ -65,7 +57,6 @@ const Editor = () => {
         </>
       )}
       
-      {/* Editor footer with word and character count */}
       <div className="editor-footer" style={{ display: isHtmlMode ? "none" : "block" }}>
         <span>Words: {wordCount}</span> | <span>Chars: {charCount}</span>
       </div>

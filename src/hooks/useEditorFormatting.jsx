@@ -1,7 +1,8 @@
-import { useCallback } from "react";
+import { useCallback, useState, useEffect } from "react";
 
 export const useEditorFormatting = (editorRef) => {
-  // Function to update data attributes based on applied styles
+  const [activeStyles, setActiveStyles] = useState([]);
+
   const updateDataAttributes = useCallback((element) => {
     const styles = window.getComputedStyle(element);
     const dataType = [];
@@ -16,7 +17,6 @@ export const useEditorFormatting = (editorRef) => {
     element.setAttribute("data-type", dataType.join("-") || "normal");
   }, []);
 
-  // Function to apply text formatting
   const formatText = useCallback((command, value = null) => {
     const editor = editorRef.current;
     if (editor) {
@@ -29,10 +29,11 @@ export const useEditorFormatting = (editorRef) => {
       if (parentElement !== editor) {
         updateDataAttributes(parentElement);
       }
+
+      updateActiveStyles();
     }
   }, [editorRef, updateDataAttributes]);
 
-  // Function to apply heading to selected text
   const applyHeading = useCallback((heading) => {
     const editor = editorRef.current;
     if (editor) {
@@ -44,10 +45,11 @@ export const useEditorFormatting = (editorRef) => {
       
       selection.removeAllRanges();
       selection.addRange(range);
+
+      updateActiveStyles();
     }
   }, [editorRef]);
 
-  // Function to add image or video to the editor
   const addImageOrVideo = useCallback((file, fileUrl) => {
     const editor = editorRef.current;
     if (editor) {
@@ -64,7 +66,7 @@ export const useEditorFormatting = (editorRef) => {
             element.src = e.target.result;
             element.controls = true;
           }
-          insertElement(element);
+          insertElement(editor, element);
         };
         reader.readAsDataURL(file);
       } else if (fileUrl) {
@@ -77,13 +79,13 @@ export const useEditorFormatting = (editorRef) => {
           element.src = fileUrl;
           element.controls = true;
         }
-        insertElement(element);
+        insertElement(editor, element);
       }
     }
   }, [editorRef]);
 
-  // Helper function to insert an element into the editor
-  const insertElement = (element) => {
+  const insertElement = (editor, element) => {
+    editor.focus();
     const selection = window.getSelection();
     const range = selection.getRangeAt(0);
     range.deleteContents();
@@ -94,10 +96,10 @@ export const useEditorFormatting = (editorRef) => {
     selection.addRange(range);
   };
 
-  // Function to add a link to the editor
   const addLink = useCallback((linkText, linkUrl) => {
     const editor = editorRef.current;
     if (editor) {
+      editor.focus();
       const selection = window.getSelection();
       const range = selection.getRangeAt(0);
 
@@ -114,8 +116,40 @@ export const useEditorFormatting = (editorRef) => {
       range.setEndAfter(anchor);
       selection.removeAllRanges();
       selection.addRange(range);
+
+      updateActiveStyles();
     }
   }, [editorRef]);
 
-  return { formatText, updateDataAttributes, applyHeading, addImageOrVideo, addLink };
+  const updateActiveStyles = useCallback(() => {
+    const editor = editorRef.current;
+    if (editor) {
+      const styles = [];
+      if (document.queryCommandState('bold')) styles.push('bold');
+      if (document.queryCommandState('italic')) styles.push('italic');
+      if (document.queryCommandState('underline')) styles.push('underline');
+      if (document.queryCommandState('insertOrderedList')) styles.push('orderedList');
+      if (document.queryCommandState('insertUnorderedList')) styles.push('unorderedList');
+      if (document.queryCommandState('justifyLeft')) styles.push('justifyLeft');
+      if (document.queryCommandState('justifyCenter')) styles.push('justifyCenter');
+      if (document.queryCommandState('justifyRight')) styles.push('justifyRight');
+      if (document.queryCommandState('superscript')) styles.push('superscript');
+      if (document.queryCommandState('subscript')) styles.push('subscript');
+      setActiveStyles(styles);
+    }
+  }, [editorRef]);
+
+  useEffect(() => {
+    const editor = editorRef.current;
+    if (editor) {
+      editor.addEventListener('keyup', updateActiveStyles);
+      editor.addEventListener('mouseup', updateActiveStyles);
+      return () => {
+        editor.removeEventListener('keyup', updateActiveStyles);
+        editor.removeEventListener('mouseup', updateActiveStyles);
+      };
+    }
+  }, [editorRef, updateActiveStyles]);
+
+  return { formatText, updateDataAttributes, applyHeading, addImageOrVideo, addLink, activeStyles };
 };
