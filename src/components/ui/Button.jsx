@@ -12,21 +12,31 @@ const AppButton = ({ type = "primary", children, onClick, disabled = false }) =>
   );
 };
 
-// Icon buttons
 const IconButton = ({ children, onClick, id, toolTip, isActive }) => {
-  if (isActive) {
-    console.log(
-      "====================",
-      children,
-      "====================",
-      "isActive =",
-      isActive
-    );
-  }
+  const [isPressed, setIsPressed] = useState(false);
+
+  const handleClick = () => {
+    setIsPressed((prevState) => !prevState);
+    onClick();
+  };
+
   return (
     <Tooltip text={toolTip}>
-      <div className={`toolbarBtnDiv ${isActive ? "active" : ""}`}>
-        <button className="toolbarBtn" onClick={onClick} id={id}>
+      <style>
+        {`
+          .toolbarBtnDiv.active,
+          .toolbarBtnDiv.pressed {
+            background-color: #ddd; /* Highlighted background color */
+            border: 1px solid #333; /* Highlighted border */
+          }
+        `}
+      </style>
+      <div
+        className={`toolbarBtnDiv ${isActive ? "active" : ""} ${
+          isPressed ? "pressed" : ""
+        }`}
+      >
+        <button className="toolbarBtn" onClick={handleClick} id={id}>
           {children}
         </button>
       </div>

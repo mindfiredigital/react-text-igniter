@@ -1,7 +1,7 @@
 import { useCallback, useState, useEffect } from "react";
 
 export const useEditorFormatting = (editorRef) => {
-  const [activeStyles, setActiveStyles] = useState([]);
+  const [activeStyles, setActiveStyles] = useState(["justifyLeft"]); // Set initial justifyLeft
 
   const updateDataAttributes = useCallback((element) => {
     const styles = window.getComputedStyle(element);
@@ -17,13 +17,58 @@ export const useEditorFormatting = (editorRef) => {
     element.setAttribute("data-type", dataType.join("-") || "normal");
   }, []);
 
+  const updateActiveStyles = useCallback(() => {
+    const editor = editorRef.current;
+    if (editor) {
+      const styles = new Set();
+
+      // Check command states for text formatting
+      if (document.queryCommandState('bold')) styles.add('bold');
+      if (document.queryCommandState('italic')) styles.add('italic');
+      if (document.queryCommandState('underline')) styles.add('underline');
+
+      // Ensure only one list style is selected at a time
+      if (document.queryCommandState('insertOrderedList')) {
+        styles.add('orderedList');
+        styles.delete('unorderedList');
+      } else if (document.queryCommandState('insertUnorderedList')) {
+        styles.add('unorderedList');
+        styles.delete('orderedList');
+      } else {
+        styles.delete('orderedList');
+        styles.delete('unorderedList');
+      }
+
+      // Ensure only one justification style is selected at a time
+      if (document.queryCommandState('justifyLeft')) {
+        styles.add('justifyLeft');
+        styles.delete('justifyCenter');
+        styles.delete('justifyRight');
+      } else if (document.queryCommandState('justifyCenter')) {
+        styles.add('justifyCenter');
+        styles.delete('justifyLeft');
+        styles.delete('justifyRight');
+      } else if (document.queryCommandState('justifyRight')) {
+        styles.add('justifyRight');
+        styles.delete('justifyLeft');
+        styles.delete('justifyCenter');
+      } else {
+        styles.delete('justifyLeft');
+        styles.delete('justifyCenter');
+        styles.delete('justifyRight');
+      }
+
+      setActiveStyles(Array.from(styles));
+    }
+  }, [editorRef]);
+
   const formatText = useCallback((command, value = null) => {
     const editor = editorRef.current;
     if (editor) {
       document.execCommand(command, false, value);
       updateActiveStyles();
     }
-  }, [editorRef]);
+  }, [editorRef, updateActiveStyles]);
 
   const applyHeading = useCallback((heading) => {
     const editor = editorRef.current;
@@ -31,7 +76,7 @@ export const useEditorFormatting = (editorRef) => {
       document.execCommand('formatBlock', false, heading);
       updateActiveStyles();
     }
-  }, [editorRef]);
+  }, [editorRef, updateActiveStyles]);
 
   const addImageOrVideo = useCallback((file, fileUrl) => {
     const editor = editorRef.current;
@@ -51,6 +96,7 @@ export const useEditorFormatting = (editorRef) => {
           }
           editor.appendChild(element);
           editor.appendChild(document.createElement('br'));
+          updateActiveStyles();
         };
         reader.readAsDataURL(file);
       } else if (fileUrl) {
@@ -65,9 +111,10 @@ export const useEditorFormatting = (editorRef) => {
         }
         editor.appendChild(element);
         editor.appendChild(document.createElement('br'));
+        updateActiveStyles();
       }
     }
-  }, [editorRef]);
+  }, [editorRef, updateActiveStyles]);
 
   const addLink = useCallback((linkText, linkUrl) => {
     const editor = editorRef.current;
@@ -81,25 +128,7 @@ export const useEditorFormatting = (editorRef) => {
       editor.appendChild(document.createElement('br'));
       updateActiveStyles();
     }
-  }, [editorRef]);
-
-  const updateActiveStyles = useCallback(() => {
-    const editor = editorRef.current;
-    if (editor) {
-      const styles = [];
-      if (document.queryCommandState('bold')) styles.push('bold');
-      if (document.queryCommandState('italic')) styles.push('italic');
-      if (document.queryCommandState('underline')) styles.push('underline');
-      if (document.queryCommandState('insertOrderedList')) styles.push('orderedList');
-      if (document.queryCommandState('insertUnorderedList')) styles.push('unorderedList');
-      if (document.queryCommandState('justifyLeft')) styles.push('justifyLeft');
-      if (document.queryCommandState('justifyCenter')) styles.push('justifyCenter');
-      if (document.queryCommandState('justifyRight')) styles.push('justifyRight');
-      if (document.queryCommandState('superscript')) styles.push('superscript');
-      if (document.queryCommandState('subscript')) styles.push('subscript');
-      setActiveStyles(styles);
-    }
-  }, [editorRef]);
+  }, [editorRef, updateActiveStyles]);
 
   useEffect(() => {
     const editor = editorRef.current;
@@ -113,5 +142,12 @@ export const useEditorFormatting = (editorRef) => {
     }
   }, [editorRef, updateActiveStyles]);
 
-  return { formatText, updateDataAttributes, applyHeading, addImageOrVideo, addLink, activeStyles };
+  return {
+    formatText,
+    updateDataAttributes,
+    applyHeading,
+    addImageOrVideo,
+    addLink,
+    activeStyles,
+  };
 };
