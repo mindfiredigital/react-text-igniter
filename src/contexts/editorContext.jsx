@@ -5,18 +5,22 @@ import { useHeadingState } from "../hooks/useHeadingState.jsx";
 import { useTableOperations } from "../hooks/useTableOperation.jsx";
 import { useHtmlMode } from "../hooks/useHtmlMode.jsx";
 
+// Create a context for the editor
 const EditorContext = createContext();
 
 export const EditorProvider = ({ children }) => {
+  // Create a ref for the editor element
   const editorRef = useRef(null);
 
-  const { formatText, updateDataAttributes, applyHeading, addImageOrVideo, addLink, activeStyles } =
+  // Use custom hooks to manage different aspects of the editor
+  const { formatText, updateDataAttributes, applyHeading, addImageOrVideo, addLink ,isBold,isItalic,isUnderline,textAlignment,isOrderedList,isUnorderedList} =
     useEditorFormatting(editorRef);
   const state = useEditorState(editorRef, updateDataAttributes);
   const headingState = useHeadingState();
   const { insertTable, addTableRow, addTableColumn, insertLayout } = useTableOperations(editorRef);
   const { isHtmlMode, toggleHtmlMode } = useHtmlMode();
 
+  // Combine all editor-related values and functions
   const editorValue = { 
     ...state, 
     ...headingState, 
@@ -30,8 +34,13 @@ export const EditorProvider = ({ children }) => {
     addTableColumn, 
     insertLayout, 
     isHtmlMode, 
-    toggleHtmlMode,
-    activeStyles
+    toggleHtmlMode, 
+    isBold,
+    isItalic,
+    isUnderline,
+    textAlignment,
+    isOrderedList,
+    isUnorderedList
   };
 
   return (
@@ -41,4 +50,5 @@ export const EditorProvider = ({ children }) => {
   );
 };
 
+// Custom hook to use the editor context
 export const useEditor = () => useContext(EditorContext);
