@@ -101,7 +101,6 @@ const Toolbar = ({ features }) => {
     superscript: <IconButton onClick={() => formatText("superscript")} toolTip="Superscript" style={getButtonStyle('superscript')}><Icons.SuperScriptIcon /></IconButton>,
     subscript: <IconButton onClick={() => formatText("subscript")} toolTip="Subscript" style={getButtonStyle('subscript')}><Icons.SubScriptIcon /></IconButton>,
    
-    htmlMode: <IconButton onClick={toggleHtmlMode} style={getButtonStyle('htmlMode')}><Icons.CodeIcon /></IconButton>,
     table: (
       <IconDropDown
         id="tableDropdown"
