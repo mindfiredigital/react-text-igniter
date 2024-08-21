@@ -1,48 +1,44 @@
-import React, { useState, createContext, useContext, useRef } from "react";
+import React, { createContext, useContext, useRef } from "react";
 import { useEditorFormatting } from "../hooks/useEditorFormatting.jsx";
 import { useEditorState } from "../hooks/useEditorState.jsx";
 import { useHeadingState } from "../hooks/useHeadingState.jsx";
 import { useTableOperations } from "../hooks/useTableOperation.jsx";
+import { useHtmlMode } from "../hooks/useHtmlMode.jsx";
+import { getJson, getHtml } from "../utils/editorUtil.jsx";
 
-// Create a context for the editor
 const EditorContext = createContext();
 
 export const EditorProvider = ({ children }) => {
-  // Create a ref for the editor element
   const editorRef = useRef(null);
 
-  // Use the editor formatting hook
-  const { formatText, updateDataAttributes, applyHeading, addImageOrVideo } =
+  const { formatText, updateDataAttributes, applyHeading, addImageOrVideo, addLink, activeStyles } =
     useEditorFormatting(editorRef);
-
-  // Use the editor state hook
   const state = useEditorState(editorRef, updateDataAttributes);
-
   const headingState = useHeadingState();
+  const { insertTable, addTableRow, addTableColumn, insertLayout } = useTableOperations(editorRef);
+  const { isHtmlMode, toggleHtmlMode } = useHtmlMode();
 
-  const { insertTable, addTableRow, addTableColumn, insertLayout } =
-    useTableOperations(editorRef);
-
-  const [isHtmlMode, setIsHtmlMode] = useState(false);
-
-  const toggleHtmlMode = () => {
-    setIsHtmlMode(!isHtmlMode);
+  const editorContent = {
+    getJson: () => getJson(editorRef),
+    getHtml: () => getHtml(editorRef)
   };
 
-  // Combine all editor-related values and functions
-  const editorValue = {
-    ...state,
-    ...headingState,
-    applyHeading,
-    formatText,
-    editorRef,
-    addImageOrVideo,
-    insertTable,
-    addTableRow,
-    addTableColumn,
-    insertLayout,
-    isHtmlMode,
+  const editorValue = { 
+    ...state, 
+    ...headingState, 
+    applyHeading, 
+    formatText, 
+    editorRef, 
+    addImageOrVideo, 
+    addLink, 
+    insertTable, 
+    addTableRow, 
+    addTableColumn, 
+    insertLayout, 
+    isHtmlMode, 
     toggleHtmlMode,
+    activeStyles,
+    editorContent
   };
 
   return (

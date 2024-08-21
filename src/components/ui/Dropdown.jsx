@@ -1,36 +1,36 @@
 import React, { useState } from "react";
 import "../../styles/ui-component.css";
+import Tooltip from "./ToolTip";
 
-const IconDropDown = ({ items, onChange, selected, id, openRight }) => {
-  const [selectedLabel, setSelectedLabel] = useState(() => {
-    const selectedItem = items.find((item) => item.value === selected);
-    return selectedItem ? selectedItem.label : "";
-  });
+const IconDropDown = ({ items, onChange, icon, id, openRight,toolTip }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleButtonClick = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleItemClick = (value, label) => {
-    setSelectedLabel(label);
+  const handleItemClick = (value) => {
     onChange(value);
-    //close after item selection.
+    // Close the dropdown after item selection.
     setIsOpen(false);
   };
 
   return (
+
     <div className={`icon-dropdown ${openRight ? "open-right" : ""}`}>
+          <Tooltip text={toolTip}>
       <button className="dropbtn" id={id} onClick={handleButtonClick}>
-        {selectedLabel || "Select Value"}
+        {/* Render the consistent icon on the button */}
+        {icon}
       </button>
-      {isOpen && ( // render the dropdown content
+      </Tooltip>
+      {isOpen && (
         <div className="icon-dropdown-content">
           {items.map((item, index) => (
             <div
               key={index}
               className="dropdown-item"
-              onClick={() => handleItemClick(item.value, item.label)}
+              onClick={() => handleItemClick(item.value)}
             >
               {item.icon && <span className="dropdown-icon">{item.icon}</span>}
               {item.label}

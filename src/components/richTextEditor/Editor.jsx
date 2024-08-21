@@ -1,58 +1,43 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useEditor } from "../../contexts/editorContext.jsx";
 import { AppButton } from "../ui/Button.jsx";
-import "../../index.css";
+import "../../index.css"
 
 const Editor = () => {
-  // Destructure necessary values and functions from the useEditor hook
-  const { editorRef, wordCount, charCount, isHtmlMode, toggleHtmlMode } =
-    useEditor();
-  const [content, setContent] = useState(
-    '<div class="editor-block active" contenteditable="true" data-type="normal" placeholder="Start typing..."></div>'
-  );
+  const { editorRef, wordCount, charCount, isHtmlMode, toggleHtmlMode } = useEditor();
+  const [content, setContent] = useState('');
 
-  // Callback function to handle changes in normal mode (contenteditable)
-  const handleNormalModeChange = useCallback((event) => {
-    // setContent(event.target.innerHTML);
+  const handleNormalModeChange = useCallback(() => {
+    // setContent(editorRef.current.innerHTML);
   }, []);
 
-  // Callback function to handle changes in HTML mode (textarea)
   const handleHtmlModeChange = useCallback((event) => {
     setContent(event.target.value);
   }, []);
 
-  // Function to move the cursor to the end of the content in normal mode
-  const moveCursorToEnd = useCallback(() => {
+  useEffect(() => {
     if (editorRef.current) {
-      const range = document.createRange();
-      const selection = window.getSelection();
-      range.selectNodeContents(editorRef.current);
-      range.collapse(false);
-      selection.removeAllRanges();
-      selection.addRange(range);
       editorRef.current.focus();
     }
-  }, [editorRef]);
+  }, [isHtmlMode]);
 
-  // Effect to move the cursor to the end when switching from HTML mode to normal mode
-  useEffect(() => {
-    if (!isHtmlMode) {
-      moveCursorToEnd();
-    }
-  }, [content, isHtmlMode, moveCursorToEnd]);
   return (
     <>
-      {/* Editor area */}
       <div
         id="editor"
         ref={editorRef}
         contentEditable={!isHtmlMode}
-        className={isHtmlMode ? "html-mode" : ""}
+        className={`editor-content ${isHtmlMode ? "html-mode" : ""}`}
         onInput={handleNormalModeChange}
-        style={{ display: isHtmlMode ? "none" : "block" }}
+        style={{ 
+          display: isHtmlMode ? "none" : "block",
+          minHeight: "300px",
+          padding: "10px",
+          overflowY: "auto"
+        }}
         dangerouslySetInnerHTML={{ __html: content }}
       />
-      {/* HTML mode textarea */}
+      
       {isHtmlMode && (
         <>
           <textarea
@@ -68,15 +53,11 @@ const Editor = () => {
               resize: "vertical",
             }}
           />
-          {/* Button to toggle between HTML mode and normal mode */}
           <AppButton onClick={toggleHtmlMode}>Convert</AppButton>
         </>
       )}
-      {/* Editor footer showing word and character counts */}
-      <div
-        className="editor-footer"
-        style={{ display: isHtmlMode ? "none" : "block" }}
-      >
+      
+      <div className="editor-footer" style={{ display: isHtmlMode ? "none" : "block" }}>
         <span>Words: {wordCount}</span> | <span>Chars: {charCount}</span>
       </div>
     </>

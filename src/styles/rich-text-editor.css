@@ -51,7 +51,7 @@ img {
 
 /* Editor footer (word/character count) */
 .editor-footer {
-  position: absolute;
+  position: relative;
   bottom: 0;
   left: 0;
   padding: 10px;

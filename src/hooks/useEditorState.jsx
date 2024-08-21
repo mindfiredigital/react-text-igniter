@@ -1,6 +1,5 @@
 import { useReducer, useEffect } from "react";
 
-// Initial state for the editor
 const initialState = { wordCount: 0, charCount: 0 };
 
 const reducer = (state, action) => {
@@ -22,65 +21,25 @@ export const useEditorState = (editorRef, updateDataAttributes) => {
   useEffect(() => {
     const editor = editorRef.current;
 
-    /**
-     * Handles click events within the editor
-     *
-     * @param {Event} event - Click event
-     */
-    const handleClick = (event) => {
-      // Remove active class from all blocks
-      editor
-        .querySelectorAll(".editor-block")
-        .forEach((block) => block.classList.remove("active"));
-
-      // Add active class to clicked block
-      if (event.target.classList.contains("editor-block")) {
-        event.target.classList.add("active");
-      }
-    };
-
-    /**
-     * Handles input events within the editor
-     */
     const handleInput = () => {
       const text = editor.innerText || "";
-      const words = text
-        .trim()
-        .split(/\s+/)
-        .filter((word) => word.length > 0);
-
-      // Update word and character counts
+      const words = text.trim().split(/\s+/).filter((word) => word.length > 0);
+      
       dispatch({
         type: "SET_COUNTS",
         wordCount: words.length,
         charCount: text.length,
       });
 
-      // Update data attributes for all blocks
-      editor.querySelectorAll(".editor-block").forEach(updateDataAttributes);
-
-      // Add a new block if the editor is empty
-      if (editor.children.length === 0) {
-        const newBlock = document.createElement("div");
-        newBlock.className = "editor-block";
-        newBlock.setAttribute("contentEditable", "true");
-        newBlock.setAttribute("data-type", "normal");
-        newBlock.setAttribute("placeholder", "Start typing...");
-        editor.appendChild(newBlock);
-        newBlock.focus();
-      }
+      updateDataAttributes(editor);
     };
 
-    // Add event listeners
-    editor.addEventListener("click", handleClick);
     editor.addEventListener("input", handleInput);
 
-    // Clean up event listeners on unmount
     return () => {
-      editor.removeEventListener("click", handleClick);
       editor.removeEventListener("input", handleInput);
     };
-  }, [updateDataAttributes]);
+  }, [editorRef, updateDataAttributes]);
 
   return state;
 };
