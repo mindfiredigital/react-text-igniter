@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useEditor } from "../../contexts/editorContext.jsx";
 import * as Icons from "../../assets/icon.jsx";
 import { IconButton } from "../ui/Button.jsx";
@@ -60,23 +60,20 @@ const Toolbar = ({ features }) => {
     }
   };
 
-  const getButtonStyle = (style) => ({
-    backgroundColor: activeStyles.includes(style) ? 'black' : 'transparent',
-    color: activeStyles.includes(style) ? 'white' : 'black',
-  });
+  const getIsActive = (style) => activeStyles.includes(style);
 
   const featureButtons = {
-    bold: <IconButton onClick={() => formatText("bold")} toolTip="Bold" style={getButtonStyle('bold')}><Icons.BoldIcon /></IconButton>,
-    italic: <IconButton onClick={() => formatText("italic")} toolTip="Italic" style={getButtonStyle('italic')}><Icons.ItalicIcon /></IconButton>,
-    underline: <IconButton onClick={() => formatText("underline")} toolTip="Underline" style={getButtonStyle('underline')}><Icons.UnderlineIcon /></IconButton>,
-    orderedList: <IconButton onClick={() => formatText("insertOrderedList")} toolTip="Ordered List" style={getButtonStyle('orderedList')}><Icons.OrderedListIcon /></IconButton>,
-    unorderedList: <IconButton onClick={() => formatText("insertUnorderedList")} toolTip="Unordered List" style={getButtonStyle('unorderedList')}><Icons.UnOrderedListIcon /></IconButton>,
-    justifyLeft: <IconButton onClick={() => formatText("justifyLeft")} toolTip="Justify Left" style={getButtonStyle('justifyLeft')}><Icons.AlignLeftIcon /></IconButton>,
-    justifyCenter: <IconButton onClick={() => formatText("justifyCenter")} toolTip="Justify Center" style={getButtonStyle('justifyCenter')}><Icons.AlignCenterIcon /></IconButton>,
-    justifyRight: <IconButton onClick={() => formatText("justifyRight")} toolTip="Justify Right" style={getButtonStyle('justifyRight')}><Icons.AlignRightIcon /></IconButton>,
+    bold: <IconButton onClick={() => formatText("bold")} toolTip="Bold" isActive={getIsActive('bold')}><Icons.BoldIcon /></IconButton>,
+    italic: <IconButton onClick={() => formatText("italic")} toolTip="Italic" isActive={getIsActive('italic')}><Icons.ItalicIcon /></IconButton>,
+    underline: <IconButton onClick={() => formatText("underline")} toolTip="Underline" isActive={getIsActive('underline')}><Icons.UnderlineIcon /></IconButton>,
+    orderedList: <IconButton onClick={() => formatText("insertOrderedList")} toolTip="Ordered List" isActive={getIsActive('orderedList')}><Icons.OrderedListIcon /></IconButton>,
+    unorderedList: <IconButton onClick={() => formatText("insertUnorderedList")} toolTip="Unordered List" isActive={getIsActive('unorderedList')}><Icons.UnOrderedListIcon /></IconButton>,
+    justifyLeft: <IconButton onClick={() => formatText("justifyLeft")} toolTip="Justify Left" isActive={getIsActive('justifyLeft')}><Icons.AlignLeftIcon /></IconButton>,
+    justifyCenter: <IconButton onClick={() => formatText("justifyCenter")} toolTip="Justify Center" isActive={getIsActive('justifyCenter')}><Icons.AlignCenterIcon /></IconButton>,
+    justifyRight: <IconButton onClick={() => formatText("justifyRight")} toolTip="Justify Right" isActive={getIsActive('justifyRight')}><Icons.AlignRightIcon /></IconButton>,
     createLink: (
       <>
-        <IconButton onClick={() => setUrlDialogOpen(true)} toolTip="Create Link" style={getButtonStyle('createLink')}><Icons.LinkIcon /></IconButton>
+        <IconButton onClick={() => setUrlDialogOpen(true)} toolTip="Create Link" isActive={getIsActive('createLink')}><Icons.LinkIcon /></IconButton>
         <FileUrlDialog
           isOpen={isUrlDialogOpen}
           onClose={() => setUrlDialogOpen(false)}
@@ -89,7 +86,7 @@ const Toolbar = ({ features }) => {
     ),
     insertImage: (
       <>
-        <IconButton onClick={() => setImageDialogOpen(true)} toolTip="Insert Image/video" style={getButtonStyle('insertImage')}><Icons.ImageIcon /></IconButton>
+        <IconButton onClick={() => setImageDialogOpen(true)} toolTip="Insert Image/Video" isActive={getIsActive('insertImage')}><Icons.ImageIcon /></IconButton>
         <ImageUploadSelectionDialog
           isOpen={isImageDialogOpen}
           onClose={() => setImageDialogOpen(false)}
@@ -98,10 +95,9 @@ const Toolbar = ({ features }) => {
         />
       </>
     ),
-    superscript: <IconButton onClick={() => formatText("superscript")} toolTip="Superscript" style={getButtonStyle('superscript')}><Icons.SuperScriptIcon /></IconButton>,
-    subscript: <IconButton onClick={() => formatText("subscript")} toolTip="Subscript" style={getButtonStyle('subscript')}><Icons.SubScriptIcon /></IconButton>,
-   
-    htmlMode: <IconButton onClick={toggleHtmlMode} style={getButtonStyle('htmlMode')}><Icons.CodeIcon /></IconButton>,
+    superscript: <IconButton onClick={() => formatText("superscript")} toolTip="Superscript" isActive={getIsActive('superscript')}><Icons.SuperScriptIcon /></IconButton>,
+    subscript: <IconButton onClick={() => formatText("subscript")} toolTip="Subscript" isActive={getIsActive('subscript')}><Icons.SubScriptIcon /></IconButton>,
+    htmlMode: <IconButton onClick={toggleHtmlMode} isActive={getIsActive('htmlMode')}><Icons.CodeIcon /></IconButton>,
     table: (
       <IconDropDown
         id="tableDropdown"
