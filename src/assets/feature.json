@@ -56,10 +56,6 @@
       "tag": "sub",
       "displayName": "Subscript"
     },
-    "htmlMode": {
-      "tag": "htmlMode",
-      "displayName": "HTML Mode"
-    },
     "table":{
       "tag": "table",
       "displayName":"Table"

@@ -4,11 +4,11 @@ import Toolbar from "./Toolbar.jsx";
 import Editor from "./Editor.jsx";
 import "../../styles/rich-text-editor.css";
 
-const RichTextEditor = ({ features }) => (
+const RichTextEditor = ({ features,height }) => (
   <EditorProvider>
     <div className="editor-container">
       <Toolbar features={features} />
-      <Editor />
+      <Editor height={height}/>
     </div>
   </EditorProvider>
 );
