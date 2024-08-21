@@ -11,3 +11,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.toolbarBtnDiv.active {
+  background-color: #ee0f0f;
+  border-color: #999;
+}

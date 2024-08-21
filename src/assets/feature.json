@@ -64,9 +64,13 @@
       "tag": "htmlMode",
       "displayName": "HTML Mode"
     },
-    "columnLayout": {
-      "tag": "columnLayout",
-      "displayName": "Column Layout"
+    "table":{
+      "tag": "table",
+      "displayName":"Table"
+    },
+    "layout":{
+      "tag":"layout",
+      "displayName":"Layout"
     }
   }
 }

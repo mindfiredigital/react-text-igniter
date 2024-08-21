@@ -1,0 +1,83 @@
+.dropbtn {
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.icon-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.icon-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.icon-dropdown .open-right .icon-dropdown-content {
+  display: block;
+  right: 0;
+}
+
+.dropdown-item {
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #f1f1f1;
+}
+
+/* Specific styles for each type */
+.normal {
+  font-weight: normal;
+}
+
+.paragraph {
+  font-size: 14px;
+}
+
+.heading1 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.heading2 {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.heading3 {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.heading4 {
+  font-size: 12px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  font-size: 14px;
+}
+
+.strong {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.book-title {
+    font-size: 12px;
+    font-weight: bold;
+    font-style: italic;
+}
+

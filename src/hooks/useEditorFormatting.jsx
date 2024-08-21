@@ -1,144 +1,174 @@
-import { useCallback } from "react";
-import featuresData from "../assets/feature.json";
+import { useCallback, useState } from "react";
 
-/**
- * Custom hook for handling editor formatting
- *
- * @param {React.RefObject} editorRef - Reference to the editor element
- * @returns {Object} Object containing formatting functions
- */
 export const useEditorFormatting = (editorRef) => {
-  /**
-   * Updates data attributes of a block based on its computed styles
-   *
-   * @param {HTMLElement} block - The block element to update
-   */
-  const updateDataAttributes = useCallback((block) => {
-    const styles = window.getComputedStyle(block);
+  const [isBold, setIsBold] = useState(false);
+  const [isItalic, setIsItalic] = useState(false);
+  const [isUnderline, setIsUnderline] = useState(false);
+  const [textAlignment, setTextAlignment] = useState("left");
+  const [isOrderedList, setIsOrderedList] = useState(false);
+  const [isUnorderedList, setIsUnorderedList] = useState(false);
+
+  const updateDataAttributes = useCallback((element) => {
     const dataType = [];
 
-    // Check for bold text
-    if (styles.fontWeight === "bold" || +styles.fontWeight >= 600)
-      dataType.push("bold");
+    if (isBold) dataType.push("bold");
+    if (isItalic) dataType.push("italic");
+    if (isUnderline) dataType.push("underline");
+    if (textAlignment === "left") dataType.push("justifyLeft");
+    if (textAlignment === "center") dataType.push("justifyCenter");
+    if (textAlignment === "right") dataType.push("justifyRight");
+    if (isOrderedList) dataType.push("orderedList");
+    if (isUnorderedList) dataType.push("unorderedList");
 
-    // Check for italic text
-    if (styles.fontStyle === "italic") dataType.push("italic");
+    element.setAttribute("data-type", dataType.join("-") || "normal");
+  }, [isBold, isItalic, isUnderline, textAlignment, isOrderedList, isUnorderedList]);
 
-    // Check for underlined text
-    if (styles.textDecoration.includes("underline")) dataType.push("underline");
+  const formatText = useCallback(
+    (command, value = null) => {
+      const editor = editorRef.current;
+      if (editor) {
+        switch (command) {
+          case "bold":
+            setIsBold(prev => !prev);
+            break;
+          case "italic":
+            setIsItalic(prev => !prev);
+            break;
+          case "underline":
+            setIsUnderline(prev => !prev);
+            break;
+          case "justifyLeft":
+          case "justifyCenter":
+          case "justifyRight":
+            setTextAlignment(command.replace("justify", "").toLowerCase());
+            break;
+          case "insertOrderedList":
+            setIsOrderedList(prev => !prev);
+            setIsUnorderedList(false); // Disable unordered list when ordered list is active
+            break;
+          case "insertUnorderedList":
+            setIsUnorderedList(prev => !prev);
+            setIsOrderedList(false); // Disable ordered list when unordered list is active
+            break;
+          default:
+            console.log(`Applying command: ${command}`);
+        }
 
-    // Check for text alignment
-    if (styles.textAlign === "left") dataType.push("justifyLeft");
-    if (styles.textAlign === "center") dataType.push("justifyCenter");
-    if (styles.textAlign === "right") dataType.push("justifyRight");
+        document.execCommand(command, false, value);
 
-    // Set the data-type attribute
-    block.setAttribute("data-type", dataType.join("-") || "normal");
-  }, []);
+        const selection = window.getSelection();
+        const range = selection.getRangeAt(0);
+        const parentElement = range.commonAncestorContainer.parentElement;
 
-  /**
-   * Applies formatting to the selected text
-   *
-   * @param {string} command - The formatting command to execute
-   * @param {string|null} value - Optional value for the command
-   */
-  const formatText = useCallback((command, value = null) => {
-    const activeBlock = document.querySelector(".editor-block.active");
-    if (activeBlock) {
-      activeBlock.focus();
-      document.execCommand(command, false, value);
-
-      const currentDataType = activeBlock.getAttribute("data-type") || "normal";
-      const currentStyles = new Set(currentDataType.split("-"));
-
-      const toggleStyle = (style) => {
-        currentStyles.has(style)
-          ? currentStyles.delete(style)
-          : currentStyles.add(style);
-      };
-
-      // Handle different formatting commands
-      switch (command) {
-        case featuresData.features.bold.tag:
-        case featuresData.features.italic.tag:
-        case featuresData.features.underline.tag:
-        case featuresData.features.superscript.tag:
-        case featuresData.features.subscript.tag:
-        case featuresData.features.justifyLeft.tag:
-        case featuresData.features.justifyCenter.tag:
-        case featuresData.features.justifyRight.tag:
-        case featuresData.features.orderedList.tag:
-        case featuresData.features.unorderedList.tag:
-          toggleStyle(command);
-          break;
-        default:
-          break;
+        if (parentElement !== editor) {
+          updateDataAttributes(parentElement);
+        }
       }
+    },
+    [editorRef, updateDataAttributes]
+  );
 
-      // Update the data-type attribute
-      activeBlock.setAttribute(
-        "data-type",
-        Array.from(currentStyles).join("-") || "normal"
-      );
-    }
-  }, []);
+  const applyHeading = useCallback(
+    (heading) => {
+      const editor = editorRef.current;
+      if (editor) {
+        const selection = window.getSelection();
+        const range = selection.getRangeAt(0);
 
-  const addImageOrVideo = useCallback((file, imageUrl) => {
-    const activeBlock = document.querySelector(".editor-block.active");
-    const appendMedia = (element) => {
-      element.style.maxWidth = "100%";
-      activeBlock.appendChild(element);
-    };
+        const newElement = document.createElement(heading);
+        range.surroundContents(newElement);
 
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      let element;
-      if (file.type.startsWith("image/")) {
-        element = document.createElement("img");
-        element.src = e.target.result;
-        element.alt = file.name;
-      } else if (file.type.startsWith("video/")) {
-        element = document.createElement("video");
-        element.src = e.target.result;
-        element.controls = true;
-        element.alt = file.name;
+        selection.removeAllRanges();
+        selection.addRange(range);
       }
-      appendMedia(element);
-    };
-    reader.readAsDataURL(file);
-  } else if (imageUrl) {
-    let element;
-    if (imageUrl.match(/\.(jpeg|jpg|gif|png)$/) != null) {
-      element = document.createElement("img");
-      element.src = imageUrl;
-      element.alt = "Inserted image";
-    } else if (imageUrl.match(/\.(mp4|webm|ogg)$/) != null) {
-      element = document.createElement("video");
-      element.src = imageUrl;
-      element.controls = true;
-      element.alt = "Inserted video";
-    }
-    appendMedia(element);
-  }
-  }, []);
+    },
+    [editorRef]
+  );
 
-  // Applies a heading tag to the active block
-  const applyHeading = useCallback((heading) => {
-    const activeBlock = document.querySelector(".editor-block.active");
-    if (activeBlock) {
-      const newElement = document.createElement(heading);
-      newElement.innerHTML = activeBlock.innerHTML;
-      newElement.className = activeBlock.className;
-      newElement.setAttribute("contentEditable", "true");
-      newElement.setAttribute(
-        "data-type",
-        activeBlock.getAttribute("data-type") || "normal"
-      );
-      activeBlock.parentNode.replaceChild(newElement, activeBlock);
-      newElement.focus();
-      newElement.classList.add("active");
-    }
-  }, []);
-  return {formatText, updateDataAttributes, applyHeading, addImageOrVideo};
+  const addImageOrVideo = useCallback(
+    (file, fileUrl) => {
+      const editor = editorRef.current;
+      if (editor) {
+        let element;
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            if (file.type.startsWith("image/")) {
+              element = document.createElement("img");
+              element.src = e.target.result;
+              element.alt = file.name;
+            } else if (file.type.startsWith("video/")) {
+              element = document.createElement("video");
+              element.src = e.target.result;
+              element.controls = true;
+            }
+            insertElement(element);
+          };
+          reader.readAsDataURL(file);
+        } else if (fileUrl) {
+          if (fileUrl.match(/\.(jpeg|jpg|gif|png)$/)) {
+            element = document.createElement("img");
+            element.src = fileUrl;
+            element.alt = "Inserted image";
+          } else if (fileUrl.match(/\.(mp4|webm|ogg)$/)) {
+            element = document.createElement("video");
+            element.src = fileUrl;
+            element.controls = true;
+          }
+          insertElement(element);
+        }
+      }
+    },
+    [editorRef]
+  );
+
+  const insertElement = (element) => {
+    const selection = window.getSelection();
+    const range = selection.getRangeAt(0);
+    range.deleteContents();
+    range.insertNode(element);
+    range.setStartAfter(element);
+    range.setEndAfter(element);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  };
+
+  const addLink = useCallback(
+    (linkText, linkUrl) => {
+      const editor = editorRef.current;
+      if (editor) {
+        const selection = window.getSelection();
+        const range = selection.getRangeAt(0);
+
+        const anchor = document.createElement("a");
+        anchor.href = linkUrl;
+        anchor.textContent = linkText;
+        anchor.target = "_blank";
+        anchor.rel = "noopener noreferrer";
+
+        range.deleteContents();
+        range.insertNode(anchor);
+
+        range.setStartAfter(anchor);
+        range.setEndAfter(anchor);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+    },
+    [editorRef]
+  );
+
+  return {
+    formatText,
+    updateDataAttributes,
+    applyHeading,
+    addImageOrVideo,
+    addLink,
+    isBold,
+    isItalic,
+    isUnderline,
+    textAlignment,
+    isOrderedList,
+    isUnorderedList,
+  };
 };
