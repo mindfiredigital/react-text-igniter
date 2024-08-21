@@ -23,6 +23,12 @@ const Toolbar = ({ features }) => {
     insertLayout,
     addImageOrVideo,
     addLink,
+    isBold,
+    isItalic,
+    isUnderline,
+    textAlignment,
+    isOrderedList,
+    isUnorderedList
   } = useEditor();
 
   const { isToolbarVisible, toggleToolbarVisibility } = usePreviewMode();
@@ -61,15 +67,15 @@ const Toolbar = ({ features }) => {
   };
 
   const featureButtons = {
-    bold: <IconButton onClick={() => formatText("bold")} toolTip="Bold"><Icons.BoldIcon /></IconButton>,
-    italic: <IconButton onClick={() => formatText("italic")} toolTip="Italic"><Icons.ItalicIcon /></IconButton>,
-    underline: <IconButton onClick={() => formatText("underline")} toolTip="Underline"><Icons.UnderlineIcon /></IconButton>,
-    orderedList: <IconButton onClick={() => formatText("insertOrderedList")} toolTip="Ordered List"><Icons.OrderedListIcon /></IconButton>,
-    unorderedList: <IconButton onClick={() => formatText("insertUnorderedList")} toolTip="Unordered List"><Icons.UnOrderedListIcon /></IconButton>,
-    justifyLeft: <IconButton onClick={() => formatText("justifyLeft")} toolTip="Justify Left"><Icons.AlignLeftIcon /></IconButton>,
-    justifyCenter: <IconButton onClick={() => formatText("justifyCenter")} toolTip="Justify Center"><Icons.AlignCenterIcon /></IconButton>,
-    justifyRight: <IconButton onClick={() => formatText("justifyRight")} toolTip="Justify Right"><Icons.AlignRightIcon /></IconButton>,
-    createLink: (
+    bold: <IconButton onClick={() => formatText("bold")} toolTip="Bold" isActive={isBold}><Icons.BoldIcon /></IconButton>,
+    italic: <IconButton onClick={() => formatText("italic")} toolTip="Italic" isActive={isItalic}><Icons.ItalicIcon /></IconButton>,
+    underline: <IconButton onClick={() => formatText("underline")} toolTip="Underline" isActive={isUnderline}><Icons.UnderlineIcon /></IconButton>,
+    orderedList: <IconButton onClick={() => formatText("insertOrderedList")} toolTip="Ordered List"isActive={isOrderedList}><Icons.OrderedListIcon /></IconButton>,
+    unorderedList: <IconButton onClick={() => formatText("insertUnorderedList")} toolTip="Unordered List"isActive={isUnorderedList}><Icons.UnOrderedListIcon /></IconButton>,
+    justifyLeft: <IconButton onClick={() => formatText("justifyLeft")} toolTip="Justify Left" isActive={textAlignment === 'left'}><Icons.AlignLeftIcon /></IconButton>,
+    justifyCenter: <IconButton onClick={() => formatText("justifyCenter")} toolTip="Justify Center" isActive={textAlignment === 'center'}><Icons.AlignCenterIcon /></IconButton>,
+    justifyRight: <IconButton onClick={() => formatText("justifyRight")} toolTip="Justify Right" isActive={textAlignment === 'right'}><Icons.AlignRightIcon /></IconButton>,  
+      createLink: (
       <>
         <IconButton onClick={() => setUrlDialogOpen(true)} toolTip="Create Link"><Icons.LinkIcon /></IconButton>
         <FileUrlDialog

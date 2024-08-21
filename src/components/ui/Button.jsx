@@ -42,6 +42,14 @@ const IconButton = ({ children, onClick, id, toolTip, isActive }) => {
   }
   return (
     <Tooltip text={toolTip}>
+       <style>
+         {`
+         .toolbarBtnDiv.active {
+            background-color: #ddd; /* Highlighted background color */
+            border: 1px solid #333; /* Highlighted border */
+          }
+          `}
+    </style>
       <div className={`toolbarBtnDiv ${isActive ? "active" : ""}`}>
         <button className="toolbarBtn" onClick={onClick} id={id}>
           {children}

@@ -13,7 +13,7 @@ export const EditorProvider = ({ children }) => {
   const editorRef = useRef(null);
 
   // Use custom hooks to manage different aspects of the editor
-  const { formatText, updateDataAttributes, applyHeading, addImageOrVideo, addLink } =
+  const { formatText, updateDataAttributes, applyHeading, addImageOrVideo, addLink ,isBold,isItalic,isUnderline,textAlignment,isOrderedList,isUnorderedList} =
     useEditorFormatting(editorRef);
   const state = useEditorState(editorRef, updateDataAttributes);
   const headingState = useHeadingState();
@@ -34,7 +34,13 @@ export const EditorProvider = ({ children }) => {
     addTableColumn, 
     insertLayout, 
     isHtmlMode, 
-    toggleHtmlMode 
+    toggleHtmlMode, 
+    isBold,
+    isItalic,
+    isUnderline,
+    textAlignment,
+    isOrderedList,
+    isUnorderedList
   };
 
   return (
