@@ -1,19 +1,6 @@
 import React, { useState } from "react";
 import "../../../styles/toolbar-components.css";
 
-/**
- * ParagraphStyleButton Component
- *
- * A button component specifically designed for icons in the toolbar.
- *
- * @param {Object} props - Component props
- * @param {Array} props.items - Array of items to display in the dropdown
- * @param {Function} props.onChange - Function to handle change of selection
- * @param {string} props.selected - Currently selected value
- * @param {string} props.id - Button ID
- * @param {boolean} props.openRight - To show option on the right by default it will be at the bottom
- * @returns {JSX.Element} The rendered ParagraphStyleButton component
- */
 
 const ParagraphStyleButton = ({ items, onChange, selected, id, openRight }) => {
   const [selectedLabel, setSelectedLabel] = useState(() => {
@@ -36,7 +23,7 @@ const ParagraphStyleButton = ({ items, onChange, selected, id, openRight }) => {
   return (
     <div className={`icon-dropdown ${openRight ? "open-right" : ""}`}>
       <button className={`dropbtn ${selected}`} id={id} onClick={handleButtonClick}>
-        {selectedLabel || "Select Value"}
+        {selectedLabel || "Select Style"}
       </button>
       {isOpen && (
         <div className="icon-dropdown-content">

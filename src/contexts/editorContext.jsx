@@ -4,6 +4,7 @@ import { useEditorState } from "../hooks/useEditorState.jsx";
 import { useHeadingState } from "../hooks/useHeadingState.jsx";
 import { useTableOperations } from "../hooks/useTableOperation.jsx";
 import { useHtmlMode } from "../hooks/useHtmlMode.jsx";
+import { getJson, getHtml } from "../utils/editorUtil.jsx";
 
 const EditorContext = createContext();
 
@@ -16,6 +17,11 @@ export const EditorProvider = ({ children }) => {
   const headingState = useHeadingState();
   const { insertTable, addTableRow, addTableColumn, insertLayout } = useTableOperations(editorRef);
   const { isHtmlMode, toggleHtmlMode } = useHtmlMode();
+
+  const editorContent = {
+    getJson: () => getJson(editorRef),
+    getHtml: () => getHtml(editorRef)
+  };
 
   const editorValue = { 
     ...state, 
@@ -31,7 +37,8 @@ export const EditorProvider = ({ children }) => {
     insertLayout, 
     isHtmlMode, 
     toggleHtmlMode,
-    activeStyles
+    activeStyles,
+    editorContent
   };
 
   return (

@@ -56,10 +56,6 @@
       "tag": "sub",
       "displayName": "Subscript"
     },
-    "heading": {
-      "tag": "heading",
-      "displayName": "Heading"
-    },
     "htmlMode": {
       "tag": "htmlMode",
       "displayName": "HTML Mode"
@@ -71,6 +67,10 @@
     "layout":{
       "tag":"layout",
       "displayName":"Layout"
+    },
+    "heading": {
+      "tag": "heading",
+      "displayName": "Heading"
     }
   }
 }

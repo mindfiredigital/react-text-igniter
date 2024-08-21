@@ -4,7 +4,6 @@ export const useTableOperations = (editorRef) => {
   const insertTable = useCallback((rows = 2, cols = 2) => {
     const editor = editorRef.current;
     if (editor) {
-      editor.focus();
       const table = document.createElement('table');
       table.style.width = '100%';
       table.style.border = '1px solid #ccc';
@@ -22,25 +21,15 @@ export const useTableOperations = (editorRef) => {
         }
       }
 
-      const selection = window.getSelection();
-      const range = selection.getRangeAt(0);
-      range.deleteContents();
-      range.insertNode(table);
-      
-      range.setStartAfter(table);
-      range.setEndAfter(table);
-      selection.removeAllRanges();
-      selection.addRange(range);
+      editor.appendChild(table);
+      editor.appendChild(document.createElement('br'));
     }
   }, [editorRef]);
 
   const addTableRow = useCallback(() => {
     const editor = editorRef.current;
     if (editor) {
-      editor.focus();
-      const selection = window.getSelection();
-      const range = selection.getRangeAt(0);
-      const table = range.startContainer.closest('table');
+      const table = editor.querySelector('table');
       if (table) {
         const newRow = table.insertRow();
         const cellCount = table.rows[0].cells.length;
@@ -58,10 +47,7 @@ export const useTableOperations = (editorRef) => {
   const addTableColumn = useCallback(() => {
     const editor = editorRef.current;
     if (editor) {
-      editor.focus();
-      const selection = window.getSelection();
-      const range = selection.getRangeAt(0);
-      const table = range.startContainer.closest('table');
+      const table = editor.querySelector('table');
       if (table) {
         const rowCount = table.rows.length;
         for (let i = 0; i < rowCount; i++) {
@@ -84,7 +70,6 @@ export const useTableOperations = (editorRef) => {
   const insertLayout = useCallback((columns) => {
     const editor = editorRef.current;
     if (editor) {
-      editor.focus();
       const table = document.createElement('table');
       table.className = 'layout-table';
       table.style.width = '100%';
@@ -95,20 +80,14 @@ export const useTableOperations = (editorRef) => {
       columns.forEach(colWidth => {
         const cell = row.insertCell();
         cell.style.border = '1px solid #ccc';
-        cell.style.padding = '10px';
+        cell.style.padding = '5px';
+          cell.style.height = '30px';
         cell.style.width = `${colWidth}%`;
         cell.contentEditable = true;
       });
 
-      const selection = window.getSelection();
-      const range = selection.getRangeAt(0);
-      range.deleteContents();
-      range.insertNode(table);
-      
-      range.setStartAfter(table);
-      range.setEndAfter(table);
-      selection.removeAllRanges();
-      selection.addRange(range);
+      editor.appendChild(table);
+      editor.appendChild(document.createElement('br'));
     }
   }, [editorRef]);
 

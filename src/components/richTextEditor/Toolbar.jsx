@@ -3,7 +3,6 @@ import { useEditor } from "../../contexts/editorContext.jsx";
 import * as Icons from "../../assets/icon.jsx";
 import { IconButton } from "../ui/Button.jsx";
 import { ImageUploadSelectionDialog, FileUrlDialog } from "../ui/Dialog.jsx";
-import { getJson, getHtml } from "../../utils/editorUtil.jsx";
 import { IconDropDown } from "../ui/Dropdown.jsx";
 import { usePreviewMode } from "../../hooks/usePreviewMode.jsx";
 import { ParagraphStyleButton } from "../ui/toolBar/ParagraphStyleButton.jsx";
@@ -99,10 +98,38 @@ const Toolbar = ({ features }) => {
         />
       </>
     ),
-    getHtml: <IconButton onClick={() => console.log(getHtml(editorRef))} toolTip="Get HTML">Get HTML</IconButton>,
-    getJson: <IconButton onClick={() => getJson(editorRef)} toolTip="Get JSON">Get JSON</IconButton>,
     superscript: <IconButton onClick={() => formatText("superscript")} toolTip="Superscript" style={getButtonStyle('superscript')}><Icons.SuperScriptIcon /></IconButton>,
     subscript: <IconButton onClick={() => formatText("subscript")} toolTip="Subscript" style={getButtonStyle('subscript')}><Icons.SubScriptIcon /></IconButton>,
+   
+    htmlMode: <IconButton onClick={toggleHtmlMode} style={getButtonStyle('htmlMode')}><Icons.CodeIcon /></IconButton>,
+    table: (
+      <IconDropDown
+        id="tableDropdown"
+        icon={<Icons.TableIcon />} // This icon will be the consistent button face
+        toolTip={"Table"}
+        items={[
+          { value: "insert", label: "Insert Table" },
+          { value: "addRow", label: "Add Row" },
+          { value: "addColumn", label: "Add Column" },
+        ]}
+        onChange={handleTableOperation}
+      />
+    ),
+    layout: (
+      <IconDropDown
+        id="layoutDropdown"
+        icon={<Icons.LayoutIcon />} // This icon will be the consistent button face
+        toolTip={"Layout"}
+        items={[
+          { value: "single", label: "Single Column" },
+          { value: "two-equal", label: "Two Equal Columns"},
+          { value: "three-equal", label: "Three Equal Columns" },
+          { value: "40-60", label: "40-60"},
+          { value: "60-40", label: "60-40" },
+        ]}
+        onChange={handleLayoutOperation}
+      />
+    ),
     heading: (
       <ParagraphStyleButton
         items={[
@@ -119,37 +146,6 @@ const Toolbar = ({ features }) => {
         onChange={handleChange}
         id="paragraph-style-button"
       />
-    ),
-    htmlMode: <IconButton onClick={toggleHtmlMode} style={getButtonStyle('htmlMode')}><Icons.CodeIcon /></IconButton>,
-    table: (
-      <IconDropDown
-        id="tableDropdown"
-        selected="insert"
-        items={[
-          { value: "insert", label: "Insert Table" },
-          { value: "addRow", label: "Add Row" },
-          { value: "addColumn", label: "Add Column" },
-        ]}
-        onChange={handleTableOperation}
-      >
-        <Icons.TableIcon />
-      </IconDropDown>
-    ),
-    layout: (
-      <IconDropDown
-        id="layoutDropdown"
-        selected="single"
-        items={[
-          { value: "single", label: "Single Column" },
-          { value: "two-equal", label: "Two Columns" },
-          { value: "three-equal", label: "Three Columns" },
-          { value: "40-60", label: "40-60" },
-          { value: "60-40", label: "60-40" },
-        ]}
-        onChange={handleLayoutOperation}
-      >
-        <Icons.LayoutIcon />
-      </IconDropDown>
     ),
   };
 

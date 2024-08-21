@@ -21,31 +21,14 @@ export const useEditorFormatting = (editorRef) => {
     const editor = editorRef.current;
     if (editor) {
       document.execCommand(command, false, value);
-      
-      const selection = window.getSelection();
-      const range = selection.getRangeAt(0);
-      const parentElement = range.commonAncestorContainer.parentElement;
-      
-      if (parentElement !== editor) {
-        updateDataAttributes(parentElement);
-      }
-
       updateActiveStyles();
     }
-  }, [editorRef, updateDataAttributes]);
+  }, [editorRef]);
 
   const applyHeading = useCallback((heading) => {
     const editor = editorRef.current;
     if (editor) {
-      const selection = window.getSelection();
-      const range = selection.getRangeAt(0);
-      
-      const newElement = document.createElement(heading);
-      range.surroundContents(newElement);
-      
-      selection.removeAllRanges();
-      selection.addRange(range);
-
+      document.execCommand('formatBlock', false, heading);
       updateActiveStyles();
     }
   }, [editorRef]);
@@ -66,7 +49,8 @@ export const useEditorFormatting = (editorRef) => {
             element.src = e.target.result;
             element.controls = true;
           }
-          insertElement(editor, element);
+          editor.appendChild(element);
+          editor.appendChild(document.createElement('br'));
         };
         reader.readAsDataURL(file);
       } else if (fileUrl) {
@@ -79,44 +63,22 @@ export const useEditorFormatting = (editorRef) => {
           element.src = fileUrl;
           element.controls = true;
         }
-        insertElement(editor, element);
+        editor.appendChild(element);
+        editor.appendChild(document.createElement('br'));
       }
     }
   }, [editorRef]);
 
-  const insertElement = (editor, element) => {
-    editor.focus();
-    const selection = window.getSelection();
-    const range = selection.getRangeAt(0);
-    range.deleteContents();
-    range.insertNode(element);
-    range.setStartAfter(element);
-    range.setEndAfter(element);
-    selection.removeAllRanges();
-    selection.addRange(range);
-  };
-
   const addLink = useCallback((linkText, linkUrl) => {
     const editor = editorRef.current;
     if (editor) {
-      editor.focus();
-      const selection = window.getSelection();
-      const range = selection.getRangeAt(0);
-
       const anchor = document.createElement("a");
       anchor.href = linkUrl;
       anchor.textContent = linkText;
       anchor.target = "_blank";
       anchor.rel = "noopener noreferrer";
-
-      range.deleteContents();
-      range.insertNode(anchor);
-
-      range.setStartAfter(anchor);
-      range.setEndAfter(anchor);
-      selection.removeAllRanges();
-      selection.addRange(range);
-
+      editor.appendChild(anchor);
+      editor.appendChild(document.createElement('br'));
       updateActiveStyles();
     }
   }, [editorRef]);

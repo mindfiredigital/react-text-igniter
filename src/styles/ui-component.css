@@ -75,7 +75,7 @@
 .toolbarBtnDiv:hover {
   padding: 0px;
   background-color: #f1f1f1;
-  border: 2px solid var(--border-hover-color);
+  padding: 2px;
   border-radius: 4px;
 }
 
@@ -129,9 +129,7 @@
 
 .icon-dropdown .dropbtn:hover,
 .icon-dropdown:hover .dropbtn {
-  padding: var(--common-hover-padding);
   background-color: #f1f1f1;
-  border: 2px solid var(--border-hover-color);
   border-radius: 4px;
 }
 

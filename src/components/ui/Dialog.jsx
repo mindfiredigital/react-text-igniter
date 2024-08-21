@@ -3,19 +3,7 @@ import "../../styles/ui-component.css";
 import { AppButton, IconButton } from "./Button.jsx";
 import * as Icons from "../../assets/icon.jsx";
 
-/**
- * ImageUploadSelectionDialog Component
- *
- * A dialog component for selecting an image either by URL or file upload from computer.
- *
- * @param {Object} props - Component props
- * @param {boolean} props.isOpen - Whether the dialog is open
- * @param {Function} props.onClose - Function to close the dialog
- * @param {Function} props.onSubmit - Function to handle image submission
- * @param {string} props.title - Dialog title
- * @param {React.ReactNode} props.children - Additional dialog content
- * @returns {JSX.Element|null} The rendered ImageUploadSelectionDialog component or null if not open
- */
+// Image/Video Dialog
 const ImageUploadSelectionDialog = ({ isOpen, onClose, onSubmit, title, children }) => {
   const [file, setFile] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
@@ -60,21 +48,21 @@ const ImageUploadSelectionDialog = ({ isOpen, onClose, onSubmit, title, children
     }
   };
 
-  const handleImageUrl = (event) => {
-    const url = event.target.value;
-    const urlExtension = url.split(".").pop().split("?")[0].toLowerCase();
-    if (
-      validImageExtensions.includes(urlExtension) ||
-      validVideoExtensions.includes(urlExtension)
-    ) {
-      setImageUrl(url);
-      setFile(null);
-      setError("");
-    } else {
-      setImageUrl("");
-      setError("Invalid URL. Please provide a link to an image or video.");
-    }
-  };
+  // const handleImageUrl = (event) => {
+  //   const url = event.target.value;
+  //   const urlExtension = url.split(".").pop().split("?")[0].toLowerCase();
+  //   if (
+  //     validImageExtensions.includes(urlExtension) ||
+  //     validVideoExtensions.includes(urlExtension)
+  //   ) {
+  //     setImageUrl(url);
+  //     setFile(null);
+  //     setError("");
+  //   } else {
+  //     setImageUrl("");
+  //     setError("Invalid URL. Please provide a link to an image or video.");
+  //   }
+  // };
 
   const handleSubmit = () => {
     if (file || imageUrl) {
@@ -98,14 +86,14 @@ const ImageUploadSelectionDialog = ({ isOpen, onClose, onSubmit, title, children
         </div>
         <div className="dialog-body">
           <div className="container">
-            <input
+            {/* <input
               type="text"
               className="image-url-input"
               placeholder="Paste file URL"
               value={imageUrl}
               onChange={handleImageUrl}
             />
-            <div className="or-divider">OR</div>
+            <div className="or-divider">OR</div> */}
             <label htmlFor="file-input" className="custom-file-input">
               {!file ? "Select file" : "Reselect file"}
             </label>
