@@ -13,8 +13,6 @@ const Toolbar = ({ features }) => {
     editorRef,
     currentHeading,
     changeHeading,
-    isHtmlMode,
-    toggleHtmlMode,
     applyHeading,
     insertTable,
     addTableRow,
@@ -97,7 +95,6 @@ const Toolbar = ({ features }) => {
     ),
     superscript: <IconButton onClick={() => formatText("superscript")} toolTip="Superscript" isActive={getIsActive('superscript')}><Icons.SuperScriptIcon /></IconButton>,
     subscript: <IconButton onClick={() => formatText("subscript")} toolTip="Subscript" isActive={getIsActive('subscript')}><Icons.SubScriptIcon /></IconButton>,
-    htmlMode: <IconButton onClick={toggleHtmlMode} isActive={getIsActive('htmlMode')}><Icons.CodeIcon /></IconButton>,
     table: (
       <IconDropDown
         id="tableDropdown"
@@ -153,8 +150,7 @@ const Toolbar = ({ features }) => {
           {!isToolbarVisible ? "Preview Mode" : "Edit Mode"}
         </label>
       </div>
-      {!isHtmlMode &&
-        !isToolbarVisible &&
+      { !isToolbarVisible &&
         features.map((feature, index) => (
           <React.Fragment key={index}>{featureButtons[feature]}</React.Fragment>
         ))}
