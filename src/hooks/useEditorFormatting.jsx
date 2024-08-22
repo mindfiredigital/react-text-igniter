@@ -144,6 +144,18 @@ export const useEditorFormatting = (editorRef) => {
     }
   }, [editorRef, updateActiveStyles]);
 
+  const applyHeading = useCallback((heading) => {
+    const editor = editorRef.current;
+    if (editor) {
+      const headingElement = document.createElement(heading);
+      headingElement.textContent = "Add Heading Here"; 
+      headingElement.contentEditable = true;
+
+      // Append heading directly
+      editor.appendChild(headingElement);
+    }
+  }, [editorRef]);
+
   useEffect(() => {
     const editor = editorRef.current;
     if (editor) {
@@ -161,6 +173,7 @@ export const useEditorFormatting = (editorRef) => {
     updateDataAttributes,
     addImageOrVideo,
     addLink,
+    applyHeading,
     activeStyles
   };
 };
