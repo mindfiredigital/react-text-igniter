@@ -6,7 +6,6 @@ import { ImageUploadSelectionDialog, FileUrlDialog } from "../ui/Dialog.jsx";
 import { IconDropDown } from "../ui/Dropdown.jsx";
 import { usePreviewMode } from "../../hooks/usePreviewMode.jsx";
 import { ParagraphStyleButton } from "../ui/toolBar/ParagraphStyleButton.jsx";
-
 const Toolbar = ({ features }) => {
   const {
     formatText,
