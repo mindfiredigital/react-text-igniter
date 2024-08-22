@@ -1,3 +1,5 @@
+// hooks/useHeadingState.jsx
+
 import { useState, useCallback } from "react";
 
 export const useHeadingState = () => {
@@ -5,6 +7,7 @@ export const useHeadingState = () => {
 
   const changeHeading = useCallback((heading) => {
     setCurrentHeading(heading);
+    document.execCommand('formatBlock', false, heading);
   }, []);
 
   return { currentHeading, changeHeading };
