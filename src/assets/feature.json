@@ -1,5 +1,9 @@
 {
   "features": {
+    "heading": {
+      "tag": "heading",
+      "displayName": "Heading"
+    },
     "bold": {
       "tag": "bold",
       "displayName": "Bold"
@@ -63,10 +67,6 @@
     "layout":{
       "tag":"layout",
       "displayName":"Layout"
-    },
-    "heading": {
-      "tag": "heading",
-      "displayName": "Heading"
     }
   }
 }
