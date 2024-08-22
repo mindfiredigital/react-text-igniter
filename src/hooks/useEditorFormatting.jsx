@@ -21,43 +21,44 @@ export const useEditorFormatting = (editorRef) => {
     const editor = editorRef.current;
     if (editor) {
       const styles = new Set();
-
-      // Check command states for text formatting
-      if (document.queryCommandState('bold')) styles.add('bold');
-      if (document.queryCommandState('italic')) styles.add('italic');
-      if (document.queryCommandState('underline')) styles.add('underline');
-
-      // Ensure only one list style is selected at a time
-      if (document.queryCommandState('insertOrderedList')) {
-        styles.add('orderedList');
-        styles.delete('unorderedList');
-      } else if (document.queryCommandState('insertUnorderedList')) {
-        styles.add('unorderedList');
-        styles.delete('orderedList');
-      } else {
-        styles.delete('orderedList');
-        styles.delete('unorderedList');
+      const selection = window.getSelection();
+      
+      if (selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
+        const parentElement = range.commonAncestorContainer.nodeType === Node.TEXT_NODE
+          ? range.commonAncestorContainer.parentElement
+          : range.commonAncestorContainer;
+  
+        // Check text formatting
+        if (document.queryCommandState('bold')) styles.add('bold');
+        if (document.queryCommandState('italic')) styles.add('italic');
+        if (document.queryCommandState('underline')) styles.add('underline');
+  
+        // Check list style (only one can be active)
+        if (document.queryCommandState('insertOrderedList')) {
+          styles.add('orderedList');
+        } else if (document.queryCommandState('insertUnorderedList')) {
+          styles.add('unorderedList');
+        }
+  
+        // Check justification (only one can be active)
+        const computedStyle = window.getComputedStyle(parentElement);
+        const textAlign = computedStyle.textAlign;
+        if (textAlign === 'left' || textAlign === 'start') {
+          styles.add('justifyLeft');
+        } else if (textAlign === 'center') {
+          styles.add('justifyCenter');
+        } else if (textAlign === 'right') {
+          styles.add('justifyRight');
+        }
       }
-
-      // Ensure only one justification style is selected at a time
-      if (document.queryCommandState('justifyLeft')) {
-        styles.add('justifyLeft');
-        styles.delete('justifyCenter');
-        styles.delete('justifyRight');
-      } else if (document.queryCommandState('justifyCenter')) {
-        styles.add('justifyCenter');
-        styles.delete('justifyLeft');
-        styles.delete('justifyRight');
-      } else if (document.queryCommandState('justifyRight')) {
-        styles.add('justifyRight');
-        styles.delete('justifyLeft');
-        styles.delete('justifyCenter');
-      } else {
-        styles.delete('justifyLeft');
-        styles.delete('justifyCenter');
-        styles.delete('justifyRight');
+      // Check superscript and subscript (only one can be active)
+      if (document.queryCommandState('superscript')) {
+        styles.add('superscript');
+      } else if (document.queryCommandState('subscript')) {
+        styles.add('subscript');
       }
-
+  
       setActiveStyles(Array.from(styles));
     }
   }, [editorRef]);
@@ -65,11 +66,32 @@ export const useEditorFormatting = (editorRef) => {
   const formatText = useCallback((command, value = null) => {
     const editor = editorRef.current;
     if (editor) {
+      if (command.startsWith('justify')) {
+        // Remove all justify styles before applying the new one
+        ['justifyLeft', 'justifyCenter', 'justifyRight'].forEach(style => {
+          if (style !== command) {
+            document.execCommand(style, false, null);
+          }
+        });
+      } else if (command === 'insertOrderedList' || command === 'insertUnorderedList') {
+        // Remove the other list style before applying the new one
+        const otherListCommand = command === 'insertOrderedList' ? 'insertUnorderedList' : 'insertOrderedList';
+        if (document.queryCommandState(otherListCommand)) {
+          document.execCommand(otherListCommand, false, null);
+        }
+      } else if (command === 'superscript' || command === 'subscript') {
+        // Remove the other script style before applying the new one
+        const otherScriptCommand = command === 'superscript' ? 'subscript' : 'superscript';
+        if (document.queryCommandState(otherScriptCommand)) {
+          document.execCommand(otherScriptCommand, false, null);
+        }
+      }
+      
       document.execCommand(command, false, value);
       updateActiveStyles();
     }
   }, [editorRef, updateActiveStyles]);
-
+  
   const applyHeading = useCallback((heading) => {
     const editor = editorRef.current;
     if (editor) {

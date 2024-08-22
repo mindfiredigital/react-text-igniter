@@ -13,30 +13,20 @@ const AppButton = ({ type = "primary", children, onClick, disabled = false }) =>
 };
 
 const IconButton = ({ children, onClick, id, toolTip, isActive }) => {
-  const [isPressed, setIsPressed] = useState(false);
-
-  const handleClick = () => {
-    setIsPressed((prevState) => !prevState);
-    onClick();
-  };
-
   return (
     <Tooltip text={toolTip}>
       <style>
         {`
-          .toolbarBtnDiv.active,
-          .toolbarBtnDiv.pressed {
+          .toolbarBtnDiv.active {
             background-color: #ddd; /* Highlighted background color */
             border: 1px solid #333; /* Highlighted border */
           }
         `}
       </style>
       <div
-        className={`toolbarBtnDiv ${isActive ? "active" : ""} ${
-          isPressed ? "pressed" : ""
-        }`}
+        className={`toolbarBtnDiv ${isActive ? "active" : ""}`}
       >
-        <button className="toolbarBtn" onClick={handleClick} id={id}>
+        <button className="toolbarBtn" onClick={onClick} id={id}>
           {children}
         </button>
       </div>
