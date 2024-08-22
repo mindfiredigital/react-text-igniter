@@ -3,9 +3,7 @@
 import React, { createContext, useContext, useRef, useCallback } from "react";
 import { useEditorFormatting } from "../hooks/useEditorFormatting.jsx";
 import { useEditorState } from "../hooks/useEditorState.jsx";
-import { useHeadingState } from "../hooks/useHeadingState.jsx";
 import { useTableOperations } from "../hooks/useTableOperation.jsx";
-
 const EditorContext = createContext();
 
 export const EditorProvider = ({ children }) => {
@@ -14,16 +12,13 @@ export const EditorProvider = ({ children }) => {
   const {
     formatText,
     updateDataAttributes,
-    applyHeading,
     addImageOrVideo,
     addLink,
     activeStyles
   } = useEditorFormatting(editorRef);
 
   const state = useEditorState(editorRef, updateDataAttributes);
-  const headingState = useHeadingState();
   const { insertTable, addTableRow, addTableColumn, insertLayout } = useTableOperations(editorRef);
-
   const getHtml = useCallback(() => {
     return editorRef.current ? editorRef.current.innerHTML : '';
   }, []);
@@ -61,8 +56,6 @@ export const EditorProvider = ({ children }) => {
 
   const editorValue = {
     ...state,
-    ...headingState,
-    applyHeading,
     formatText,
     editorRef,
     addImageOrVideo,
@@ -73,7 +66,7 @@ export const EditorProvider = ({ children }) => {
     insertLayout,
     activeStyles,
     getHtml,
-    getJson
+    getJson,
   };
 
   return (

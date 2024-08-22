@@ -91,14 +91,6 @@ export const useEditorFormatting = (editorRef) => {
       updateActiveStyles();
     }
   }, [editorRef, updateActiveStyles]);
-  
-  const applyHeading = useCallback((heading) => {
-    const editor = editorRef.current;
-    if (editor) {
-      document.execCommand('formatBlock', false, heading);
-      updateActiveStyles();
-    }
-  }, [editorRef, updateActiveStyles]);
 
   const addImageOrVideo = useCallback((file, fileUrl) => {
     const editor = editorRef.current;
@@ -167,9 +159,8 @@ export const useEditorFormatting = (editorRef) => {
   return {
     formatText,
     updateDataAttributes,
-    applyHeading,
     addImageOrVideo,
     addLink,
-    activeStyles,
+    activeStyles
   };
 };
