@@ -149,7 +149,6 @@ export const useEditorFormatting = (editorRef) => {
     if (editor) {
       const headingElement = document.createElement(heading);
       headingElement.textContent = "Add Heading Here"; 
-      headingElement.contentEditable = true;
 
       // Append heading directly
       editor.appendChild(headingElement);
