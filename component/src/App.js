@@ -1,7 +1,7 @@
 // App.js
 
 import React, { useRef } from "react";
-import RichTextEditor from "./components/richTextEditor";
+import RichTextEditor from "./components/richTextEditor/RichTextEditor";
 import featuresData from "./assets/feature.json";
 
 const App = () => {

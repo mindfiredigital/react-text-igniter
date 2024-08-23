@@ -91,14 +91,6 @@ export const useEditorFormatting = (editorRef) => {
       updateActiveStyles();
     }
   }, [editorRef, updateActiveStyles]);
-  
-  const applyHeading = useCallback((heading) => {
-    const editor = editorRef.current;
-    if (editor) {
-      document.execCommand('formatBlock', false, heading);
-      updateActiveStyles();
-    }
-  }, [editorRef, updateActiveStyles]);
 
   const addImageOrVideo = useCallback((file, fileUrl) => {
     const editor = editorRef.current;
@@ -152,6 +144,17 @@ export const useEditorFormatting = (editorRef) => {
     }
   }, [editorRef, updateActiveStyles]);
 
+  const applyHeading = useCallback((heading) => {
+    const editor = editorRef.current;
+    if (editor) {
+      const headingElement = document.createElement(heading);
+      headingElement.textContent = "Add Heading Here"; 
+
+      // Append heading directly
+      editor.appendChild(headingElement);
+    }
+  }, [editorRef]);
+
   useEffect(() => {
     const editor = editorRef.current;
     if (editor) {
@@ -167,9 +170,9 @@ export const useEditorFormatting = (editorRef) => {
   return {
     formatText,
     updateDataAttributes,
-    applyHeading,
     addImageOrVideo,
     addLink,
-    activeStyles,
+    applyHeading,
+    activeStyles
   };
 };

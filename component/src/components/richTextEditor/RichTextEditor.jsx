@@ -1,6 +1,6 @@
 // index.jsx
 
-import React, { useRef, useImperativeHandle, forwardRef } from "react";
+import React, { useImperativeHandle, forwardRef } from "react";
 import { EditorProvider, useEditor } from "../../contexts/editorContext.jsx";
 import Toolbar from "./Toolbar.jsx";
 import Editor from "./Editor.jsx";

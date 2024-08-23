@@ -5,14 +5,9 @@ import { IconButton } from "../ui/Button.jsx";
 import { ImageUploadSelectionDialog, FileUrlDialog } from "../ui/Dialog.jsx";
 import { IconDropDown } from "../ui/Dropdown.jsx";
 import { usePreviewMode } from "../../hooks/usePreviewMode.jsx";
-import { ParagraphStyleButton } from "../ui/toolBar/ParagraphStyleButton.jsx";
 const Toolbar = ({ features }) => {
   const {
     formatText,
-    editorRef,
-    currentHeading,
-    changeHeading,
-    applyHeading,
     insertTable,
     addTableRow,
     addTableColumn,
@@ -20,22 +15,25 @@ const Toolbar = ({ features }) => {
     addImageOrVideo,
     addLink,
     activeStyles,
+    changeHeading,
+    applyHeading,
   } = useEditor();
 
   const { isToolbarVisible, toggleToolbarVisibility } = usePreviewMode();
 
   const [isImageDialogOpen, setImageDialogOpen] = useState(false);
   const [isUrlDialogOpen, setUrlDialogOpen] = useState(false);
-  const [selectedStyle, setSelectedStyle] = useState("");
 
-  const handleChange = (value) => {
-    setSelectedStyle(value);
-    applyHeading(value);
-  };
 
   const handleImageSubmit = ({ file, fileUrl }) => {
     addImageOrVideo(file, fileUrl);
   };
+  const handleHeadingChange = (e) => {
+    const heading = e;
+    changeHeading(heading);
+    applyHeading(heading);
+  };
+
 
   const handleTableOperation = (operation) => {
     switch (operation) {
@@ -97,7 +95,7 @@ const Toolbar = ({ features }) => {
     table: (
       <IconDropDown
         id="tableDropdown"
-        icon={<Icons.TableIcon />} // This icon will be the consistent button face
+        icon={<Icons.TableIcon />}
         toolTip={"Table"}
         items={[
           { value: "insert", label: "Insert Table" },
@@ -110,7 +108,7 @@ const Toolbar = ({ features }) => {
     layout: (
       <IconDropDown
         id="layoutDropdown"
-        icon={<Icons.LayoutIcon />} // This icon will be the consistent button face
+        icon={<Icons.LayoutIcon />}
         toolTip={"Layout"}
         items={[
           { value: "single", label: "Single Column" },
@@ -123,20 +121,18 @@ const Toolbar = ({ features }) => {
       />
     ),
     heading: (
-      <ParagraphStyleButton
-        items={[
-          { value: "normal", label: "Normal" },
-          { value: "p", label: "Paragraph" },
-          { value: "h1", label: "Heading 1" },
-          { value: "h2", label: "Heading 2" },
-          { value: "h3", label: "Heading 3" },
-          { value: "h4", label: "Heading 4" },
-          { value: "h5", label: "Heading 5" },
-          { value: "h6", label: "Heading 6" },
+      <IconDropDown
+      icon={<Icons.HeadingIcon />}
+      items={[
+          { value: "h1", label: "Heading 1", },
+          { value: "h2" , label: "Heading 2"},
+          {  value: "h3", label: "Heading 3" },
+          { value: "h4" ,label: "Heading 4"},
+          { value: "h5" , label: "Heading 5"},
+          {value: "h6", label: "Heading 6" },
         ]}
-        selected={selectedStyle}
-        onChange={handleChange}
-        id="paragraph-style-button"
+        onChange={handleHeadingChange}
+        toolTip={"Headings"}
       />
     ),
   };
