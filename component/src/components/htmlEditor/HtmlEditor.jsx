@@ -4,9 +4,9 @@ import React, { useImperativeHandle, forwardRef } from "react";
 import { EditorProvider, useEditor } from "../../contexts/editorContext.jsx";
 import Toolbar from "./Toolbar.jsx";
 import Editor from "./Editor.jsx";
-import "../../styles/rich-text-editor.css";
+import "../../styles/html-editor.css";
 
-const RichTextEditorContent = forwardRef(({ features, height }, ref) => {
+const HtmlEditorContent = forwardRef(({ features, height }, ref) => {
   const { getHtml, getJson } = useEditor();
 
   useImperativeHandle(ref, () => ({
@@ -22,10 +22,10 @@ const RichTextEditorContent = forwardRef(({ features, height }, ref) => {
   );
 });
 
-const RichTextEditor = forwardRef((props, ref) => (
+const HtmlEditor = forwardRef((props, ref) => (
   <EditorProvider>
-    <RichTextEditorContent {...props} ref={ref} />
+    <HtmlEditorContent {...props} ref={ref} />
   </EditorProvider>
 ));
 
-export default RichTextEditor;
+export default HtmlEditor;

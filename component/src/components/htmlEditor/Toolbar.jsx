@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import { useEditor } from "../../contexts/editorContext.jsx";
 import * as Icons from "../../assets/icon.jsx";
 import { IconButton } from "../ui/Button.jsx";

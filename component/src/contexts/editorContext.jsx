@@ -1,5 +1,3 @@
-// editorContext.jsx
-
 import React, { createContext, useContext, useRef, useCallback } from "react";
 import { useEditorFormatting } from "../hooks/useEditorFormatting.jsx";
 import { useEditorState } from "../hooks/useEditorState.jsx";

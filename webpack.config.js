@@ -1,18 +1,29 @@
 const path = require('path');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   entry: './component/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'index.js',
-    sourceMapFilename: 'index.js.map',
-    library: 'RichTextEditor',
+    library: 'HtmlEditor',
     libraryTarget: 'umd',
-    globalObject: 'this'
+    globalObject: 'this',
+    umdNamedDefine: true
   },
   externals: {
-    react: 'react',
-    'react-dom': 'react-dom'
+    react: {
+      commonjs: 'react',
+      commonjs2: 'react',
+      amd: 'React',
+      root: 'React'
+    },
+    'react-dom': {
+      commonjs: 'react-dom',
+      commonjs2: 'react-dom',
+      amd: 'ReactDOM',
+      root: 'ReactDOM'
+    }
   },
   module: {
     rules: [
@@ -22,57 +33,37 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
+            presets: [
+              ['@babel/preset-env', { modules: false }],
+              '@babel/preset-react'
+            ],
+            plugins: ['@babel/plugin-transform-runtime']
           }
         }
       },
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
-      },
-      {
-        test: /\.(png|jpe?g|gif|svg)$/i,  // For handling image assets
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-              outputPath: 'assets/images/',
-            },
-          },
-        ],
-      },
-      {
-        test: /\.woff(2)?|ttf|eot|svg$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-              outputPath: 'assets/fonts/',
-            },
-          },
-        ],
-      },
-      {
-        test: /\.js$/,
-        enforce: 'pre',
-        use: ['source-map-loader'],
-      },
-    ],
+      }
+    ]
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.json'],
+    extensions: ['.js', '.jsx']
   },
-  devtool: 'source-map',  // Enable source maps for debugging
-  devServer: {
-    static: path.resolve(__dirname, 'dist'),
-    compress: true,
-    port: 9000,
-    hot: true,  // Enable hot module replacement
-    open: true, // Automatically open the browser
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          compress: {
+            drop_console: true,
+          },
+          output: {
+            comments: false,
+          },
+        },
+        extractComments: false,
+      }),
+    ],
   },
-  plugins: [
-    // Add any Webpack plugins if necessary
-  ],
+  mode: 'production'
 };

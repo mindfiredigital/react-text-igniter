@@ -1,5 +1,3 @@
-// hooks/useHeadingState.jsx
-
 import { useState, useCallback } from "react";
 
 export const useHeadingState = () => {

@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
-import { RichTextEditor } from '../component';
+import { HtmlEditor } from '../component';
 
 export default {
-  title: 'RichTextEditor',
-  component: RichTextEditor,
+  title: 'HtmlEditor',
+  component: HtmlEditor,
   argTypes: {
     features: {
       control: 'object',
@@ -33,11 +33,10 @@ console.log("line 23 here");
 
   return (
     <div>
-     <RichTextEditor ref={editorRef} {...args} />
+     <HtmlEditor ref={editorRef} {...args} />
       <button onClick={handleGetContent} style={{ marginTop: '10px' }}>
         Get Content
       </button>
-      {/* <p>hellow world</p> */}
     </div>
   );
 };
