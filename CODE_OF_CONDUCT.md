@@ -1,4 +1,4 @@
-# Code of Conduct - IgniteJS
+# Code of Conduct - TextIgnite JS
 
 ## Our Pledge
 

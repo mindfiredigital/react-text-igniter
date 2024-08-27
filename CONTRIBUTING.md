@@ -1,6 +1,6 @@
-# Contributing to IgniteJS
+# Contributing to TextIgnite JS
 
-We welcome and appreciate your contribution to IgniteJS. These guidelines will help ensure a smooth and collaborative process for everyone.
+We welcome and appreciate your contribution to TextIgnite JS. These guidelines will help ensure a smooth and collaborative process for everyone.
 
 ## How Can You Contribute?
 
@@ -37,6 +37,6 @@ Please ensure your contributions adhere to the project's [Code of Conduct](./COD
 
 If you need further clarification or help, feel free to reach out by creating an issue or directly contacting the maintainers.
 
-Thank you for your interest in contributing to IgniteJS! We appreciate your efforts in making this project better.
+Thank you for your interest in contributing to TextIgnite JS! We appreciate your efforts in making this project better.
 
 Happy contributing!

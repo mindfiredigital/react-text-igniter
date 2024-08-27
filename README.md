@@ -1,14 +1,14 @@
-<h1 align="center">IgniteJS </h1><br><br>
+<h1 align="center">TextIgnite JS </h1><br><br>
 <p align="center">
-<a href="https://www.npmjs.com/package/ignite-js-test"><img src="https://img.shields.io/npm/v/ignite-js-test.svg?sanitize=true" alt="Version"></a>
-<a href="https://www.npmjs.com/package/ignite-js-test"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs"></a>
+<a href="https://www.npmjs.com/package/react-text-igniter"><img src="https://img.shields.io/npm/v/react-text-igniter.svg?sanitize=true" alt="Version"></a>
+<a href="https://www.npmjs.com/package/react-text-igniter"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs"></a>
 </p>
 
 <br>
 
 <p align="center"> Experience a powerful and intuitive HTML Editor built with React.js. </p>
 
-The `ignite-js-test` is a tool that allows developers to integrate HTML Editor using React.
+The `react-text-igniter` is a tool that allows developers to integrate HTML Editor using React.
 <br>
 
 ## Table of Contents
@@ -46,10 +46,10 @@ The `ignite-js-test` is a tool that allows developers to integrate HTML Editor u
 
 ## Installation
 
-To install the `ignite-js-test` npm package in your project, use the following command:
+To install the `react-text-igniter` npm package in your project, use the following command:
 
 ```bash
-npm install ignite-js-test
+npm install react-text-igniter
 ```
 
 <br>
@@ -60,7 +60,7 @@ npm install ignite-js-test
 
 
 ```javascript
-import { HtmlEditor } from "ignite-js-test";
+import { HtmlEditor } from "react-text-igniter";
 import React,{useRef} from "react";
 
 export const App = () => {
@@ -80,7 +80,7 @@ const editorRef = useRef();
 
 
 ```javascript
-import { HtmlEditor } from "ignite-js-test";
+import { HtmlEditor } from "react-text-igniter";
 import React,{useRef} from "react";
 
 export const App = () => {

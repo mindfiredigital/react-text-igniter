@@ -1,6 +1,6 @@
 {
-  "name": "ignite-js-test",
-  "version": "0.1.6",
+  "name": "react-text-igniter",
+  "version": "0.1.0",
   "main": "dist/index.js",
   "license": "MIT",
   "files": [
