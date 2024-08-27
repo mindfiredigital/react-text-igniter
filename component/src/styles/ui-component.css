@@ -1,0 +1,376 @@
+/* CSS variables for consistent theming */
+:root {
+  /* Color variables */
+  --primary-bg: white;
+  --primary-color: gray;
+  --primary-textColor: black;
+  --hover-bg: black;
+  --hover-color: black;
+  --border-color: black;
+  --border-hover-color: rgb(185, 183, 183);
+  --cancel-border-hover: red;
+  --overlay-bg: #00000080;
+  --container-bg: #f0f0f0;
+  --common-padding: 6px 10px;
+  --common-hover-padding: 8px 12px;
+  /* Box shadow variable */
+  --box-shadow: 2px 6px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* 
+ ======================================== 
+ BUTTONS
+ ========================================
+ */
+/* General button styles */
+.button {
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;
+  margin: 2px;
+  border: 2px solid var(--border-color);
+}
+
+/* Primary button styles */
+.button-primary {
+  background: var(--primary-bg);
+  color: var(--primary-color);
+}
+
+.button-primary:hover {
+  color: var(--hover-color);
+  box-shadow: var(--box-shadow);
+}
+
+/* Cancel button styles */
+.button-cancel {
+  background: var(--primary-bg);
+  color: var(--primary-color);
+}
+
+.button-cancel:hover {
+  border: 2px solid var(--cancel-border-hover);
+  color: var(--hover-color);
+  box-shadow: var(--box-shadow);
+}
+
+.toolbarBtn {
+  padding: 0;
+  margin: 0;
+}
+
+.toolbarBtnDiv {
+  display: grid;
+  padding: 2px;
+  text-align: center;
+  align-items: center;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.toolbarBtnDiv:hover {
+  padding: 0px;
+  background-color: #f1f1f1;
+  padding: 2px;
+  border-radius: 4px;
+}
+
+.toolbarBtnDiv.active {
+  padding: 0px;
+  border: 2px solid var(--border-hover-color);
+  border-radius: 2px;
+}
+
+
+.link-button {
+  background: none;
+  border: none;
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.link-button:hover {
+  color: darkblue;
+}
+
+/* 
+ ======================================== 
+ DROPDOWN
+ ========================================
+ */
+.icon-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.icon-dropdown select {
+  display: none; /* Hide the native select element */
+}
+
+.icon-dropdown .dropbtn {
+  display: inline-block;
+  color: var(--primary-textColor);
+  text-align: center;
+  padding: var(--common-padding);
+  text-decoration: none;
+  background-color: white;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+}
+
+.icon-dropdown .dropbtn:hover,
+.icon-dropdown:hover .dropbtn {
+  background-color: #f1f1f1;
+  border-radius: 4px;
+}
+
+.icon-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  padding-top: 4px;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.icon-dropdown-content .dropdown-item {
+  color: black;
+  padding: var(--common-padding);
+  font-size: 12px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.icon-dropdown-content .dropdown-item:hover {
+  padding: var(--common-hover-padding);
+  background-color: #f1f1f1;
+  font-size: 12px;
+  border: 2px solid var(--border-hover-color);
+  border-radius: 4px;
+}
+
+.icon-dropdown:hover .icon-dropdown-content {
+  display: block;
+}
+
+.icon-dropdown.open-right .icon-dropdown-content {
+  margin-left: 8px;
+  left: 100%; /* Position the dropdown to the right of the button */
+  top: 0;
+}
+
+/* 
+ ======================================== 
+ TOOLTIP
+ ========================================
+*/
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip {
+  height: auto;
+  visibility: gone;
+  visibility: visible;
+  background-color: black;
+  font-size: 12px;
+  color: #fff;
+  text-align: center;
+  padding: 4px 8px;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 20;
+  /*bottom: 125%; Position the tooltip above the element */
+  top: 95%; /* Position the tooltip below the element */
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip-container:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+/* 
+ ======================================== 
+ DIALOG
+ ========================================
+ */
+/* Dialog overlay */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--overlay-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Dialog container */
+.dialog-container {
+  background: var(--primary-bg);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+  width: 400px;
+  max-width: 100%;
+  z-index: 1001;
+}
+
+/* Dialog header */
+.dialog-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Dialog body */
+.dialog-body {
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+/* Dialog footer */
+.dialog-footer {
+  text-align: right;
+}
+
+/* Close button */
+.close-button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+/* General container styles */
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 16px;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--container-bg);
+}
+
+/* Image URL input */
+.container .image-url-input {
+  width: 90%;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-family: inherit;
+  border: 1px solid #ccc;
+}
+
+/* OR divider */
+.container .or-divider {
+  margin: 10px;
+}
+
+/* Hide default file input */
+#file-input {
+  display: none;
+}
+
+/* Focus styles for form inputs */
+.form-group input:focus {
+  outline: none;
+  border-color: #1778f2;
+}
+
+/* Custom file input label */
+.custom-file-input {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  background: var(--primary-bg);
+  color: var(--primary-color);
+  border: 2px solid var(--border-color);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.custom-file-input:hover {
+  color: var(--hover-color);
+  box-shadow: var(--box-shadow);
+}
+
+/* File info display */
+.file-info {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* File remove button */
+.file-remove {
+  margin-left: 10px;
+  cursor: pointer;
+  color: red;
+}
+
+/* 
+ ======================================== 
+ TOOLBAR SWITCH
+ ========================================
+ */
+.toolbar-switch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-inline-start: 10px;
+  font-size: 14px;
+  background-color: var(--primary-bg);
+  border: 2px solid transparent;
+  border-radius: 4px;
+  padding: var(--common-padding);
+  cursor: pointer;
+}
+
+
+.toolbar-switch label {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: var(--primary-textColor);
+}
+
+.toolbar-switch input[type="checkbox"] {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.toolbar-switch:hover {
+  background-color: #f1f1f1;
+  border-color: var(--border-hover-color);
+}
+
+.toolbar-switch:active {
+  box-shadow: none;
+}
