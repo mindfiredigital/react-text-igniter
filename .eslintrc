@@ -1,0 +1,10 @@
+{
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "rules": {
+      // add any specific rules here
+    }
+  }
+  

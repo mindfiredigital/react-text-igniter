@@ -44,14 +44,6 @@
       "tag": "insertImage",
       "displayName": "Insert Image"
     },
-    "getHtml": {
-      "tag": "getHtml",
-      "displayName": "Get HTML"
-    },
-    "getJson": {
-      "tag": "getJson",
-      "displayName": "Get JSON"
-    },
     "superscript": {
       "tag": "super",
       "displayName": "Superscript"

@@ -19,7 +19,7 @@ export default {
 console.log("here");
 // Template for all stories
 const Template = (args) => {
-  const editorRef = useRef(null);
+  const editorRef = useRef();
 console.log("line 23 here");
 
   const handleGetContent = () => {
@@ -34,10 +34,10 @@ console.log("line 23 here");
   return (
     <div>
      <RichTextEditor ref={editorRef} {...args} />
-      {/*<button onClick={handleGetContent} style={{ marginTop: '10px' }}>
+      <button onClick={handleGetContent} style={{ marginTop: '10px' }}>
         Get Content
-      </button> */}
-      <p>hellow world</p>
+      </button>
+      {/* <p>hellow world</p> */}
     </div>
   );
 };
@@ -52,7 +52,7 @@ Default.args = {
 // Story with more features
 export const FullFeatured = Template.bind({});
 FullFeatured.args = {
-  features: ['bold', 'italic', 'underline'],
+  features: ['heading' ,'bold', 'italic', 'underline',"orderedList",'unorderedList','justifyLeft','justifyCenter','justifyRight','createLink','insertImage','superscript','subscript','table','layout'],
   height: '400px',
 };
 
