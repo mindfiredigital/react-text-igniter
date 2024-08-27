@@ -1,8 +1,8 @@
 {
   "name": "ignite-js-test",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "main": "dist/index.js",
-  "license":"MIT",
+  "license": "MIT",
   "files": [
     "dist"
   ],
@@ -45,7 +45,6 @@
     "@storybook/test": "^8.2.9",
     "babel-loader": "^9.1.3",
     "css-loader": "^7.1.2",
-    "prop-types": "^15.8.1",
     "storybook": "^8.2.9",
     "style-loader": "^4.0.0",
     "terser-webpack-plugin": "^5.3.10",
