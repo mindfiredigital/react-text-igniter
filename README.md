@@ -1,14 +1,14 @@
 <h1 align="center">IgniteJS </h1><br><br>
 <p align="center">
-<a href="https://www.npmjs.com/package/@mindfiredigital/react-canvas-editor"><img src="https://img.shields.io/npm/v/@mindfiredigital/react-canvas-editor.svg?sanitize=true" alt="Version"></a>
-<a href="https://www.npmjs.com/package/@mindfiredigital/react-canvas-editor"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs"></a>
+<a href="https://www.npmjs.com/package/ignite-js-test"><img src="https://img.shields.io/npm/v/ignite-js-test.svg?sanitize=true" alt="Version"></a>
+<a href="https://www.npmjs.com/package/ignite-js-test"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs"></a>
 </p>
 
 <br>
 
 <p align="center"> Experience a powerful and intuitive HTML Editor built with React.js. </p>
 
-The `@mindfiredigital/ignitejs` is a tool that allows developers to integrate HTML Editor using React.
+The `ignite-js-test` is a tool that allows developers to integrate HTML Editor using React.
 <br>
 
 ## Table of Contents
@@ -46,10 +46,10 @@ The `@mindfiredigital/ignitejs` is a tool that allows developers to integrate HT
 
 ## Installation
 
-To install the `@mindfiredigital/ignitejs` npm package in your project, use the following command:
+To install the `ignite-js-test` npm package in your project, use the following command:
 
 ```bash
-npm install @mindfiredigital/ignitejs
+npm install ignite-js-test
 ```
 
 <br>
@@ -60,7 +60,7 @@ npm install @mindfiredigital/ignitejs
 
 
 ```javascript
-import { HtmlEditor } from "@mindfiredigital/ignitejs";
+import { HtmlEditor } from "ignite-js-test";
 import React,{useRef} from "react";
 
 export const App = () => {
@@ -80,7 +80,7 @@ const editorRef = useRef();
 
 
 ```javascript
-import { HtmlEditor } from "@mindfiredigital/ignitejs";
+import { HtmlEditor } from "ignite-js-test";
 import React,{useRef} from "react";
 
 export const App = () => {
