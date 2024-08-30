@@ -6,6 +6,8 @@
   position: relative;
   margin-top: 20px;
   text-align: left;
+  background-color: white;
+  color: black;
 }
 
 /* Toolbar styles */
@@ -14,6 +16,7 @@
   justify-content: flex-start;
   margin-bottom: 10px;
   flex-wrap: wrap;
+  background-color: white;
 }
 
 .toolbar .toolbarBtn,
@@ -76,5 +79,5 @@ img {
 .table-select:focus {
   outline: none;
   border-color: #0066cc;
-  box-shadow: 0 0 0 2px rgba(0,102,204,0.2);
+  box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
 }
