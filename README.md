@@ -1,14 +1,14 @@
 <h1 align="center">TextIgnite JS </h1><br><br>
 <p align="center">
-<a href="https://www.npmjs.com/package/react-text-igniter"><img src="https://img.shields.io/npm/v/react-text-igniter.svg?sanitize=true" alt="Version"></a>
-<a href="https://www.npmjs.com/package/react-text-igniter"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs"></a>
+<a href="https://www.npmjs.com/package/@mindfiredigital/react-text-igniter"><img src="https://img.shields.io/npm/v/@mindfiredigital/react-text-igniter.svg?sanitize=true" alt="Version"></a>
+<a href="https://www.npmjs.com/package/@mindfiredigital/react-text-igniter"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs"></a>
 </p>
 
 <br>
 
 <p align="center"> Experience a powerful and intuitive HTML Editor built with React.js. </p>
 
-The `react-text-igniter` is a tool that allows developers to integrate HTML Editor using React.
+The `@mindfiredigital/react-text-igniter` is a tool that allows developers to integrate HTML Editor using React.
 <br>
 
 ## Table of Contents
@@ -46,10 +46,10 @@ The `react-text-igniter` is a tool that allows developers to integrate HTML Edit
 
 ## Installation
 
-To install the `react-text-igniter` npm package in your project, use the following command:
+To install the `@mindfiredigital/react-text-igniter` npm package in your project, use the following command:
 
 ```bash
-npm install react-text-igniter
+npm @mindfiredigital/react-text-igniter
 ```
 
 <br>
@@ -58,9 +58,8 @@ npm install react-text-igniter
 
 - **Initialization**: Initialize the HTML Editor in your project, specifying the container element where the editor will be embedded.
 
-
 ```javascript
-import { HtmlEditor } from "react-text-igniter";
+import { HtmlEditor } from "@mindfiredigital/react-text-igniter";
 import React,{useRef} from "react";
 
 export const App = () => {
@@ -78,9 +77,8 @@ const editorRef = useRef();
 
 - **GET HTML/JSON**: Geting HTML and JSON for the content of Editor.
 
-
 ```javascript
-import { HtmlEditor } from "react-text-igniter";
+import { HtmlEditor } from "@mindfiredigital/react-text-igniter";
 import React,{useRef} from "react";
 
 export const App = () => {
@@ -108,7 +106,7 @@ const editorRef = useRef();
 
 ## Contributing
 
-We welcome contributions from the community. If you'd like to contribute to the `react-document-editor` npm package, please follow our [Contributing Guidelines](CONTRIBUTING.md).
+We welcome contributions from the community. If you'd like to contribute to the `react-text-igniter` npm package, please follow our [Contributing Guidelines](CONTRIBUTING.md).
 <br>
 
 ## License
