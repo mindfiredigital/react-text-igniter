@@ -60,18 +60,29 @@ npm install @mindfiredigital/react-text-igniter
 
 ```javascript
 import { HtmlEditor } from "@mindfiredigital/react-text-igniter";
-import React,{useRef} from "react";
+import React, { useRef } from "react";
 
 export const App = () => {
-const editorRef = useRef();
- features: ['heading' ,'bold', 'italic', 'underline',"orderedList",'unorderedList','justifyLeft','justifyCenter','justifyRight','createLink','insertImage','superscript','subscript','table','layout'],
-  return (
-    <HtmlEditor
-      ref={editoRef}
-      features={features}
-      height={"400px"}
-    />
-  );
+  const editorRef = useRef();
+  const features = [
+    "heading",
+    "bold",
+    "italic",
+    "underline",
+    "orderedList",
+    "unorderedList",
+    "justifyLeft",
+    "justifyCenter",
+    "justifyRight",
+    "createLink",
+    "insertImage",
+    "superscript",
+    "subscript",
+    "table",
+    "layout",
+  ];
+
+  return <HtmlEditor ref={editorRef} features={features} height={"400px"} />;
 };
 ```
 
@@ -79,32 +90,44 @@ const editorRef = useRef();
 
 ```javascript
 import { HtmlEditor } from "@mindfiredigital/react-text-igniter";
-import React,{useRef} from "react";
+import React, { useRef } from "react";
 
 export const App = () => {
-const editorRef = useRef();
- features: ['heading' ,'bold', 'italic', 'underline',"orderedList",'unorderedList','justifyLeft','justifyCenter','justifyRight','createLink','insertImage','superscript','subscript','table','layout'],
+  const editorRef = useRef();
+  const features = [
+    "heading",
+    "bold",
+    "italic",
+    "underline",
+    "orderedList",
+    "unorderedList",
+    "justifyLeft",
+    "justifyCenter",
+    "justifyRight",
+    "createLink",
+    "insertImage",
+    "superscript",
+    "subscript",
+    "table",
+    "layout",
+  ];
 
-// get HTML content
- const handleGetHtmlContent = () => {
-    console.log('HTML:', editorRef.current.getHtml());
+  // get HTML content
+  const handleGetHtmlContent = () => {
+    console.log("HTML:", editorRef.current.getHtml());
   };
 
-// get JSON content
+  // get JSON content
   const handleGetJsonContent = () => {
-    console.log('JSON:', editorRef.current.getJson());
+    console.log("JSON:", editorRef.current.getJson());
   };
 
   return (
-<>
-    <HtmlEditor
-      ref={editoRef}
-      features={features}
-      height={"400px"}
-    />
-<button onClick={handleGetHtmlContent}>check html</button>
-<button onClick={handleGetJsonContent}>check Json</button>
-</>
+    <>
+      <HtmlEditor ref={editorRef} features={features} height={"400px"} />
+      <button onClick={handleGetHtmlContent}>check html</button>
+      <button onClick={handleGetJsonContent}>check Json</button>
+    </>
   );
 };
 ```
