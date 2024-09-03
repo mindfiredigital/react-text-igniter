@@ -83,7 +83,12 @@
   "release": {
     "repositoryUrl": "https://github.com/mindfiredigital/react-text-igniter.git",
     "branches": [
-      "master"
+      "master",
+      "next",
+      {
+        "name": "beta",
+        "prerelease": true
+      }
     ]
   }
 }
