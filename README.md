@@ -85,10 +85,16 @@ export const App = () => {
 const editorRef = useRef();
  features: ['heading' ,'bold', 'italic', 'underline',"orderedList",'unorderedList','justifyLeft','justifyCenter','justifyRight','createLink','insertImage','superscript','subscript','table','layout'],
 
- const handleGetContent = () => {
+// get HTML content
+ const handleGetHtmlContent = () => {
     console.log('HTML:', editorRef.current.getHtml());
+  };
+
+// get JSON content
+  const handleGetJsonContent = () => {
     console.log('JSON:', editorRef.current.getJson());
   };
+
   return (
 <>
     <HtmlEditor
@@ -96,7 +102,8 @@ const editorRef = useRef();
       features={features}
       height={"400px"}
     />
-<button onClick={handleGetContent}>check html/json</button>
+<button onClick={handleGetHtmlContent}>check html</button>
+<button onClick={handleGetJsonContent}>check Json</button>
 </>
   );
 };
