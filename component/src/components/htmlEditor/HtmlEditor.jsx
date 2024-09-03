@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 // index.jsx
 
 import React, { useImperativeHandle, forwardRef } from "react";
@@ -11,13 +12,13 @@ const HtmlEditorContent = forwardRef(({ features, height }, ref) => {
 
   useImperativeHandle(ref, () => ({
     getHtml,
-    getJson
+    getJson,
   }));
 
   return (
     <div className="editor-container">
       <Toolbar features={features} />
-      <Editor height={height}/>
+      <Editor height={height} />
     </div>
   );
 });
