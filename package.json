@@ -1,6 +1,6 @@
 {
   "name": "@mindfiredigital/react-text-igniter",
-  "version": "1.0.0",
+  "version": "1.0.0-development",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
@@ -19,7 +19,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "lint-staged": "lint-staged",
-    "prepare": "husky"
+    "prepare": "husky",
+    "lint": "eslint ."
   },
   "husky": {
     "hooks": {
@@ -28,7 +29,8 @@
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss}": [
-      "prettier --single-quote --write"
+      "prettier --single-quote --write",
+      "eslint ."
     ]
   },
   "browserslist": {
