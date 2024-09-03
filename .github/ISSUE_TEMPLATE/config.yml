@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: TextIgniterJS
+    url: https://mindfiredigital.github.io/react-text-igniter/
+    about: react-text-igniter is a tool that allows developers to integrate HTML Editor using React.
