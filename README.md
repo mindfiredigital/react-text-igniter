@@ -49,7 +49,7 @@ The `@mindfiredigital/react-text-igniter` is a tool that allows developers to in
 To install the `@mindfiredigital/react-text-igniter` npm package in your project, use the following command:
 
 ```bash
-npm @mindfiredigital/react-text-igniter
+npm install @mindfiredigital/react-text-igniter
 ```
 
 <br>

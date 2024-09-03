@@ -32,9 +32,6 @@ jobs:
         run: |
           git restore package-lock.json
 
-      # - name: 'Fetch branches'
-      #   run: git fetch origin
-
       - name: "Set Git user name and email"
         run: |
           git config --local user.email "github-actions@github.com"
