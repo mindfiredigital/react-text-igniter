@@ -1,6 +1,6 @@
 {
   "name": "@mindfiredigital/react-text-igniter",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
@@ -82,12 +82,7 @@
   "release": {
     "repositoryUrl": "https://github.com/mindfiredigital/react-text-igniter.git",
     "branches": [
-      "master",
-      "next",
-      {
-        "name": "beta",
-        "prerelease": true
-      }
+      "master"
     ]
   }
 }

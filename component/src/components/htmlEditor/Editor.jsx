@@ -18,13 +18,13 @@ const Editor = ({ height = "300px" }) => {
         ref={editorRef}
         contentEditable
         className="editor-content"
-        style={{ 
+        style={{
           minHeight: height,
           padding: "10px",
-          overflowY: "auto"
+          overflowY: "auto",
         }}
       />
-      
+
       <div className="editor-footer">
         <span>Words: {wordCount}</span> | <span>Chars: {charCount}</span>
       </div>
