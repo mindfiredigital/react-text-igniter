@@ -8,8 +8,7 @@
   "main": "dist/index.js",
   "license": "MIT",
   "files": [
-    "dist",
-    "react-text-igniter-screenshot.png"
+    "dist"
   ],
   "peerDependencies": {
     "react": ">=18.0.0",

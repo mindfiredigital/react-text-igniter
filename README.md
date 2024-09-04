@@ -12,7 +12,7 @@ The `@mindfiredigital/react-text-igniter` is a tool that allows developers to in
 <br>
 
 <p align="center">
-  <img alt="Screenshot of the React Text Igniter" src="./react-text-igniter-screenshot.png"\>
+  <img alt="Screenshot of the React Text Igniter" src="https://res.cloudinary.com/dxf1kplcx/image/upload/v1725448061/react-text-igniter-screenshot_c4dq9c.png"\>
 </p>
 
 ## Live Demo
