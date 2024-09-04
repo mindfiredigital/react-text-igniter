@@ -1,6 +1,6 @@
-# Contributing to TextIgnite JS
+# Contributing to React Text Igniter
 
-We welcome and appreciate your contribution to TextIgnite JS. These guidelines will help ensure a smooth and collaborative process for everyone.
+We welcome and appreciate your contribution to React Text Igniter. These guidelines will help ensure a smooth and collaborative process for everyone.
 
 ## How Can You Contribute?
 
@@ -37,6 +37,6 @@ Please ensure your contributions adhere to the project's [Code of Conduct](./COD
 
 If you need further clarification or help, feel free to reach out by creating an issue or directly contacting the maintainers.
 
-Thank you for your interest in contributing to TextIgnite JS! We appreciate your efforts in making this project better.
+Thank you for your interest in contributing to React Text Igniter! We appreciate your efforts in making this project better.
 
 Happy contributing!

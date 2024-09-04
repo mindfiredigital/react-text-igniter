@@ -1,4 +1,4 @@
-<h1 align="center">TextIgnite JS </h1><br><br>
+<h1 align="center">React Text Igniter</h1><br><br>
 <p align="center">
 <a href="https://www.npmjs.com/package/@mindfiredigital/react-text-igniter"><img src="https://img.shields.io/npm/v/@mindfiredigital/react-text-igniter.svg?sanitize=true" alt="Version"></a>
 <a href="https://www.npmjs.com/package/@mindfiredigital/react-text-igniter"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs"></a>
@@ -6,10 +6,20 @@
 
 <br>
 
-<p align="center"> Experience a powerful and intuitive HTML Editor built with React.js. </p>
+<p align="center"> Experience a Lightweight , powerful and intuitive HTML Editor built with React.js. </p>
 
 The `@mindfiredigital/react-text-igniter` is a tool that allows developers to integrate HTML Editor using React.
 <br>
+
+<p align="center">
+  <img alt="Screenshot of the React Text Igniter" src="./react-text-igniter-screenshot.png"\>
+</p>
+
+## Live Demo
+
+Click the button below to open the project on StackBlitz.
+
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/vitejs-vite-9nstpc?file=src%2Findex.css)
 
 ## Table of Contents
 
@@ -62,8 +72,10 @@ npm install @mindfiredigital/react-text-igniter
 import { HtmlEditor } from "@mindfiredigital/react-text-igniter";
 import React, { useRef } from "react";
 
-export const App = () => {
+export default function App() {
   const editorRef = useRef();
+
+  // define features
   const features = [
     "heading",
     "bold",
@@ -83,7 +95,7 @@ export const App = () => {
   ];
 
   return <HtmlEditor ref={editorRef} features={features} height={"400px"} />;
-};
+}
 ```
 
 - **GET HTML/JSON**: Geting HTML and JSON for the content of Editor.
@@ -92,8 +104,10 @@ export const App = () => {
 import { HtmlEditor } from "@mindfiredigital/react-text-igniter";
 import React, { useRef } from "react";
 
-export const App = () => {
+export default function App() {
   const editorRef = useRef();
+
+  // define features
   const features = [
     "heading",
     "bold",
@@ -129,7 +143,7 @@ export const App = () => {
       <button onClick={handleGetJsonContent}>check Json</button>
     </>
   );
-};
+}
 ```
 
 <br>
