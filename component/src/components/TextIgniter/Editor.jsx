@@ -13,6 +13,7 @@ const Editor = ({ height = "300px" }) => {
 
   return (
     <>
+      {/* main editor */}
       <div
         id="editor"
         ref={editorRef}
@@ -24,7 +25,7 @@ const Editor = ({ height = "300px" }) => {
           overflowY: "auto",
         }}
       />
-
+      {/* footer */}
       <div className="editor-footer">
         <span>Words: {wordCount}</span> | <span>Chars: {charCount}</span>
       </div>
