@@ -24,7 +24,6 @@ const Toolbar = ({ features }) => {
   const [isImageDialogOpen, setImageDialogOpen] = useState(false);
   const [isUrlDialogOpen, setUrlDialogOpen] = useState(false);
 
-
   const handleImageSubmit = ({ file, fileUrl }) => {
     addImageOrVideo(file, fileUrl);
   };
@@ -34,41 +33,128 @@ const Toolbar = ({ features }) => {
     applyHeading(heading);
   };
 
-
   const handleTableOperation = (operation) => {
     switch (operation) {
-      case "insert": insertTable(2, 2); break;
-      case "addRow": addTableRow(); break;
-      case "addColumn": addTableColumn(); break;
-      default: break;
+      case "insert":
+        insertTable(2, 2);
+        break;
+      case "addRow":
+        addTableRow();
+        break;
+      case "addColumn":
+        addTableColumn();
+        break;
+      default:
+        break;
     }
   };
 
   const handleLayoutOperation = (layout) => {
     switch (layout) {
-      case "single": insertLayout([100]); break;
-      case "two-equal": insertLayout([50, 50]); break;
-      case "three-equal": insertLayout([33.33, 33.33, 33.33]); break;
-      case "40-60": insertLayout([40, 60]); break;
-      case "60-40": insertLayout([60, 40]); break;
-      default: break;
+      case "single":
+        insertLayout([100]);
+        break;
+      case "two-equal":
+        insertLayout([50, 50]);
+        break;
+      case "three-equal":
+        insertLayout([33.33, 33.33, 33.33]);
+        break;
+      case "40-60":
+        insertLayout([40, 60]);
+        break;
+      case "60-40":
+        insertLayout([60, 40]);
+        break;
+      default:
+        break;
     }
   };
 
   const getIsActive = (style) => activeStyles.includes(style);
 
   const featureButtons = {
-    bold: <IconButton onClick={() => formatText("bold")} toolTip="Bold" isActive={getIsActive('bold')}><Icons.BoldIcon /></IconButton>,
-    italic: <IconButton onClick={() => formatText("italic")} toolTip="Italic" isActive={getIsActive('italic')}><Icons.ItalicIcon /></IconButton>,
-    underline: <IconButton onClick={() => formatText("underline")} toolTip="Underline" isActive={getIsActive('underline')}><Icons.UnderlineIcon /></IconButton>,
-    orderedList: <IconButton onClick={() => formatText("insertOrderedList")} toolTip="Ordered List" isActive={getIsActive('orderedList')}><Icons.OrderedListIcon /></IconButton>,
-    unorderedList: <IconButton onClick={() => formatText("insertUnorderedList")} toolTip="Unordered List" isActive={getIsActive('unorderedList')}><Icons.UnOrderedListIcon /></IconButton>,
-    justifyLeft: <IconButton onClick={() => formatText("justifyLeft")} toolTip="Justify Left" isActive={getIsActive('justifyLeft')}><Icons.AlignLeftIcon /></IconButton>,
-    justifyCenter: <IconButton onClick={() => formatText("justifyCenter")} toolTip="Justify Center" isActive={getIsActive('justifyCenter')}><Icons.AlignCenterIcon /></IconButton>,
-    justifyRight: <IconButton onClick={() => formatText("justifyRight")} toolTip="Justify Right" isActive={getIsActive('justifyRight')}><Icons.AlignRightIcon /></IconButton>,
+    bold: (
+      <IconButton
+        onClick={() => formatText("bold")}
+        toolTip="Bold"
+        isActive={getIsActive("bold")}
+      >
+        <Icons.BoldIcon />
+      </IconButton>
+    ),
+    italic: (
+      <IconButton
+        onClick={() => formatText("italic")}
+        toolTip="Italic"
+        isActive={getIsActive("italic")}
+      >
+        <Icons.ItalicIcon />
+      </IconButton>
+    ),
+    underline: (
+      <IconButton
+        onClick={() => formatText("underline")}
+        toolTip="Underline"
+        isActive={getIsActive("underline")}
+      >
+        <Icons.UnderlineIcon />
+      </IconButton>
+    ),
+    orderedList: (
+      <IconButton
+        onClick={() => formatText("insertOrderedList")}
+        toolTip="Ordered List"
+        isActive={getIsActive("orderedList")}
+      >
+        <Icons.OrderedListIcon />
+      </IconButton>
+    ),
+    unorderedList: (
+      <IconButton
+        onClick={() => formatText("insertUnorderedList")}
+        toolTip="Unordered List"
+        isActive={getIsActive("unorderedList")}
+      >
+        <Icons.UnOrderedListIcon />
+      </IconButton>
+    ),
+    justifyLeft: (
+      <IconButton
+        onClick={() => formatText("justifyLeft")}
+        toolTip="Justify Left"
+        isActive={getIsActive("justifyLeft")}
+      >
+        <Icons.AlignLeftIcon />
+      </IconButton>
+    ),
+    justifyCenter: (
+      <IconButton
+        onClick={() => formatText("justifyCenter")}
+        toolTip="Justify Center"
+        isActive={getIsActive("justifyCenter")}
+      >
+        <Icons.AlignCenterIcon />
+      </IconButton>
+    ),
+    justifyRight: (
+      <IconButton
+        onClick={() => formatText("justifyRight")}
+        toolTip="Justify Right"
+        isActive={getIsActive("justifyRight")}
+      >
+        <Icons.AlignRightIcon />
+      </IconButton>
+    ),
     createLink: (
       <>
-        <IconButton onClick={() => setUrlDialogOpen(true)} toolTip="Create Link" isActive={getIsActive('createLink')}><Icons.LinkIcon /></IconButton>
+        <IconButton
+          onClick={() => setUrlDialogOpen(true)}
+          toolTip="Create Link"
+          isActive={getIsActive("createLink")}
+        >
+          <Icons.LinkIcon />
+        </IconButton>
         <FileUrlDialog
           isOpen={isUrlDialogOpen}
           onClose={() => setUrlDialogOpen(false)}
@@ -81,7 +167,13 @@ const Toolbar = ({ features }) => {
     ),
     insertImage: (
       <>
-        <IconButton onClick={() => setImageDialogOpen(true)} toolTip="Insert Image/Video" isActive={getIsActive('insertImage')}><Icons.ImageIcon /></IconButton>
+        <IconButton
+          onClick={() => setImageDialogOpen(true)}
+          toolTip="Insert Image/Video"
+          isActive={getIsActive("insertImage")}
+        >
+          <Icons.ImageIcon />
+        </IconButton>
         <ImageUploadSelectionDialog
           isOpen={isImageDialogOpen}
           onClose={() => setImageDialogOpen(false)}
@@ -90,8 +182,24 @@ const Toolbar = ({ features }) => {
         />
       </>
     ),
-    superscript: <IconButton onClick={() => formatText("superscript")} toolTip="Superscript" isActive={getIsActive('superscript')}><Icons.SuperScriptIcon /></IconButton>,
-    subscript: <IconButton onClick={() => formatText("subscript")} toolTip="Subscript" isActive={getIsActive('subscript')}><Icons.SubScriptIcon /></IconButton>,
+    superscript: (
+      <IconButton
+        onClick={() => formatText("superscript")}
+        toolTip="Superscript"
+        isActive={getIsActive("superscript")}
+      >
+        <Icons.SuperScriptIcon />
+      </IconButton>
+    ),
+    subscript: (
+      <IconButton
+        onClick={() => formatText("subscript")}
+        toolTip="Subscript"
+        isActive={getIsActive("subscript")}
+      >
+        <Icons.SubScriptIcon />
+      </IconButton>
+    ),
     table: (
       <IconDropDown
         id="tableDropdown"
@@ -112,9 +220,9 @@ const Toolbar = ({ features }) => {
         toolTip={"Layout"}
         items={[
           { value: "single", label: "Single Column" },
-          { value: "two-equal", label: "Two Equal Columns"},
+          { value: "two-equal", label: "Two Equal Columns" },
           { value: "three-equal", label: "Three Equal Columns" },
-          { value: "40-60", label: "40-60"},
+          { value: "40-60", label: "40-60" },
           { value: "60-40", label: "60-40" },
         ]}
         onChange={handleLayoutOperation}
@@ -122,14 +230,14 @@ const Toolbar = ({ features }) => {
     ),
     heading: (
       <IconDropDown
-      icon={<Icons.HeadingIcon />}
-      items={[
-          { value: "h1", label: "Heading 1", },
-          { value: "h2" , label: "Heading 2"},
-          {  value: "h3", label: "Heading 3" },
-          { value: "h4" ,label: "Heading 4"},
-          { value: "h5" , label: "Heading 5"},
-          {value: "h6", label: "Heading 6" },
+        icon={<Icons.HeadingIcon />}
+        items={[
+          { value: "h1", label: "Heading 1" },
+          { value: "h2", label: "Heading 2" },
+          { value: "h3", label: "Heading 3" },
+          { value: "h4", label: "Heading 4" },
+          { value: "h5", label: "Heading 5" },
+          { value: "h6", label: "Heading 6" },
         ]}
         onChange={handleHeadingChange}
         toolTip={"Headings"}
@@ -141,11 +249,15 @@ const Toolbar = ({ features }) => {
     <div className="toolbar">
       <div className="toolbar-switch">
         <label>
-          <input type="checkbox" checked={isToolbarVisible} onChange={toggleToolbarVisibility} />
+          <input
+            type="checkbox"
+            checked={isToolbarVisible}
+            onChange={toggleToolbarVisibility}
+          />
           {!isToolbarVisible ? "Preview Mode" : "Edit Mode"}
         </label>
       </div>
-      { !isToolbarVisible &&
+      {!isToolbarVisible &&
         features.map((feature, index) => (
           <React.Fragment key={index}>{featureButtons[feature]}</React.Fragment>
         ))}
