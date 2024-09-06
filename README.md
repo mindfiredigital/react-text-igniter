@@ -8,7 +8,7 @@
 
 <p align="center"> Experience a Lightweight , powerful and intuitive HTML Editor built with React.js. </p>
 
-The `@mindfiredigital/react-text-igniter` is a tool that allows developers to integrate HTML Editor using React.
+The `@mindfiredigital/react-text-igniter` is a tool that allows developers to integrate TextIgniter using React.
 <br>
 
 <p align="center">
@@ -19,7 +19,9 @@ The `@mindfiredigital/react-text-igniter` is a tool that allows developers to in
 
 Click the button below to open the project on StackBlitz.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/vitejs-vite-9nstpc?file=src%2Findex.css)
+<a href="https://stackblitz.com/edit/vitejs-vite-9nstpc?file=src%2Findex.css" target="_blank">
+  <img src="https://developer.stackblitz.com/img/open_in_stackblitz.svg" alt="Open in StackBlitz">
+</a>
 
 ## Table of Contents
 
@@ -66,10 +68,10 @@ npm install @mindfiredigital/react-text-igniter
 
 ## Getting Started
 
-- **Initialization**: Initialize the HTML Editor in your project, specifying the container element where the editor will be embedded.
+- **Initialization**: Initialize the TextIgniter in your project, specifying the container element where the editor will be embedded.
 
 ```javascript
-import { HtmlEditor } from "@mindfiredigital/react-text-igniter";
+import { TextIgniter } from "@mindfiredigital/react-text-igniter";
 import React, { useRef } from "react";
 
 export default function App() {
@@ -94,14 +96,14 @@ export default function App() {
     "layout",
   ];
 
-  return <HtmlEditor ref={editorRef} features={features} height={"400px"} />;
+  return <TextIgniter ref={editorRef} features={features} height={"400px"} />;
 }
 ```
 
 - **GET HTML/JSON**: Geting HTML and JSON for the content of Editor.
 
 ```javascript
-import { HtmlEditor } from "@mindfiredigital/react-text-igniter";
+import { TextIgniter } from "@mindfiredigital/react-text-igniter";
 import React, { useRef } from "react";
 
 export default function App() {
@@ -138,7 +140,7 @@ export default function App() {
 
   return (
     <>
-      <HtmlEditor ref={editorRef} features={features} height={"400px"} />
+      <TextIgniter ref={editorRef} features={features} height={"400px"} />
       <button onClick={handleGetHtmlContent}>check html</button>
       <button onClick={handleGetJsonContent}>check Json</button>
     </>

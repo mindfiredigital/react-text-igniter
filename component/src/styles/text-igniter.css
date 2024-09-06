@@ -21,7 +21,7 @@
 
 .toolbar .toolbarBtn,
 .toolbar select {
-  margin: 5px;
+  padding: 5px;
   cursor: pointer;
   border: none;
   background-color: transparent;

@@ -1,29 +1,29 @@
-const path = require('path');
-const TerserPlugin = require('terser-webpack-plugin');
+const path = require("path");
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
-  entry: './component/index.js',
+  entry: "./component/index.js",
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'index.js',
-    library: 'HtmlEditor',
-    libraryTarget: 'umd',
-    globalObject: 'this',
-    umdNamedDefine: true
+    path: path.resolve(__dirname, "dist"),
+    filename: "index.js",
+    library: "TextIgniter",
+    libraryTarget: "umd",
+    globalObject: "this",
+    umdNamedDefine: true,
   },
   externals: {
     react: {
-      commonjs: 'react',
-      commonjs2: 'react',
-      amd: 'React',
-      root: 'React'
+      commonjs: "react",
+      commonjs2: "react",
+      amd: "React",
+      root: "React",
     },
-    'react-dom': {
-      commonjs: 'react-dom',
-      commonjs2: 'react-dom',
-      amd: 'ReactDOM',
-      root: 'ReactDOM'
-    }
+    "react-dom": {
+      commonjs: "react-dom",
+      commonjs2: "react-dom",
+      amd: "ReactDOM",
+      root: "ReactDOM",
+    },
   },
   module: {
     rules: [
@@ -31,24 +31,24 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
             presets: [
-              ['@babel/preset-env', { modules: false }],
-              '@babel/preset-react'
+              ["@babel/preset-env", { modules: false }],
+              "@babel/preset-react",
             ],
-            plugins: ['@babel/plugin-transform-runtime']
-          }
-        }
+            plugins: ["@babel/plugin-transform-runtime"],
+          },
+        },
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader']
-      }
-    ]
+        use: ["style-loader", "css-loader"],
+      },
+    ],
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: [".js", ".jsx"],
   },
   optimization: {
     minimizer: [
@@ -65,5 +65,5 @@ module.exports = {
       }),
     ],
   },
-  mode: 'production'
+  mode: "production",
 };

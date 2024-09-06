@@ -1,13 +1,11 @@
 /* eslint-disable react/display-name */
-// index.jsx
-
 import React, { useImperativeHandle, forwardRef } from "react";
 import { EditorProvider, useEditor } from "../../contexts/editorContext.jsx";
 import Toolbar from "./Toolbar.jsx";
 import Editor from "./Editor.jsx";
-import "../../styles/html-editor.css";
+import "../../styles/text-igniter.css";
 
-const HtmlEditorContent = forwardRef(({ features, height }, ref) => {
+const TextIgniterContent = forwardRef(({ features, height }, ref) => {
   const { getHtml, getJson } = useEditor();
 
   useImperativeHandle(ref, () => ({
@@ -23,10 +21,10 @@ const HtmlEditorContent = forwardRef(({ features, height }, ref) => {
   );
 });
 
-const HtmlEditor = forwardRef((props, ref) => (
+const TextIgniter = forwardRef((props, ref) => (
   <EditorProvider>
-    <HtmlEditorContent {...props} ref={ref} />
+    <TextIgniterContent {...props} ref={ref} />
   </EditorProvider>
 ));
 
-export default HtmlEditor;
+export default TextIgniter;
