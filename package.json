@@ -23,7 +23,8 @@
     "react text igniter",
     "text formatting",
     "npm package",
-    "mindfiredigital"
+    "mindfiredigital",
+    "contenteditable"
   ],
   "peerDependencies": {
     "react": ">=18.0.0",
