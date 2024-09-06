@@ -48,22 +48,6 @@ const ImageUploadSelectionDialog = ({ isOpen, onClose, onSubmit, title, children
     }
   };
 
-  // const handleImageUrl = (event) => {
-  //   const url = event.target.value;
-  //   const urlExtension = url.split(".").pop().split("?")[0].toLowerCase();
-  //   if (
-  //     validImageExtensions.includes(urlExtension) ||
-  //     validVideoExtensions.includes(urlExtension)
-  //   ) {
-  //     setImageUrl(url);
-  //     setFile(null);
-  //     setError("");
-  //   } else {
-  //     setImageUrl("");
-  //     setError("Invalid URL. Please provide a link to an image or video.");
-  //   }
-  // };
-
   const handleSubmit = () => {
     if (file || imageUrl) {
       onSubmit({ file, imageUrl });
@@ -86,14 +70,6 @@ const ImageUploadSelectionDialog = ({ isOpen, onClose, onSubmit, title, children
         </div>
         <div className="dialog-body">
           <div className="container">
-            {/* <input
-              type="text"
-              className="image-url-input"
-              placeholder="Paste file URL"
-              value={imageUrl}
-              onChange={handleImageUrl}
-            />
-            <div className="or-divider">OR</div> */}
             <label htmlFor="file-input" className="custom-file-input">
               {!file ? "Select file" : "Reselect file"}
             </label>
@@ -123,19 +99,6 @@ const ImageUploadSelectionDialog = ({ isOpen, onClose, onSubmit, title, children
   );
 };
 
-/**
- * FileUrlDialog Component
- *
- * A dialog component for entering a file URL.
- *
- * @param {Object} props - Component props
- * @param {boolean} props.isOpen - Whether the dialog is open
- * @param {Function} props.onClose - Function to close the dialog
- * @param {Function} props.onSubmit - Function to handle URL submission
- * @param {string} props.title - Dialog title
- * @param {React.ReactNode} props.children - Additional dialog content
- * @returns {JSX.Element|null} The rendered FileUrlDialog component or null if not open
- */
 const FileUrlDialog = ({ isOpen, onClose, onSubmit, linkText, link, children }) => {
   const [url, setUrl] = useState(link || ""); // Initialize with link if provided
   const [text, setText] = useState(linkText || ""); // Initialize with title if provided
@@ -171,8 +134,7 @@ const FileUrlDialog = ({ isOpen, onClose, onSubmit, linkText, link, children }) 
     if (errorMessage) {
       setError(errorMessage);
     } else {
-      onSubmit({ text, url }); // Pass both url and title
-      console.log("#########", linkText, url, "#########");
+      onSubmit({ text, url });
       onClose();
     }
   };
