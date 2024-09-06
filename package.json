@@ -1,5 +1,6 @@
 {
   "name": "@mindfiredigital/react-text-igniter",
+  "description": "A Lightweight , powerful and intuitive HTML Editor built with React.js.",
   "version": "1.0.0-development",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
@@ -9,6 +10,20 @@
   "license": "MIT",
   "files": [
     "dist"
+  ],
+  "keywords": [
+    "react",
+    "text editor",
+    "rich text editor",
+    "html editor",
+    "wysiwyg",
+    "content editing",
+    "react component",
+    "text igniter",
+    "react text igniter",
+    "text formatting",
+    "npm package",
+    "mindfiredigital"
   ],
   "peerDependencies": {
     "react": ">=18.0.0",
