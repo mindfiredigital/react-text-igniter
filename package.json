@@ -31,7 +31,7 @@
     "react-dom": ">=18.0.0"
   },
   "scripts": {
-    "build": "webpack",
+    "build": "rm -rf dist && npm cache clean --force && webpack",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "lint-staged": "lint-staged",
