@@ -1,1 +1,1 @@
-export {default as HtmlEditor} from "./htmlEditor";
+export { default as TextIgniter } from "./TextIgniter";
