@@ -11,21 +11,6 @@
   "files": [
     "dist"
   ],
-  "keywords": [
-    "react",
-    "text editor",
-    "rich text editor",
-    "html editor",
-    "wysiwyg",
-    "content editing",
-    "react component",
-    "text igniter",
-    "react text igniter",
-    "text formatting",
-    "npm package",
-    "mindfiredigital",
-    "contenteditable"
-  ],
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
