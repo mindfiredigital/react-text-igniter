@@ -149,13 +149,14 @@ export const useEditorFormatting = (editorRef) => {
     (linkText, linkUrl) => {
       const editor = editorRef.current;
       if (editor) {
-        const anchor = document.createElement("a");
-        anchor.href = linkUrl;
-        anchor.textContent = linkText;
-        anchor.target = "_blank";
-        anchor.rel = "noopener noreferrer";
-        editor.appendChild(anchor);
+        const button = document.createElement("button");
+        button.textContent = linkText;
+        button.className = "link-btn";
+        button.onclick = () =>
+          window.open(linkUrl, "_blank", "noopener,noreferrer");
+        editor.appendChild(button);
         editor.appendChild(document.createElement("br"));
+
         updateActiveStyles();
       }
     },
