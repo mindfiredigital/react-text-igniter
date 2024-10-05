@@ -104,6 +104,13 @@ const FileUrlDialog = ({ isOpen, onClose, onSubmit, linkText, link, children }) 
   const [text, setText] = useState(linkText || ""); // Initialize with title if provided
   const [error, setError] = useState("");
 
+// Reset dialog state after submission
+  useEffect(() => {
+    if (isOpen) {
+      resetToDefault();
+    }
+  }, [isOpen, link, linkText]);
+
   const closeDialog = () => {
     resetToDefault();
     onClose();
