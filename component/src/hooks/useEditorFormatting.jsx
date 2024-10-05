@@ -149,12 +149,17 @@ export const useEditorFormatting = (editorRef) => {
     (linkText, linkUrl) => {
       const editor = editorRef.current;
       if (editor) {
-        const button = document.createElement("button");
-        button.textContent = linkText;
-        button.className = "link-btn";
-        button.onclick = () =>
-          window.open(linkUrl, "_blank", "noopener,noreferrer");
-        editor.appendChild(button);
+        // Focus the editor to ensure the link is inserted at the right position
+        editor.focus();
+
+        // Create an anchor element instead of button
+        const linkElement = document.createElement("a");
+        linkElement.textContent = linkText;
+        linkElement.href = linkUrl;
+        linkElement.target = "_blank";
+        linkElement.rel = "noopener noreferrer"; // Prevent security issues
+        linkElement.className = "link-btn";
+        editor.appendChild(linkElement);
         editor.appendChild(document.createElement("br"));
 
         updateActiveStyles();
@@ -180,11 +185,26 @@ export const useEditorFormatting = (editorRef) => {
   useEffect(() => {
     const editor = editorRef.current;
     if (editor) {
+      // Handle link clicks to open them in a new tab
+      const handleLinkClick = (e) => {
+        const target = e.target;
+        // The element that was clicked is checked to see if it’s an <a> (anchor) tag.
+        if (target.tagName === "A") {
+          e.preventDefault(); // Prevent default editing behavior
+          window.open(target.href, "_blank", "noopener,noreferrer"); // Open the link in a new tab
+        }
+      };
+
       editor.addEventListener("keyup", updateActiveStyles);
       editor.addEventListener("mouseup", updateActiveStyles);
+      // Attach the click event listener to the editor for anchor elements
+      editor.addEventListener("click", handleLinkClick);
+
+      // Cleanup event listeners when the component unmounts or the editor changes
       return () => {
         editor.removeEventListener("keyup", updateActiveStyles);
         editor.removeEventListener("mouseup", updateActiveStyles);
+        editor.removeEventListener("click", handleLinkClick);
       };
     }
   }, [editorRef, updateActiveStyles]);
