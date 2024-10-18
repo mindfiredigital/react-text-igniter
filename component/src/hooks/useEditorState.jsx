@@ -1,6 +1,6 @@
 import { useReducer, useEffect } from "react";
 
-const initialState = { wordCount: 0, charCount: 0, html: "" };
+const initialState = { wordCount: 0, charCount: 0, html: null };
 
 const reducer = (state, action) => {
   switch (action.type) {
