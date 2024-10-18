@@ -99,6 +99,7 @@ export const useEditorFormatting = (editorRef) => {
 
         document.execCommand(command, false, value);
         updateActiveStyles();
+        editor.dispatchEvent(new Event('change'));
       }
     },
     [editorRef, updateActiveStyles]
