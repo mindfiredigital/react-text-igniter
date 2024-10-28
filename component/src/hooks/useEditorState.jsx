@@ -1,6 +1,6 @@
 import { useReducer, useEffect } from "react";
 
-const initialState = { wordCount: 0, charCount: 0 };
+const initialState = { wordCount: 0, charCount: 0, html: null };
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -9,6 +9,11 @@ const reducer = (state, action) => {
         ...state,
         wordCount: action.wordCount,
         charCount: action.charCount,
+      };
+    case "UPDATE_HTML":
+      return {
+        ...state,
+        html: action.html,
       };
     default:
       return state;
@@ -20,11 +25,15 @@ export const useEditorState = (editorRef, updateDataAttributes) => {
 
   useEffect(() => {
     const editor = editorRef.current;
+    let editorChangedHtml = state.html;
 
     const handleInput = () => {
       const text = editor.innerText || "";
-      const words = text.trim().split(/\s+/).filter((word) => word.length > 0);
-      
+      const words = text
+        .trim()
+        .split(/\s+/)
+        .filter((word) => word.length > 0);
+
       dispatch({
         type: "SET_COUNTS",
         wordCount: words.length,
@@ -32,12 +41,29 @@ export const useEditorState = (editorRef, updateDataAttributes) => {
       });
 
       updateDataAttributes(editor);
+
+      handleChange();
+    };
+
+    const handleChange = () => {
+      const newHtml = editor.innerHTML || "";
+
+      if (editorChangedHtml !== newHtml) {
+        editorChangedHtml = newHtml;
+
+        dispatch({
+          type: "UPDATE_HTML",
+          html: newHtml,
+        });
+      }
     };
 
     editor.addEventListener("input", handleInput);
+    editor.addEventListener("change", handleChange);
 
     return () => {
       editor.removeEventListener("input", handleInput);
+      editor.removeEventListener("change", handleChange);
     };
   }, [editorRef, updateDataAttributes]);
 

@@ -13,6 +13,14 @@ export default {
       control: "text",
       description: "Height of the editor",
     },
+    defaultContent: {
+      control: "text",
+      description: "Default content for the editor",
+    },
+    onChange: {
+      control: Function,
+      description: "Callback function for editor content change",
+    },
   },
 };
 
@@ -46,6 +54,8 @@ export const Default = Template.bind({});
 Default.args = {
   features: ["bold", "italic", "underline"],
   height: "300px",
+  defaultContent: "",
+  onChange: undefined
 };
 
 // Story with more features
@@ -76,4 +86,54 @@ export const CustomHeight = Template.bind({});
 CustomHeight.args = {
   ...Default.args,
   height: "500px",
+};
+
+
+// Story with default content
+export const DefaultContent = Template.bind({});
+DefaultContent.args = {
+  features: [
+    "heading",
+    "bold",
+    "italic",
+    "underline",
+    "orderedList",
+    "unorderedList",
+    "justifyLeft",
+    "justifyCenter",
+    "justifyRight",
+    "createLink",
+    "insertImage",
+    "superscript",
+    "subscript",
+    "table",
+    "layout",
+  ],
+  height: "400px",
+  defaultContent: "<p>Opening <b>default HTML</b> content</p>",
+};
+
+// Story with defaultContent & onChange callback
+export const OnChangeCallback = Template.bind({});
+OnChangeCallback.args = {
+  features: [
+    "heading",
+    "bold",
+    "italic",
+    "underline",
+    "orderedList",
+    "unorderedList",
+    "justifyLeft",
+    "justifyCenter",
+    "justifyRight",
+    "createLink",
+    "insertImage",
+    "superscript",
+    "subscript",
+    "table",
+    "layout",
+  ],
+  height: "400px",
+  defaultContent: "<p>Opening <b>default HTML</b> content and watch console to see if onChange callback is triggered</p>",
+  onChange: (val) => { console.log("onChange", val) }
 };

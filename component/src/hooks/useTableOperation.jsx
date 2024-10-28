@@ -23,6 +23,7 @@ export const useTableOperations = (editorRef) => {
 
       editor.appendChild(table);
       editor.appendChild(document.createElement('br'));
+      editor.dispatchEvent(new Event('change'));
     }
   }, [editorRef]);
 
@@ -41,6 +42,7 @@ export const useTableOperations = (editorRef) => {
           cell.contentEditable = true;
         }
       }
+      editor.dispatchEvent(new Event('change'));
     }
   }, [editorRef]);
 
@@ -64,6 +66,7 @@ export const useTableOperations = (editorRef) => {
           }
         }
       }
+      editor.dispatchEvent(new Event('change'));
     }
   }, [editorRef]);
 
@@ -88,6 +91,7 @@ export const useTableOperations = (editorRef) => {
 
       editor.appendChild(table);
       editor.appendChild(document.createElement('br'));
+      editor.dispatchEvent(new Event('change'));
     }
   }, [editorRef]);
 
