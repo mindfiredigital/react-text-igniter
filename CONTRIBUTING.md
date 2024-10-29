@@ -18,7 +18,7 @@ Here are some ways you can contribute to the project:
 2. **Clone** the forked repository to your local machine.
 3. Create a new **branch** for your feature/fix: `git checkout -b feature-name`.
 4. **Make changes** and **test** to ensure they work as expected.
-5. **Commit** your changes: `git commit -m 'Your descriptive commit message'`.
+5. **Commit** your changes: `git commit -m 'Your descriptive commit message'` . check [commit message guidelines](./COMMIT_MESSAGE.md).
 6. **Push** your branch to your GitHub repository: `git push origin feature-name`.
 7. Create a **Pull Request (PR)** from your branch to the original repository's `main` or `master` branch.
 
